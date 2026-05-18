@@ -102,7 +102,7 @@ class _ProfilesViewState extends State<ProfilesView> {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (_, ref, __) {
         final isLoading = ref.watch(loadingProvider(LoadingTag.profiles));
         final state = ref.watch(profilesStateProvider);
         final spacing = 14.mAp;
@@ -139,9 +139,8 @@ class _ProfilesViewState extends State<ProfilesView> {
                               groupValue: state.currentProfileId,
                               onChanged: (profileId) {
                                 ref
-                                        .read(currentProfileIdProvider.notifier)
-                                        .value =
-                                    profileId;
+                                    .read(currentProfileIdProvider.notifier)
+                                    .value = profileId;
                               },
                             ),
                           ),
@@ -235,6 +234,15 @@ class ProfileItem extends StatelessWidget {
     ];
   }
 
+  List<Widget> _buildProfileInfo(BuildContext context) {
+    switch (profile.type) {
+      case ProfileType.file:
+        return _buildFileProfileInfo(context);
+      case ProfileType.url:
+        return _buildUrlProfileInfo(context);
+    }
+  }
+
   Future<void> _handleCopyLink(BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: profile.url));
     if (context.mounted) {
@@ -276,7 +284,7 @@ class ProfileItem extends StatelessWidget {
           height: 40,
           width: 40,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final isUpdating = ref.watch(
                 isUpdatingProvider(profile.updatingKey),
               );
@@ -398,12 +406,7 @@ class ProfileItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...switch (profile.type) {
-                    ProfileType.file => _buildFileProfileInfo(context),
-                    ProfileType.url => _buildUrlProfileInfo(context),
-                  },
-                ],
+                children: _buildProfileInfo(context),
               ),
             ],
           ),
@@ -466,18 +469,18 @@ class _ReorderableProfilesSheetState extends State<ReorderableProfilesSheet> {
       type: widget.type,
       actions: [
         if (widget.type == SheetType.bottomSheet)
-          IconButton.filledTonal(
+          IconButton(
             onPressed: _handleSave,
+            iconSize: 20,
             style: IconButton.styleFrom(
               visualDensity: VisualDensity.comfortable,
               tapTargetSize: MaterialTapTargetSize.padded,
               padding: EdgeInsets.all(8),
-              iconSize: 20,
             ),
             icon: Icon(Icons.check),
           )
         else
-          IconButton.filledTonal(
+          IconButton(
             icon: Icon(Icons.check),
             onPressed: _handleSave,
           ),

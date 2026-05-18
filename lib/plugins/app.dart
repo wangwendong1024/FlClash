@@ -19,6 +19,7 @@ class App {
           if (onExit != null) {
             await onExit!();
           }
+          break;
         default:
           throw MissingPluginException();
       }

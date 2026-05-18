@@ -3,13 +3,12 @@ import 'package:flutter/rendering.dart';
 
 enum CrossSlideState { showFirst, showSecond }
 
-typedef AnimatedCrossSlideBuilder =
-    Widget Function(
-      Widget topChild,
-      Key topChildKey,
-      Widget bottomChild,
-      Key bottomChildKey,
-    );
+typedef AnimatedCrossSlideBuilder = Widget Function(
+  Widget topChild,
+  Key topChildKey,
+  Widget bottomChild,
+  Key bottomChildKey,
+);
 
 class AnimatedCrossSlide extends StatefulWidget {
   const AnimatedCrossSlide({
@@ -156,8 +155,10 @@ class _AnimatedCrossSlideState extends State<AnimatedCrossSlide>
       switch (widget.crossSlideState) {
         case CrossSlideState.showFirst:
           _controller.reverse();
+          break;
         case CrossSlideState.showSecond:
           _controller.forward();
+          break;
       }
     }
   }
@@ -189,7 +190,8 @@ class _AnimatedCrossSlideState extends State<AnimatedCrossSlide>
     Widget bottomChild;
     final secondSlideAnimation = _secondAnimation.drive(_kRightMiddleTween);
     final firstSlideAnimation = _firstAnimation.drive(_kMiddleLeftTween);
-    if (_controller.isForwardOrCompleted) {
+    if (_controller.status == AnimationStatus.forward ||
+        _controller.status == AnimationStatus.completed) {
       topKey = kSecondChildKey;
       topChild = widget.secondChild;
       topAnimation = _secondAnimation;

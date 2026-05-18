@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -20,9 +21,8 @@ class Picker {
     final path = await FilePicker.platform.saveFile(
       fileName: fileName,
       initialDirectory: await appPath.downloadDirPath,
-      bytes: bytes,
     );
-    if (!system.isAndroid && path != null) {
+    if (path != null) {
       final file = File(path);
       await file.safeWriteAsBytes(bytes);
     }
@@ -34,13 +34,11 @@ class Picker {
     if (!await localFile.exists()) {
       await localFile.create(recursive: true);
     }
-    final bytes = Platform.isAndroid ? await localFile.readAsBytes() : null;
     final path = await FilePicker.platform.saveFile(
       fileName: fileName,
       initialDirectory: await appPath.downloadDirPath,
-      bytes: bytes,
     );
-    if (path != null && bytes == null) {
+    if (path != null) {
       await localFile.copy(path);
     }
     await localFile.safeDelete();
@@ -53,11 +51,19 @@ class Picker {
       return null;
     }
     final controller = MobileScannerController();
-    final capture = await controller.analyzeImage(
-      xFile.path,
-      formats: [BarcodeFormat.qrCode],
+    final completer = Completer<String?>();
+    final subscription = controller.barcodes.listen((barcode) {
+      if (!completer.isCompleted) {
+        completer.complete(barcode.rawValue);
+      }
+    });
+    await controller.analyzeImage(xFile.path);
+    final result = await completer.future.timeout(
+      const Duration(seconds: 3),
+      onTimeout: () => null,
     );
-    final result = capture?.barcodes.first.rawValue;
+    await subscription.cancel();
+    controller.dispose();
     if (result == null || !result.isUrl) {
       throw appLocalizations.pleaseUploadValidQrcode;
     }

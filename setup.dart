@@ -36,7 +36,8 @@ extension TargetExt on Target {
   String get dynamicLibExtensionName {
     final String extensionName;
     switch (this) {
-      case Target.android || Target.linux:
+      case Target.android:
+      case Target.linux:
         extensionName = '.so';
         break;
       case Target.windows:
@@ -82,16 +83,18 @@ class BuildItem {
 
 class Build {
   static List<BuildItem> get buildItems => [
-    BuildItem(target: Target.macos, arch: Arch.arm64),
-    BuildItem(target: Target.macos, arch: Arch.amd64),
-    BuildItem(target: Target.linux, arch: Arch.arm64),
-    BuildItem(target: Target.linux, arch: Arch.amd64),
-    BuildItem(target: Target.windows, arch: Arch.amd64),
-    BuildItem(target: Target.windows, arch: Arch.arm64),
-    BuildItem(target: Target.android, arch: Arch.arm, archName: 'armeabi-v7a'),
-    BuildItem(target: Target.android, arch: Arch.arm64, archName: 'arm64-v8a'),
-    BuildItem(target: Target.android, arch: Arch.amd64, archName: 'x86_64'),
-  ];
+        BuildItem(target: Target.macos, arch: Arch.arm64),
+        BuildItem(target: Target.macos, arch: Arch.amd64),
+        BuildItem(target: Target.linux, arch: Arch.arm64),
+        BuildItem(target: Target.linux, arch: Arch.amd64),
+        BuildItem(target: Target.windows, arch: Arch.amd64),
+        BuildItem(target: Target.windows, arch: Arch.arm64),
+        BuildItem(
+            target: Target.android, arch: Arch.arm, archName: 'armeabi-v7a'),
+        BuildItem(
+            target: Target.android, arch: Arch.arm64, archName: 'arm64-v8a'),
+        BuildItem(target: Target.android, arch: Arch.amd64, archName: 'x86_64'),
+      ];
 
   static String get appName => 'FlClash';
 
@@ -442,9 +445,8 @@ class BuildCommand extends Command {
     final String out = argResults?['out'] ?? (target.same ? 'app' : 'core');
     final archName = argResults?['arch'];
     final env = argResults?['env'] ?? 'pre';
-    final currentArches = arches
-        .where((element) => element.name == archName)
-        .toList();
+    final currentArches =
+        arches.where((element) => element.name == archName).toList();
     final arch = currentArches.isEmpty ? null : currentArches.first;
 
     if (arch == null && target != Target.android) {

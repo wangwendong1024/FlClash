@@ -32,11 +32,11 @@ class CommonSafeArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    EdgeInsets padding = MediaQuery.paddingOf(context);
+    EdgeInsets padding = MediaQuery.of(context).padding;
     final height = MediaQuery.of(context).size.height;
     if (maintainBottomViewPadding) {
       padding = padding.copyWith(
-        bottom: MediaQuery.viewPaddingOf(context).bottom,
+        bottom: MediaQuery.of(context).viewPadding.bottom,
       );
     }
     final double realPaddingTop = padding.top > height * 0.5 ? 0 : padding.top;

@@ -283,7 +283,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       ],
       ValueListenableBuilder<FileInfo?>(
         valueListenable: _fileInfoNotifier,
-        builder: (_, fileInfo, _) {
+        builder: (_, fileInfo, __) {
           return FadeThroughBox(
             alignment: Alignment.centerLeft,
             child: fileInfo == null
@@ -345,7 +345,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               itemBuilder: (_, index) {
                 return items[index];
               },
-              separatorBuilder: (_, _) {
+              separatorBuilder: (_, __) {
                 return const SizedBox(height: 24);
               },
               itemCount: items.length,

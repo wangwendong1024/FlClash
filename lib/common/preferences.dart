@@ -16,7 +16,7 @@ class Preferences {
   Preferences._internal() {
     SharedPreferences.getInstance()
         .then((value) => sharedPreferencesCompleter.complete(value))
-        .onError((_, _) => sharedPreferencesCompleter.complete(null));
+        .onError((_, __) => sharedPreferencesCompleter.complete(null));
   }
 
   factory Preferences() {
@@ -82,7 +82,10 @@ class Preferences {
 
   Future<bool> saveConfig(Config config) async {
     final preferences = await sharedPreferencesCompleter.future;
-    return preferences?.setString(configKey, json.encode(config)) ?? false;
+    if (preferences == null) {
+      return false;
+    }
+    return preferences.setString(configKey, json.encode(config));
   }
 
   Future<void> clearPreferences() async {

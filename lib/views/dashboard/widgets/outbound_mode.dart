@@ -19,7 +19,7 @@ class OutboundMode extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Consumer(
-        builder: (_, ref, _) {
+        builder: (_, ref, __) {
           final mode = ref.watch(
             patchClashConfigProvider.select((state) => state.mode),
           );
@@ -37,52 +37,49 @@ class OutboundMode extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 12, bottom: 12),
-                child: RadioGroup<Mode>(
-                  groupValue: mode,
-                  onChanged: (value) {
-                    if (value == null) {
-                      return;
-                    }
-                    appController.changeMode(value);
-                  },
-                  child: LayoutBuilder(
-                    builder: (_, constraints) {
-                      final maxHeight = constraints.maxHeight;
-                      return Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          for (final item in Mode.values)
-                            ListItem.radio(
-                              horizontalTitleGap: 8,
-                              tileTitleAlignment: ListTileTitleAlignment.center,
-                              minTileHeight: min(
-                                maxHeight / 3,
-                                globalState.measure.bodyMediumHeight + 16,
-                              ),
-                              minVerticalPadding: 0,
-                              padding: EdgeInsets.only(
-                                left: 12.ap,
-                                right: 16.ap,
-                              ),
-                              delegate: RadioDelegate(
-                                onTab: () {
-                                  appController.changeMode(item);
-                                },
-                                value: item,
-                              ),
-                              title: Text(
-                                Intl.message(item.name),
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodyMedium?.toSoftBold,
-                              ),
+                child: LayoutBuilder(
+                  builder: (_, constraints) {
+                    final maxHeight = constraints.maxHeight;
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        for (final item in Mode.values)
+                          ListItem.radio(
+                            horizontalTitleGap: 8,
+                            tileTitleAlignment: ListTileTitleAlignment.center,
+                            minTileHeight: min(
+                              maxHeight / 3,
+                              globalState.measure.bodyMediumHeight + 16,
                             ),
-                        ],
-                      );
-                    },
-                  ),
+                            minVerticalPadding: 0,
+                            padding: EdgeInsets.only(
+                              left: 12.ap,
+                              right: 16.ap,
+                            ),
+                            delegate: RadioDelegate<Mode>(
+                              onTab: () {
+                                appController.changeMode(item);
+                              },
+                              onChanged: (value) {
+                                if (value != null) {
+                                  appController.changeMode(value);
+                                }
+                              },
+                              value: item,
+                              groupValue: mode,
+                            ),
+                            title: Text(
+                              Intl.message(item.name),
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium?.toSoftBold,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -97,11 +94,25 @@ class OutboundModeV2 extends StatelessWidget {
   const OutboundModeV2({super.key});
 
   Color _getTextColor(BuildContext context, Mode mode) {
-    return switch (mode) {
-      Mode.rule => context.colorScheme.onSecondaryContainer,
-      Mode.global => context.colorScheme.onPrimaryContainer,
-      Mode.direct => context.colorScheme.onTertiaryContainer,
-    };
+    switch (mode) {
+      case Mode.rule:
+        return context.colorScheme.onSecondaryContainer;
+      case Mode.global:
+        return context.colorScheme.onPrimaryContainer;
+      case Mode.direct:
+        return context.colorScheme.onTertiaryContainer;
+    }
+  }
+
+  Color _getThumbColor(BuildContext context, Mode mode) {
+    switch (mode) {
+      case Mode.rule:
+        return context.colorScheme.secondaryContainer;
+      case Mode.global:
+        return globalState.theme.darken3PrimaryContainer;
+      case Mode.direct:
+        return context.colorScheme.tertiaryContainer;
+    }
   }
 
   @override
@@ -112,15 +123,11 @@ class OutboundModeV2 extends StatelessWidget {
       child: CommonCard(
         padding: EdgeInsets.zero,
         child: Consumer(
-          builder: (_, ref, _) {
+          builder: (_, ref, __) {
             final mode = ref.watch(
               patchClashConfigProvider.select((state) => state.mode),
             );
-            final thumbColor = switch (mode) {
-              Mode.rule => context.colorScheme.secondaryContainer,
-              Mode.global => globalState.theme.darken3PrimaryContainer,
-              Mode.direct => context.colorScheme.tertiaryContainer,
-            };
+            final thumbColor = _getThumbColor(context, mode);
             return LayoutBuilder(
               builder: (_, constraints) {
                 return Column(

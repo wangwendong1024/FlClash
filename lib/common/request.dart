@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/controller.dart';
 import 'package:fl_clash/enum/enum.dart';
@@ -20,16 +20,14 @@ class Request {
   Request() {
     dio = Dio(BaseOptions(headers: {'User-Agent': browserUa}));
     _clashDio = Dio();
-    _clashDio.httpClientAdapter = IOHttpClientAdapter(
-      createHttpClient: () {
-        final client = HttpClient();
-        client.findProxy = (Uri uri) {
-          client.userAgent = appController.ua;
-          return FlClashHttpOverrides.handleFindProxy(uri);
-        };
-        return client;
-      },
-    );
+    (_clashDio.httpClientAdapter as DefaultHttpClientAdapter)
+        .onHttpClientCreate = (client) {
+      client.findProxy = (Uri uri) {
+        client.userAgent = appController.ua;
+        return FlClashHttpOverrides.handleFindProxy(uri);
+      };
+      return client;
+    };
   }
 
   Future<Response<Uint8List>> getFileResponseForUrl(String url) async {
@@ -40,10 +38,10 @@ class Request {
       );
     } catch (e) {
       commonPrint.log('getFileResponseForUrl error ${e.toString()}');
-      if (e is DioException) {
-        if (e.type == DioExceptionType.unknown) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.other) {
           throw appLocalizations.unknownNetworkError;
-        } else if (e.type == DioExceptionType.badResponse) {
+        } else if (e.type == DioErrorType.response) {
           throw appLocalizations.networkException;
         }
         rethrow;
@@ -119,22 +117,20 @@ class Request {
             options: Options(responseType: ResponseType.json),
           )
           .timeout(const Duration(seconds: 10));
-      future
-          .then((res) {
-            if (res.statusCode == HttpStatus.ok && res.data != null) {
-              completer.complete(Result.success(source.value(res.data!)));
-              return;
-            }
-            failureCount++;
-            handleFailRes();
-          })
-          .catchError((e) {
-            failureCount++;
-            if (e is DioException && e.type == DioExceptionType.cancel) {
-              completer.complete(Result.error('cancelled'));
-            }
-            handleFailRes();
-          });
+      future.then((res) {
+        if (res.statusCode == HttpStatus.ok && res.data != null) {
+          completer.complete(Result.success(source.value(res.data!)));
+          return;
+        }
+        failureCount++;
+        handleFailRes();
+      }).catchError((e) {
+        failureCount++;
+        if (e is DioError && e.type == DioErrorType.cancel) {
+          completer.complete(Result.error('cancelled'));
+        }
+        handleFailRes();
+      });
       return completer.future;
     });
     final res = await Future.any(futures);

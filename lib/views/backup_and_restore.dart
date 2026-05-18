@@ -175,7 +175,7 @@ class BackupAndRestore extends ConsumerWidget {
               leading: const Icon(Icons.account_box),
               title: Text(appLocalizations.noInfo),
               subtitle: Text(appLocalizations.pleaseBindWebDAV),
-              trailing: FilledButton.tonal(
+              trailing: ElevatedButton(
                 onPressed: () {
                   _showAddWebDAV(dav);
                 },
@@ -205,23 +205,23 @@ class BackupAndRestore extends ConsumerWidget {
                           child: FadeThroughBox(
                             child:
                                 snapshot.connectionState != ConnectionState.done
-                                ? const SizedBox(
-                                    width: 12,
-                                    height: 12,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 1,
-                                    ),
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: snapshot.data == true
-                                          ? Colors.green
-                                          : Colors.red,
-                                    ),
-                                    width: 12,
-                                    height: 12,
-                                  ),
+                                    ? const SizedBox(
+                                        width: 12,
+                                        height: 12,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                        ),
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: snapshot.data == true
+                                              ? Colors.green
+                                              : Colors.red,
+                                        ),
+                                        width: 12,
+                                        height: 12,
+                                      ),
                           ),
                         );
                       },
@@ -229,7 +229,7 @@ class BackupAndRestore extends ConsumerWidget {
                   ],
                 ),
               ),
-              trailing: FilledButton.tonal(
+              trailing: ElevatedButton(
                 onPressed: () {
                   _showAddWebDAV(dav);
                 },
@@ -281,7 +281,7 @@ class BackupAndRestore extends ConsumerWidget {
           ),
           ListHeader(title: appLocalizations.options),
           Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final restoreStrategy = ref.watch(
                 appSettingProvider.select((state) => state.restoreStrategy),
               );
@@ -290,7 +290,7 @@ class BackupAndRestore extends ConsumerWidget {
                   _handleUpdateRestoreStrategy(ref);
                 },
                 title: Text(appLocalizations.restoreStrategy),
-                trailing: FilledButton(
+                trailing: ElevatedButton(
                   onPressed: () {
                     _handleUpdateRestoreStrategy(ref);
                   },
@@ -440,7 +440,7 @@ class _WebDAVFormDialogState extends ConsumerState<WebDAVFormDialog> {
             ),
             ValueListenableBuilder(
               valueListenable: _obscureController,
-              builder: (_, obscure, _) {
+              builder: (_, obscure, __) {
                 return TextFormField(
                   controller: _passwordController,
                   obscureText: obscure,

@@ -7,7 +7,6 @@ import 'package:fl_clash/state.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 class LogsView extends ConsumerStatefulWidget {
   const LogsView({super.key});
@@ -109,7 +108,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
       title: appLocalizations.logs,
       floatingActionButton: ValueListenableBuilder(
         valueListenable: _logsStateNotifier,
-        builder: (_, state, _) {
+        builder: (_, state, __) {
           final autoScrollToEnd = state.autoScrollToEnd;
           return FadeRotationScaleBox(
             child: FloatingActionButton(
@@ -161,7 +160,7 @@ class _LogsViewState extends ConsumerState<LogsView> {
               dataSource: logs,
               child: CommonScrollBar(
                 controller: _scrollController,
-                child: SuperListView.builder(
+                child: ListView.builder(
                   physics: NextClampingScrollPhysics(),
                   reverse: true,
                   shrinkWrap: true,

@@ -23,13 +23,13 @@ abstract class UpdateParams with _$UpdateParams {
     @JsonKey(name: 'mixed-port') required int mixedPort,
     @JsonKey(name: 'allow-lan') required bool allowLan,
     @JsonKey(name: 'find-process-mode')
-    required FindProcessMode findProcessMode,
+        required FindProcessMode findProcessMode,
     required Mode mode,
     @JsonKey(name: 'log-level') required LogLevel logLevel,
     required bool ipv6,
     @JsonKey(name: 'tcp-concurrent') required bool tcpConcurrent,
     @JsonKey(name: 'external-controller')
-    required ExternalControllerStatus externalController,
+        required ExternalControllerStatus externalController,
     @JsonKey(name: 'unified-delay') required bool unifiedDelay,
   }) = _UpdateParams;
 
@@ -153,7 +153,7 @@ abstract class ExternalProvider with _$ExternalProvider {
     String? path,
     required int count,
     @JsonKey(name: 'subscription-info', fromJson: subscriptionInfoFormCore)
-    SubscriptionInfo? subscriptionInfo,
+        SubscriptionInfo? subscriptionInfo,
     @JsonKey(name: 'vehicle-type') required String vehicleType,
     @JsonKey(name: 'update-at') required DateTime updateAt,
   }) = _ExternalProvider;

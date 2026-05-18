@@ -107,7 +107,7 @@ class StatusManagerState extends State<StatusManager> {
                   duration: animateDuration,
                   child: ValueListenableBuilder(
                     valueListenable: _messagesNotifier,
-                    builder: (_, messages, _) {
+                    builder: (_, messages, __) {
                       return FadeThroughBox(
                         alignment: Alignment.centerRight,
                         child: messages.isEmpty
@@ -128,8 +128,7 @@ class StatusManagerState extends State<StatusManager> {
                                       ),
                                       elevation: 10,
                                       color: context
-                                          .colorScheme
-                                          .surfaceContainerHigh,
+                                          .colorScheme.surfaceContainerHigh,
                                       child: Container(
                                         width: min(constraints.maxWidth, 500),
                                         constraints: BoxConstraints(
@@ -148,21 +147,19 @@ class StatusManagerState extends State<StatusManager> {
                                                 messages.last.text,
                                                 maxLines: 3,
                                                 style: context
-                                                    .textTheme
-                                                    .labelLarge
+                                                    .textTheme.labelLarge
                                                     ?.copyWith(
-                                                      color: context
-                                                          .colorScheme
-                                                          .onSurfaceVariant,
-                                                    ),
+                                                  color: context.colorScheme
+                                                      .onSurfaceVariant,
+                                                ),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
                                             SizedBox(width: 16),
                                             if (messages.last.actionState !=
                                                 null)
-                                              CommonMinFilledButtonTheme(
-                                                child: FilledButton.tonal(
+                                              CommonMinElevatedButtonTheme(
+                                                child: ElevatedButton(
                                                   onPressed: () async {
                                                     _cancelMessage(
                                                       messages.last.id,
@@ -171,9 +168,7 @@ class StatusManagerState extends State<StatusManager> {
                                                         .action();
                                                   },
                                                   child: Text(
-                                                    messages
-                                                        .last
-                                                        .actionState!
+                                                    messages.last.actionState!
                                                         .actionText,
                                                   ),
                                                 ),

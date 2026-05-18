@@ -45,7 +45,7 @@ class _NetworkSpeedState extends State<NetworkSpeed> {
         child: CommonCard(
           onPressed: () {},
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final traffics = ref.watch(trafficsProvider).list;
               return Column(
                 children: [

@@ -82,12 +82,10 @@ class _SideSheetState extends State<SideSheet> {
     final Color surfaceTintColor = colorScheme.surfaceTint;
     final Color shadowColor = widget.shadowColor ?? Colors.transparent;
     final double elevation = widget.elevation ?? 0;
-    final ShapeBorder shape =
-        widget.shape ??
+    final ShapeBorder shape = widget.shape ??
         RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(0));
 
-    final BoxConstraints constraints =
-        widget.constraints ??
+    final BoxConstraints constraints = widget.constraints ??
         const BoxConstraints(maxWidth: 320, minWidth: 320);
 
     final Clip clipBehavior = widget.clipBehavior ?? Clip.none;
@@ -155,12 +153,12 @@ class _RenderSideSheetLayoutWithSizeListener extends RenderShiftedBox {
     required double animationValue,
     required bool isScrollControlled,
     required double scrollControlDisabledMaxHeightRatio,
-  }) : _onChildSizeChanged = onChildSizeChanged,
-       _animationValue = animationValue,
-       _isScrollControlled = isScrollControlled,
-       _scrollControlDisabledMaxHeightRatio =
-           scrollControlDisabledMaxHeightRatio,
-       super(child);
+  })  : _onChildSizeChanged = onChildSizeChanged,
+        _animationValue = animationValue,
+        _isScrollControlled = isScrollControlled,
+        _scrollControlDisabledMaxHeightRatio =
+            scrollControlDisabledMaxHeightRatio,
+        super(child);
 
   Size _lastSize = Size.zero;
 
@@ -291,9 +289,8 @@ class _RenderSideSheetLayoutWithSizeListener extends RenderShiftedBox {
         size,
         childConstraints.isTight ? childConstraints.smallest : child!.size,
       );
-      final Size childSize = childConstraints.isTight
-          ? childConstraints.smallest
-          : child!.size;
+      final Size childSize =
+          childConstraints.isTight ? childConstraints.smallest : child!.size;
 
       if (_lastSize != childSize) {
         _lastSize = childSize;
@@ -542,7 +539,7 @@ class ModalSideSheetRoute<T> extends PopupRoute<T> {
 
   @override
   Widget buildModalBarrier() {
-    if (barrierColor.a != 0 && !offstage) {
+    if (barrierColor.alpha != 0 && !offstage) {
       assert(barrierColor != barrierColor.opacity0);
       final Animation<Color?> color = animation!.drive(
         ColorTween(
@@ -555,16 +552,12 @@ class ModalSideSheetRoute<T> extends PopupRoute<T> {
         dismissible: barrierDismissible,
         semanticsLabel: barrierLabel,
         barrierSemanticsDismissible: semanticsDismissible,
-        clipDetailsNotifier: _clipDetailsNotifier,
-        semanticsOnTapHint: barrierOnTapHint,
       );
     } else {
       return ModalBarrier(
         dismissible: barrierDismissible,
         semanticsLabel: barrierLabel,
         barrierSemanticsDismissible: semanticsDismissible,
-        clipDetailsNotifier: _clipDetailsNotifier,
-        semanticsOnTapHint: barrierOnTapHint,
       );
     }
   }
@@ -609,18 +602,15 @@ Future<T?> showModalSideSheet<T>({
       ),
       isScrollControlled: isScrollControlled,
       scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
-      barrierLabel: barrierLabel ?? localizations.scrimLabel,
-      barrierOnTapHint: localizations.scrimOnTapHint(
-        localizations.bottomSheetLabel,
-      ),
+      barrierLabel: barrierLabel ?? 'Dismiss',
+      barrierOnTapHint: 'Dismiss',
       backgroundColor: backgroundColor,
       elevation: elevation,
       shape: shape,
       clipBehavior: clipBehavior,
       constraints: constraints,
       isDismissible: isDismissible,
-      modalBarrierColor:
-          barrierColor ?? Theme.of(context).bottomSheetTheme.modalBarrierColor,
+      modalBarrierColor: barrierColor ?? Colors.black54,
       settings: routeSettings,
       transitionAnimationController: transitionAnimationController,
       anchorPoint: anchorPoint,

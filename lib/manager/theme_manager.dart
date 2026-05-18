@@ -31,9 +31,7 @@ class ThemeManager extends ConsumerWidget {
               ? Brightness.dark
               : Brightness.light;
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            ref
-                .read(systemUiOverlayStyleStateProvider.notifier)
-                .update(
+            ref.read(systemUiOverlayStyleStateProvider.notifier).update(
                   (state) => state.copyWith(
                     statusBarColor: Colors.transparent,
                     statusBarIconBrightness: iconBrightness,
@@ -94,19 +92,19 @@ class ThemeManager extends ConsumerWidget {
     final height = MediaQuery.of(context).size.height;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaler: TextScaler.linear(textScaleFactor),
+        textScaleFactor: textScaleFactor,
         padding: padding.copyWith(
           top: padding.top > height * 0.3 ? 20.0 : padding.top,
         ),
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
-          floatingActionButtonTheme: Theme.of(context).floatingActionButtonTheme
-              .copyWith(
-                shape: const RoundedSuperellipseBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                ),
-              ),
+          floatingActionButtonTheme:
+              Theme.of(context).floatingActionButtonTheme.copyWith(
+                    shape: const RoundedSuperellipseBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                    ),
+                  ),
         ),
         child: LayoutBuilder(
           builder: (_, container) {

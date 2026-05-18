@@ -133,9 +133,8 @@ class Indexing {
     }
 
     int digitA = (a.isNotEmpty) ? digits.indexOf(a[0]) : 0;
-    int digitB = (b != null && b.isNotEmpty)
-        ? digits.indexOf(b[0])
-        : digits.length;
+    int digitB =
+        (b != null && b.isNotEmpty) ? digits.indexOf(b[0]) : digits.length;
 
     if (digitB - digitA > 1) {
       int midDigit = (digitA + digitB + 1) ~/ 2;

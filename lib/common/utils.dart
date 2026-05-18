@@ -68,9 +68,8 @@ class Utils {
     bytes[6] = (bytes[6] & 0x0F) | 0x40;
     bytes[8] = (bytes[8] & 0x3F) | 0x80;
 
-    final hex = bytes
-        .map((byte) => byte.toRadixString(16).padLeft(2, '0'))
-        .join();
+    final hex =
+        bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 
     return '${hex.substring(0, 8)}-${hex.substring(8, 12)}-${hex.substring(12, 16)}-${hex.substring(16, 20)}-${hex.substring(20, 32)}';
   }
@@ -230,11 +229,14 @@ class Utils {
 
   int getProxiesColumns(double viewWidth, ProxiesLayout proxiesLayout) {
     final columns = max((viewWidth / 250).ceil(), 2);
-    return switch (proxiesLayout) {
-      ProxiesLayout.tight => columns + 1,
-      ProxiesLayout.standard => columns,
-      ProxiesLayout.loose => columns - 1,
-    };
+    switch (proxiesLayout) {
+      case ProxiesLayout.tight:
+        return columns + 1;
+      case ProxiesLayout.standard:
+        return columns;
+      case ProxiesLayout.loose:
+        return columns - 1;
+    }
   }
 
   int getProfilesColumns(double viewWidth) {

@@ -101,10 +101,9 @@ class ProxyCard extends StatelessWidget {
     final isSelector = groupType == GroupType.Selector;
     if (isComputedSelected || isSelector) {
       final currentProxyName = ref.read(getProxyNameProvider(groupName));
-      final nextProxyName = switch (isComputedSelected) {
-        true => currentProxyName == proxy.name ? '' : proxy.name,
-        false => proxy.name,
-      };
+      final nextProxyName = isComputedSelected
+          ? (currentProxyName == proxy.name ? '' : proxy.name)
+          : proxy.name;
       appController.updateCurrentSelectedMap(groupName, nextProxyName);
       appController.changeProxyDebounce(groupName, nextProxyName);
       return;
@@ -164,10 +163,7 @@ class ProxyCard extends StatelessWidget {
                               style: context.textTheme.bodySmall?.copyWith(
                                 overflow: TextOverflow.ellipsis,
                                 color: context
-                                    .textTheme
-                                    .bodySmall
-                                    ?.color
-                                    ?.opacity80,
+                                    .textTheme.bodySmall?.color?.opacity80,
                               ),
                             ),
                           ),

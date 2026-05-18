@@ -11,15 +11,24 @@ import 'open_container.dart';
 import 'scaffold.dart';
 import 'sheet.dart';
 
+enum ListTileTitleAlignment { center, titleHeight }
+
 class Delegate {
   const Delegate();
 }
 
 class RadioDelegate<T> extends Delegate {
   final T value;
+  final T? groupValue;
   final void Function()? onTab;
+  final ValueChanged<T?>? onChanged;
 
-  const RadioDelegate({required this.value, this.onTab});
+  const RadioDelegate({
+    required this.value,
+    this.groupValue,
+    this.onTab,
+    this.onChanged,
+  });
 }
 
 class SwitchDelegate<T> extends Delegate {
@@ -224,8 +233,8 @@ class ListItem<T> extends StatelessWidget {
     this.visualDensity,
     this.minVerticalPadding = 12,
     this.tileTitleAlignment = ListTileTitleAlignment.center,
-  }) : trailing = null,
-       onTap = null;
+  })  : trailing = null,
+        onTap = null;
 
   const ListItem.switchItem({
     super.key,
@@ -243,8 +252,8 @@ class ListItem<T> extends StatelessWidget {
     this.visualDensity,
     this.minVerticalPadding = 12,
     this.tileTitleAlignment = ListTileTitleAlignment.center,
-  }) : trailing = null,
-       onTap = null;
+  })  : trailing = null,
+        onTap = null;
 
   const ListItem.radio({
     super.key,
@@ -262,8 +271,8 @@ class ListItem<T> extends StatelessWidget {
     this.visualDensity,
     this.minVerticalPadding = 12,
     this.tileTitleAlignment = ListTileTitleAlignment.center,
-  }) : leading = null,
-       onTap = null;
+  })  : leading = null,
+        onTap = null;
 
   Widget _buildListTile({
     void Function()? onTap,
@@ -275,15 +284,11 @@ class ListItem<T> extends StatelessWidget {
       dense: dense,
       visualDensity: visualDensity,
       tileColor: color,
-      titleTextStyle: titleTextStyle,
-      subtitleTextStyle: subtitleTextStyle,
       leading: leading ?? this.leading,
       horizontalTitleGap: horizontalTitleGap,
       title: title,
-      minTileHeight: minTileHeight,
       minVerticalPadding: minVerticalPadding,
       subtitle: subtitle,
-      titleAlignment: tileTitleAlignment,
       onTap: onTap,
       trailing: trailing ?? this.trailing,
       contentPadding: padding,
@@ -420,6 +425,9 @@ class ListItem<T> extends StatelessWidget {
           visualDensity: VisualDensity.compact,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           value: radioDelegate.value,
+          groupValue: radioDelegate.groupValue,
+          onChanged:
+              radioDelegate.onChanged ?? (_) => radioDelegate.onTab?.call(),
           toggleable: true,
         ),
         trailing: trailing,
@@ -494,17 +502,15 @@ List<Widget> generateSection({
   bool isFirst = false,
   bool separated = true,
 }) {
-  final genItems = separated
-      ? items.separated(const Divider(height: 0))
-      : items;
+  final genItems =
+      separated ? items.separated(const Divider(height: 0)) : items;
   return [
     if (items.isNotEmpty && title != null)
       ListHeader(
         title: title,
         actions: actions,
-        padding: isFirst
-            ? listHeaderPadding.copyWith(top: 8.ap)
-            : listHeaderPadding,
+        padding:
+            isFirst ? listHeaderPadding.copyWith(top: 8.ap) : listHeaderPadding,
       ),
     ...genItems,
   ];
@@ -516,18 +522,16 @@ Widget generateSectionV2({
   List<Widget>? actions,
   bool separated = true,
 }) {
-  final genItems = items
-      .map<Widget>((item) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: CommonCard(
-            type: CommonCardType.filled,
-            radius: 0,
-            child: item,
-          ),
-        );
-      })
-      .separated(const Divider(height: 2, color: Colors.transparent));
+  final genItems = items.map<Widget>((item) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: CommonCard(
+        type: CommonCardType.filled,
+        radius: 0,
+        child: item,
+      ),
+    );
+  }).separated(const Divider(height: 2, color: Colors.transparent));
   return Column(
     children: [
       if (items.isNotEmpty && title != null)
@@ -546,9 +550,8 @@ List<Widget> generateInfoSection({
   List<Widget>? actions,
   bool separated = true,
 }) {
-  final genItems = separated
-      ? items.separated(const Divider(height: 0))
-      : items;
+  final genItems =
+      separated ? items.separated(const Divider(height: 0)) : items;
   return [
     if (items.isNotEmpty) InfoHeader(info: info, actions: actions),
     ...genItems,
@@ -599,7 +602,6 @@ class CommonSelectedListItem extends StatelessWidget {
             onPressed();
           },
           child: ListTile(
-            minTileHeight: 32 + globalState.measure.bodyMediumHeight,
             minVerticalPadding: 12,
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             trailing: SizedBox(

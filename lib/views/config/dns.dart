@@ -228,9 +228,7 @@ class FakeIpFilterItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns(fakeIpFilter: List.from(items)),
               );
         },
@@ -258,9 +256,7 @@ class DefaultNameserverItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) =>
                     state.copyWith.dns(defaultNameserver: List.from(items)),
               );
@@ -289,9 +285,7 @@ class NameserverItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns(nameserver: List.from(items)),
               );
         },
@@ -394,9 +388,7 @@ class ProxyServerNameserverItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) =>
                     state.copyWith.dns(proxyServerNameserver: List.from(items)),
               );
@@ -425,9 +417,7 @@ class FallbackItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns(fallback: List.from(items)),
               );
         },
@@ -451,9 +441,7 @@ class GeoipItem extends ConsumerWidget {
       delegate: SwitchDelegate(
         value: geoip,
         onChanged: (bool value) async {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns.fallbackFilter(geoip: value),
               );
         },
@@ -488,9 +476,7 @@ class GeoipCodeItem extends ConsumerWidget {
           if (value == null) {
             return;
           }
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns.fallbackFilter(geoipCode: value),
               );
         },
@@ -519,9 +505,7 @@ class GeositeItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.dns.fallbackFilter(
                   geosite: List.from(items),
                 ),
@@ -552,9 +536,7 @@ class IpcidrItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) =>
                     state.copyWith.dns.fallbackFilter(ipcidr: List.from(items)),
               );
@@ -584,9 +566,7 @@ class DomainItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) =>
                     state.copyWith.dns.fallbackFilter(domain: List.from(items)),
               );

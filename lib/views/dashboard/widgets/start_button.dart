@@ -76,16 +76,15 @@ class _StartButtonState extends ConsumerState<StartButton>
     }
     return Theme(
       data: Theme.of(context).copyWith(
-        floatingActionButtonTheme: Theme.of(context).floatingActionButtonTheme
-            .copyWith(
-              sizeConstraints: BoxConstraints(minWidth: 56, maxWidth: 200),
-            ),
+        floatingActionButtonTheme:
+            Theme.of(context).floatingActionButtonTheme.copyWith(
+                  sizeConstraints: BoxConstraints(minWidth: 56, maxWidth: 200),
+                ),
       ),
       child: AnimatedBuilder(
         animation: _controller!.view,
         builder: (_, child) {
-          final textWidth =
-              globalState.measure
+          final textWidth = globalState.measure
                   .computeTextSize(
                     Text(
                       utils.getTimeDifference(DateTime.now()),
@@ -119,14 +118,17 @@ class _StartButtonState extends ConsumerState<StartButton>
           );
         },
         child: Consumer(
-          builder: (_, ref, _) {
+          builder: (_, ref, __) {
             final runTime = ref.watch(runTimeProvider);
             final text = utils.getTimeText(runTime);
             return Text(
               text,
               maxLines: 1,
               overflow: TextOverflow.visible,
-              style: Theme.of(context).textTheme.titleMedium?.toSoftBold
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.toSoftBold
                   .copyWith(color: context.colorScheme.onPrimaryContainer),
             );
           },

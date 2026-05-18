@@ -32,7 +32,7 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
           onPressed: () {
             _proxiesTabKey.currentState?.scrollToGroupSelected();
           },
-          icon: Icon(Icons.adjust, weight: 1),
+          icon: Icon(Icons.adjust),
         ),
       CommonPopupBox(
         targetBuilder: (open) {
@@ -138,6 +138,15 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
       proxiesStyleSettingProvider.select((state) => state.type),
     );
     final isLoading = ref.watch(loadingProvider(LoadingTag.proxies));
+    final Widget body;
+    switch (proxiesType) {
+      case ProxiesType.tab:
+        body = ProxiesTabView(key: _proxiesTabKey);
+        break;
+      case ProxiesType.list:
+        body = const ProxiesListView();
+        break;
+    }
     return CommonScaffold(
       key: _scaffoldKey,
       isLoading: isLoading,
@@ -146,10 +155,7 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
       actions: _buildActions(),
       title: appLocalizations.proxies,
       searchState: AppBarSearchState(onSearch: _onSearch),
-      body: switch (proxiesType) {
-        ProxiesType.tab => ProxiesTabView(key: _proxiesTabKey),
-        ProxiesType.list => const ProxiesListView(),
-      },
+      body: body,
     );
   }
 }

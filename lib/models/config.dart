@@ -65,7 +65,7 @@ abstract class AppSettingProps with _$AppSettingProps {
     String? locale,
     @Default(defaultDashboardWidgets)
     @JsonKey(fromJson: dashboardWidgetsSafeFormJson)
-    List<DashboardWidget> dashboardWidgets,
+        List<DashboardWidget> dashboardWidgets,
     @Default(false) bool onlyStatisticsProxy,
     @Default(false) bool autoLaunch,
     @Default(false) bool silentLaunch,
@@ -113,15 +113,23 @@ abstract class AccessControlProps with _$AccessControlProps {
 }
 
 extension AccessControlPropsExt on AccessControlProps {
-  List<String> get currentList => switch (mode) {
-    AccessControlMode.acceptSelected => acceptList,
-    AccessControlMode.rejectSelected => rejectList,
-  };
+  List<String> get currentList {
+    switch (mode) {
+      case AccessControlMode.acceptSelected:
+        return acceptList;
+      case AccessControlMode.rejectSelected:
+        return rejectList;
+    }
+  }
 
-  AccessControlProps copyWithNewList(List<String> value) => switch (mode) {
-    AccessControlMode.acceptSelected => copyWith(acceptList: value),
-    AccessControlMode.rejectSelected => copyWith(rejectList: value),
-  };
+  AccessControlProps copyWithNewList(List<String> value) {
+    switch (mode) {
+      case AccessControlMode.acceptSelected:
+        return copyWith(acceptList: value);
+      case AccessControlMode.rejectSelected:
+        return copyWith(rejectList: value);
+    }
+  }
 }
 
 @freezed
@@ -232,7 +240,7 @@ abstract class Config with _$Config {
     @Default([]) List<HotKeyAction> hotKeyActions,
     @JsonKey(fromJson: AppSettingProps.safeFromJson)
     @Default(defaultAppSettingProps)
-    AppSettingProps appSettingProps,
+        AppSettingProps appSettingProps,
     DAVProps? davProps,
     @Default(defaultNetworkProps) NetworkProps networkProps,
     @Default(defaultVpnProps) VpnProps vpnProps,

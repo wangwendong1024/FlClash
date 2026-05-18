@@ -15,7 +15,8 @@ class AppPath {
 
   AppPath._internal() {
     appDirPath = join(dirname(Platform.resolvedExecutable));
-    getApplicationSupportDirectory().then((value) {
+    final supportDirectory = getApplicationSupportDirectory();
+    supportDirectory.then((value) {
       dataDir.complete(value);
     });
     getTemporaryDirectory().then((value) {
@@ -24,8 +25,10 @@ class AppPath {
     getDownloadsDirectory().then((value) {
       downloadDir.complete(value);
     });
-    getApplicationCacheDirectory().then((value) {
-      cacheDir.complete(value);
+    supportDirectory.then((value) async {
+      final cacheDirectory = Directory(join(value.path, 'cache'));
+      await cacheDirectory.create(recursive: true);
+      cacheDir.complete(cacheDirectory);
     });
   }
 

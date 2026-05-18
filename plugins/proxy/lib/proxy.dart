@@ -14,22 +14,30 @@ class Proxy extends ProxyPlatform {
     int port, [
     List<String> bypassDomain = const [],
   ]) async {
-    return switch (Platform.operatingSystem) {
-      "macos" => await _startProxyWithMacos(port, bypassDomain),
-      "linux" => await _startProxyWithLinux(port, bypassDomain),
-      "windows" => await ProxyPlatform.instance.startProxy(port, bypassDomain),
-      String() => false,
-    };
+    switch (Platform.operatingSystem) {
+      case "macos":
+        return _startProxyWithMacos(port, bypassDomain);
+      case "linux":
+        return _startProxyWithLinux(port, bypassDomain);
+      case "windows":
+        return ProxyPlatform.instance.startProxy(port, bypassDomain);
+      default:
+        return false;
+    }
   }
 
   @override
   Future<bool?> stopProxy() async {
-    return switch (Platform.operatingSystem) {
-      "macos" => await _stopProxyWithMacos(),
-      "linux" => await _stopProxyWithLinux(),
-      "windows" => await ProxyPlatform.instance.stopProxy(),
-      String() => false,
-    };
+    switch (Platform.operatingSystem) {
+      case "macos":
+        return _stopProxyWithMacos();
+      case "linux":
+        return _stopProxyWithLinux();
+      case "windows":
+        return ProxyPlatform.instance.stopProxy();
+      default:
+        return false;
+    }
   }
 
   Future<bool> _startProxyWithLinux(int port, List<String> bypassDomain) async {

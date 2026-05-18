@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:archive/archive_io.dart';
 import 'package:drift/drift.dart';
-import 'package:drift_flutter/drift_flutter.dart';
+import 'package:drift/native.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/database/database.dart';
 import 'package:fl_clash/enum/enum.dart';
@@ -49,20 +49,17 @@ Future<List<Group>> _toGroupsTask(ComputeGroupsState state) async {
   final defaultTestUrl = state.defaultTestUrl;
   final proxies = proxiesData.proxies;
   if (proxies.isEmpty) return [];
-  final groupsRaw = all
-      .where((name) {
-        final proxy = proxies[name] ?? {};
-        return GroupTypeExtension.valueList.contains(proxy['type']);
-      })
-      .map((groupName) {
-        final group = proxies[groupName];
-        group['all'] = ((group['all'] ?? []) as List)
-            .map((name) => proxies[name])
-            .where((proxy) => proxy != null)
-            .toList();
-        return group;
-      })
-      .toList();
+  final groupsRaw = all.where((name) {
+    final proxy = proxies[name] ?? {};
+    return GroupTypeExtension.valueList.contains(proxy['type']);
+  }).map((groupName) {
+    final group = proxies[groupName];
+    group['all'] = ((group['all'] ?? []) as List)
+        .map((name) => proxies[name])
+        .where((proxy) => proxy != null)
+        .toList();
+    return group;
+  }).toList();
   final groups = groupsRaw.map((e) => Group.fromJson(e)).toList();
   return computeSort(
     groups: groups,
@@ -188,12 +185,11 @@ Future<Map<String, dynamic>> _makeRealProfileTask(
   final isEnableDns = rawConfig['dns']['enable'] == true;
   final systemDns = 'system://';
   if (overrideDns || !isEnableDns) {
-    final dns = switch (!isEnableDns) {
-      true => realPatchConfig.dns.copyWith(
-        nameserver: [...realPatchConfig.dns.nameserver, systemDns],
-      ),
-      false => realPatchConfig.dns,
-    };
+    final dns = !isEnableDns
+        ? realPatchConfig.dns.copyWith(
+            nameserver: [...realPatchConfig.dns.nameserver, systemDns],
+          )
+        : realPatchConfig.dns;
     rawConfig['dns'] = dns.toJson();
     rawConfig['dns']['nameserver-policy'] = {};
     for (final entry in dns.nameserverPolicy.entries) {
@@ -215,9 +211,8 @@ Future<Map<String, dynamic>> _makeRealProfileTask(
   }
   rawConfig.remove('rules');
   if (addedRules.isNotEmpty) {
-    final parsedNewRules = addedRules
-        .map((item) => ParsedRule.parseString(item.value))
-        .toList();
+    final parsedNewRules =
+        addedRules.map((item) => ParsedRule.parseString(item.value)).toList();
     final hasMatchPlaceholder = parsedNewRules.any(
       (item) => item.ruleTarget?.toUpperCase() == 'MATCH',
     );
@@ -261,19 +256,14 @@ Future<Map<String, dynamic>> _makeRealProfileTask(
 Future<List<String>> shakingProfileTask(
   VM2<Iterable<int>, Iterable<int>> data,
 ) async {
-  return await compute<
-    VM3<Iterable<int>, Iterable<int>, RootIsolateToken>,
-    List<String>
-  >(_shakingProfileTask, VM3(data.a, data.b, RootIsolateToken.instance!));
+  return _shakingProfileTask(data);
 }
 
 Future<List<String>> _shakingProfileTask(
-  VM3<Iterable<int>, Iterable<int>, RootIsolateToken> data,
+  VM2<Iterable<int>, Iterable<int>> data,
 ) async {
   final profileIds = data.a;
   final scriptIds = data.b;
-  final token = data.c;
-  BackgroundIsolateBinaryMessenger.ensureInitialized(token);
   final profilesDir = Directory(await appPath.profilesPath);
   final scriptsDir = Directory(await appPath.scriptsDirPath);
   final providersDir = Directory(await appPath.getProvidersRootPath());
@@ -318,10 +308,8 @@ Future<String> _encodeLogsTask(List<Log> data) async {
 
 Future<MigrationData> oldToNowTask(Map<String, Object?> data) async {
   final homeDir = await appPath.homeDirPath;
-  return await compute<
-    VM3<Map<String, Object?>, String, String>,
-    MigrationData
-  >(_oldToNowTask, VM3(data, homeDir, homeDir));
+  return await compute<VM3<Map<String, Object?>, String, String>,
+      MigrationData>(_oldToNowTask, VM3(data, homeDir, homeDir));
 }
 
 Future<MigrationData> _oldToNowTask(
@@ -442,9 +430,8 @@ Future<MigrationData> _oldToNowTask(
     profiles.add(Profile.fromJson(rawProfile));
   }
   final currentProfileId = configMap['currentProfileId'];
-  configMap['currentProfileId'] = currentProfileId != null
-      ? idMap[currentProfileId]
-      : null;
+  configMap['currentProfileId'] =
+      currentProfileId != null ? idMap[currentProfileId] : null;
   return MigrationData(
     configMap: configMap,
     profiles: profiles,
@@ -458,19 +445,14 @@ Future<String> backupTask(
   Map<String, dynamic> configMap,
   Iterable<String> fileNames,
 ) async {
-  return await compute<
-    VM3<Map<String, dynamic>, Iterable<String>, RootIsolateToken>,
-    String
-  >(_backupTask, VM3(configMap, fileNames, RootIsolateToken.instance!));
+  return _backupTask(VM2(configMap, fileNames));
 }
 
 Future<String> _backupTask<T>(
-  VM3<Map<String, dynamic>, Iterable<String>, RootIsolateToken> args,
+  VM2<Map<String, dynamic>, Iterable<String>> args,
 ) async {
   final configMap = args.a;
   final fileNames = args.b;
-  final token = args.c;
-  BackgroundIsolateBinaryMessenger.ensureInitialized(token);
   final dbPath = await appPath.databasePath;
   final configStr = json.encode(configMap);
   final profilesDir = Directory(await appPath.profilesPath);
@@ -488,26 +470,18 @@ Future<String> _backupTask<T>(
   await encoder.addFile(tempDBFile, backupDatabaseName);
   await encoder.addFile(tempConfigFile, configJsonName);
   if (await profilesDir.exists()) {
-    await encoder.addDirectory(
-      profilesDir,
-      filter: (file, _) {
-        if (!fileNames.contains(basename(file.path))) {
-          return ZipFileOperation.skip;
-        }
-        return ZipFileOperation.include;
-      },
-    );
+    for (final entity in profilesDir.listSync(recursive: true)) {
+      if (entity is File && fileNames.contains(basename(entity.path))) {
+        await encoder.addFile(entity, join('profiles', basename(entity.path)));
+      }
+    }
   }
   if (await scriptsDir.exists()) {
-    await encoder.addDirectory(
-      scriptsDir,
-      filter: (file, _) {
-        if (!fileNames.contains(basename(file.path))) {
-          return ZipFileOperation.skip;
-        }
-        return ZipFileOperation.include;
-      },
-    );
+    for (final entity in scriptsDir.listSync(recursive: true)) {
+      if (entity is File && fileNames.contains(basename(entity.path))) {
+        await encoder.addFile(entity, join('scripts', basename(entity.path)));
+      }
+    }
   }
   encoder.close();
   await tempConfigFile.safeDelete();
@@ -516,20 +490,16 @@ Future<String> _backupTask<T>(
 }
 
 Future<MigrationData> restoreTask() async {
-  return await compute<RootIsolateToken, MigrationData>(
-    _restoreTask,
-    RootIsolateToken.instance!,
-  );
+  return _restoreTask();
 }
 
-Future<MigrationData> _restoreTask(RootIsolateToken token) async {
-  BackgroundIsolateBinaryMessenger.ensureInitialized(token);
+Future<MigrationData> _restoreTask() async {
   final backupFilePath = await appPath.backupFilePath;
   final restoreDirPath = await appPath.restoreDirPath;
   final homeDirPath = await appPath.homeDirPath;
   final zipDecoder = ZipDecoder();
-  final input = InputFileStream(backupFilePath);
-  final archive = zipDecoder.decodeStream(input);
+  final archive =
+      zipDecoder.decodeBytes(await File(backupFilePath).readAsBytes());
   final dir = Directory(restoreDirPath);
   await dir.create(recursive: true);
   for (final file in archive.files) {
@@ -538,14 +508,12 @@ Future<MigrationData> _restoreTask(RootIsolateToken token) async {
     file.writeContent(outputStream);
     await outputStream.close();
   }
-  await input.close();
   final restoreConfigFile = File(join(restoreDirPath, configJsonName));
   if (!await restoreConfigFile.exists()) {
     throw appLocalizations.invalidBackupFile;
   }
-  final restoreConfigMap =
-      json.decode(await restoreConfigFile.readAsString())
-          as Map<String, Object?>?;
+  final restoreConfigMap = json.decode(await restoreConfigFile.readAsString())
+      as Map<String, Object?>?;
   final version = restoreConfigMap?['version'] ?? 0;
   MigrationData migrationData = MigrationData(configMap: restoreConfigMap);
   if (version == 0 && restoreConfigMap != null) {
@@ -558,19 +526,16 @@ Future<MigrationData> _restoreTask(RootIsolateToken token) async {
   if (!await backupDatabaseFile.exists()) {
     return migrationData;
   }
-  final database = Database(
-    driftDatabase(
-      name: 'database',
-      native: DriftNativeOptions(
-        databaseDirectory: () async => Directory(restoreDirPath),
-      ),
-    ),
-  );
+  final database =
+      Database(NativeDatabase.createInBackground(backupDatabaseFile));
   final results = await Future.wait([
     database.profilesDao.all().get(),
     database.scriptsDao.all().get(),
-    database.rules.all().map((item) => item.toRule()).get(),
-    database.profileRuleLinks.all().map((item) => item.toLink()).get(),
+    database.select(database.rules).map((item) => item.toRule()).get(),
+    database
+        .select(database.profileRuleLinks)
+        .map((item) => item.toLink())
+        .get(),
   ]);
   final profiles = results[0].cast<Profile>();
   final scripts = results[1].cast<Script>();

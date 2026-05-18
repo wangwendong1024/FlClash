@@ -33,12 +33,16 @@ class System {
 
   Future<int> get version async {
     final deviceInfo = await DeviceInfoPlugin().deviceInfo;
-    return switch (Platform.operatingSystem) {
-      'macos' => (deviceInfo as MacOsDeviceInfo).majorVersion,
-      'android' => (deviceInfo as AndroidDeviceInfo).version.sdkInt,
-      'windows' => (deviceInfo as WindowsDeviceInfo).majorVersion,
-      String() => 0,
-    };
+    switch (Platform.operatingSystem) {
+      case 'macos':
+        return (deviceInfo as MacOsDeviceInfo).majorVersion;
+      case 'android':
+        return (deviceInfo as AndroidDeviceInfo).version.sdkInt;
+      case 'windows':
+        return (deviceInfo as WindowsDeviceInfo).majorVersion;
+      default:
+        return 0;
+    }
   }
 
   Future<bool> checkIsAdmin() async {
@@ -148,25 +152,23 @@ class Windows {
     final argumentsPtr = arguments.toNativeUtf16();
     final operationPtr = 'runas'.toNativeUtf16();
 
-    final shellExecute = _shell32
-        .lookupFunction<
-          Int32 Function(
-            Pointer<Utf16> hwnd,
-            Pointer<Utf16> lpOperation,
-            Pointer<Utf16> lpFile,
-            Pointer<Utf16> lpParameters,
-            Pointer<Utf16> lpDirectory,
-            Int32 nShowCmd,
-          ),
-          int Function(
-            Pointer<Utf16> hwnd,
-            Pointer<Utf16> lpOperation,
-            Pointer<Utf16> lpFile,
-            Pointer<Utf16> lpParameters,
-            Pointer<Utf16> lpDirectory,
-            int nShowCmd,
-          )
-        >('ShellExecuteW');
+    final shellExecute = _shell32.lookupFunction<
+        Int32 Function(
+      Pointer<Utf16> hwnd,
+      Pointer<Utf16> lpOperation,
+      Pointer<Utf16> lpFile,
+      Pointer<Utf16> lpParameters,
+      Pointer<Utf16> lpDirectory,
+      Int32 nShowCmd,
+    ),
+        int Function(
+      Pointer<Utf16> hwnd,
+      Pointer<Utf16> lpOperation,
+      Pointer<Utf16> lpFile,
+      Pointer<Utf16> lpParameters,
+      Pointer<Utf16> lpDirectory,
+      int nShowCmd,
+    )>('ShellExecuteW');
 
     final result = shellExecute(
       nullptr,
@@ -268,8 +270,7 @@ class Windows {
   }
 
   Future<bool> registerTask(String appName) async {
-    final taskXml =
-        '''
+    final taskXml = '''
 <?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.3" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <Principals>
@@ -358,15 +359,13 @@ class MacOS {
     if (currentService.isEmpty) {
       return null;
     }
-    final currentServiceNameLine = currentService
-        .split('\n')
-        .firstWhere(
+    final currentServiceNameLine = currentService.split('\n').firstWhere(
           (line) => RegExp(r'^\(\d+\).*').hasMatch(line),
           orElse: () => '',
         );
     final currentServiceNameLineSplits = currentServiceNameLine.trim().split(
-      ' ',
-    );
+          ' ',
+        );
     if (currentServiceNameLineSplits.length < 2) {
       return null;
     }

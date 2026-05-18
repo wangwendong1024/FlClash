@@ -57,7 +57,7 @@ class TUNButton extends StatelessWidget {
                 ),
               ),
               Consumer(
-                builder: (_, ref, _) {
+                builder: (_, ref, __) {
                   final enable = ref.watch(
                     patchClashConfigProvider.select(
                       (state) => state.tun.enable,
@@ -129,7 +129,7 @@ class SystemProxyButton extends StatelessWidget {
                 ),
               ),
               Consumer(
-                builder: (_, ref, _) {
+                builder: (_, ref, __) {
                   final systemProxy = ref.watch(
                     networkSettingProvider.select((state) => state.systemProxy),
                   );
@@ -137,9 +137,7 @@ class SystemProxyButton extends StatelessWidget {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     value: systemProxy,
                     onChanged: (value) {
-                      ref
-                          .read(networkSettingProvider.notifier)
-                          .update(
+                      ref.read(networkSettingProvider.notifier).update(
                             (state) => state.copyWith(systemProxy: value),
                           );
                     },
@@ -203,7 +201,7 @@ class VpnButton extends StatelessWidget {
                 ),
               ),
               Consumer(
-                builder: (_, ref, _) {
+                builder: (_, ref, __) {
                   final enable = ref.watch(
                     vpnSettingProvider.select((state) => state.enable),
                   );

@@ -115,10 +115,12 @@ abstract class CoreHandlerInterface with CoreInterface {
   });
 
   Future<T> parasResult<T>(ActionResult result) async {
-    return switch (result.method) {
-      ActionMethod.getConfig => result.toResult as T,
-      _ => result.data as T,
-    };
+    switch (result.method) {
+      case ActionMethod.getConfig:
+        return result.toResult as T;
+      default:
+        return result.data as T;
+    }
   }
 
   @override

@@ -5,7 +5,6 @@ import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 import 'item.dart';
 
@@ -89,17 +88,17 @@ class _RequestsViewState extends ConsumerState<RequestsView> {
       onKeywordsUpdate: _onKeywordsUpdate,
       floatingActionButton: ValueListenableBuilder(
         valueListenable: _requestsStateNotifier,
-        builder: (_, state, _) {
+        builder: (_, state, __) {
           final autoScrollToEnd = state.autoScrollToEnd;
           return FadeRotationScaleBox(
             child: FloatingActionButton(
               key: ValueKey(autoScrollToEnd),
               onPressed: () {
-                _requestsStateNotifier.value = _requestsStateNotifier.value
-                    .copyWith(
-                      autoScrollToEnd:
-                          !_requestsStateNotifier.value.autoScrollToEnd,
-                    );
+                _requestsStateNotifier.value =
+                    _requestsStateNotifier.value.copyWith(
+                  autoScrollToEnd:
+                      !_requestsStateNotifier.value.autoScrollToEnd,
+                );
               },
               child: autoScrollToEnd
                   ? const Icon(Icons.block)
@@ -145,7 +144,7 @@ class _RequestsViewState extends ConsumerState<RequestsView> {
                   _requestsStateNotifier.value = _requestsStateNotifier.value
                       .copyWith(autoScrollToEnd: false);
                 },
-                child: SuperListView.builder(
+                child: ListView.builder(
                   reverse: true,
                   shrinkWrap: true,
                   physics: NextClampingScrollPhysics(),

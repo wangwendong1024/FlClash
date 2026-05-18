@@ -2,16 +2,17 @@ import 'package:collection/collection.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/database/database.dart';
 import 'package:fl_clash/models/models.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/database.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<List<Profile>> profilesStream(Ref ref) {
   return database.profilesDao.all().watch();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<List<Rule>> addedRuleStream(Ref ref, int profileId) {
   return database.rulesDao.allAddedRules(profileId).watch();
 }

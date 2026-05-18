@@ -341,13 +341,10 @@ class FindProcessItem extends ConsumerWidget {
       delegate: SwitchDelegate(
         value: findProcess,
         onChanged: (bool value) async {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith(
-                  findProcessMode: value
-                      ? FindProcessMode.always
-                      : FindProcessMode.off,
+                  findProcessMode:
+                      value ? FindProcessMode.always : FindProcessMode.off,
                 ),
               );
         },
@@ -397,9 +394,7 @@ class GeodataLoaderItem extends ConsumerWidget {
       delegate: SwitchDelegate(
         value: isMemconservative,
         onChanged: (bool value) async {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith(
                   geodataLoader: value
                       ? GeodataLoader.memconservative
@@ -429,9 +424,7 @@ class ExternalControllerItem extends ConsumerWidget {
       delegate: SwitchDelegate(
         value: hasExternalController,
         onChanged: (bool value) async {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith(
                   externalController: value
                       ? ExternalControllerStatus.open
@@ -506,9 +499,7 @@ class _PortDialogState extends ConsumerState<_PortDialog> {
     if (res != true) {
       return;
     }
-    ref
-        .read(patchClashConfigProvider.notifier)
-        .update(
+    ref.read(patchClashConfigProvider.notifier).update(
           (state) => state.copyWith(
             mixedPort: 7890,
             port: 0,
@@ -524,9 +515,7 @@ class _PortDialogState extends ConsumerState<_PortDialog> {
 
   void _handleUpdate() {
     if (_formKey.currentState?.validate() == false) return;
-    ref
-        .read(patchClashConfigProvider.notifier)
-        .update(
+    ref.read(patchClashConfigProvider.notifier).update(
           (state) => state.copyWith(
             mixedPort: int.parse(_mixedPortController.text),
             port: int.parse(_portController.text),
@@ -562,12 +551,12 @@ class _PortDialogState extends ConsumerState<_PortDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton.filledTonal(
+            IconButton(
               onPressed: _handleMore,
               icon: CommonExpandIcon(expand: _isMore),
             ),
             Row(
-              children: [
+              children: <Widget>[
                 TextButton(
                   onPressed: _handleReset,
                   child: Text(appLocalizations.reset),
@@ -592,8 +581,7 @@ class _PortDialogState extends ConsumerState<_PortDialog> {
             curve: Curves.easeOutQuad,
             alignment: Alignment.topCenter,
             child: Column(
-              spacing: 24,
-              children: [
+              children: <Widget>[
                 TextFormField(
                   keyboardType: TextInputType.url,
                   maxLines: 1,

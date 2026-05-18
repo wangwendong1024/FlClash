@@ -1,4 +1,4 @@
-abstract mixin class WindowExtListener {
+mixin WindowExtListener {
   void onTaskbarCreated() {}
 
   void onShouldTerminate() {}

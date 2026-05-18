@@ -157,7 +157,7 @@ class RulesDao extends DatabaseAccessor<Database> with _$RulesDaoMixin {
       profileId == null
           ? profileRuleLinks.profileId.isNull()
           : profileRuleLinks.profileId.equals(profileId) &
-                profileRuleLinks.scene.equalsValue(scene),
+              profileRuleLinks.scene.equalsValue(scene),
     );
 
     query.orderBy([

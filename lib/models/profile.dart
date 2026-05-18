@@ -133,8 +133,7 @@ extension ProfilesExt on List<Profile> {
 
   String _getLabel(String label, int id) {
     final realLabel = label.takeFirstValid([id.toString()]);
-    final hasDup =
-        indexWhere(
+    final hasDup = indexWhere(
           (element) => element.label == realLabel && element.id != id,
         ) !=
         -1;

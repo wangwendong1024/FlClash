@@ -9,6 +9,18 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'generated/common.freezed.dart';
 part 'generated/common.g.dart';
 
+enum DynamicSchemeVariant {
+  tonalSpot,
+  fidelity,
+  content,
+  monochrome,
+  neutral,
+  vibrant,
+  expressive,
+  rainbow,
+  fruitSalad,
+}
+
 @freezed
 abstract class NavigationItem with _$NavigationItem {
   const factory NavigationItem({
@@ -19,7 +31,7 @@ abstract class NavigationItem with _$NavigationItem {
     @Default(true) bool keep,
     String? path,
     @Default([NavigationItemMode.mobile, NavigationItemMode.desktop])
-    List<NavigationItemMode> modes,
+        List<NavigationItemMode> modes,
   }) = _NavigationItem;
 }
 
@@ -55,11 +67,14 @@ extension PackagesExt on List<Package> {
       if (isSelectA != isSelectB) {
         return isSelectA ? -1 : 1;
       }
-      return switch (sortType) {
-        AccessSortType.none => 0,
-        AccessSortType.name => a.label.compareTo(b.label),
-        AccessSortType.time => b.lastUpdateTime.compareTo(a.lastUpdateTime),
-      };
+      switch (sortType) {
+        case AccessSortType.none:
+          return 0;
+        case AccessSortType.name:
+          return a.label.compareTo(b.label);
+        case AccessSortType.time:
+          return b.lastUpdateTime.compareTo(a.lastUpdateTime);
+      }
     });
   }
 }
@@ -200,8 +215,8 @@ extension TrackerInfosStateExt on TrackerInfosState {
       final process = trackerInfo.metadata.process;
       final networkText = trackerInfo.metadata.network.toLowerCase();
       final hostText = trackerInfo.metadata.host.toLowerCase();
-      final destinationIPText = trackerInfo.metadata.destinationIP
-          .toLowerCase();
+      final destinationIPText =
+          trackerInfo.metadata.destinationIP.toLowerCase();
       final processText = trackerInfo.metadata.process.toLowerCase();
       final chainsText = chains.join('').toLowerCase();
       return {...chains, process}.containsAll(keywords) &&
@@ -347,22 +362,18 @@ extension ColorSchemesExt on ColorSchemes {
           ? ColorScheme.fromSeed(
               seedColor: darkColorScheme!.primary,
               brightness: Brightness.dark,
-              dynamicSchemeVariant: schemeVariant,
             )
           : ColorScheme.fromSeed(
               seedColor: Color(defaultPrimaryColor),
               brightness: Brightness.dark,
-              dynamicSchemeVariant: schemeVariant,
             );
     }
     return lightColorScheme != null
         ? ColorScheme.fromSeed(
             seedColor: lightColorScheme!.primary,
-            dynamicSchemeVariant: schemeVariant,
           )
         : ColorScheme.fromSeed(
             seedColor: Color(defaultPrimaryColor),
-            dynamicSchemeVariant: schemeVariant,
           );
   }
 }
@@ -373,65 +384,66 @@ abstract class IpInfo with _$IpInfo {
       _IpInfo;
 
   static IpInfo fromIpInfoIoJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'country': final String country} => IpInfo(
-        ip: ip,
-        countryCode: country,
-      ),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final country = json['country'];
+    if (ip is String && country is String) {
+      return IpInfo(ip: ip, countryCode: country);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromIpApiCoJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'country_code': final String countryCode} =>
-        IpInfo(ip: ip, countryCode: countryCode),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final countryCode = json['country_code'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromIpSbJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'country_code': final String countryCode} =>
-        IpInfo(ip: ip, countryCode: countryCode),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final countryCode = json['country_code'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromIpWhoIsJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'country_code': final String countryCode} =>
-        IpInfo(ip: ip, countryCode: countryCode),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final countryCode = json['country_code'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromMyIpJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'cc': final String countryCode} => IpInfo(
-        ip: ip,
-        countryCode: countryCode,
-      ),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final countryCode = json['cc'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromIpAPIJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'query': final String ip, 'countryCode': final String countryCode} =>
-        IpInfo(ip: ip, countryCode: countryCode),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['query'];
+    final countryCode = json['countryCode'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 
   static IpInfo fromIdentMeJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {'ip': final String ip, 'cc': final String countryCode} => IpInfo(
-        ip: ip,
-        countryCode: countryCode,
-      ),
-      _ => throw const FormatException('invalid json'),
-    };
+    final ip = json['ip'];
+    final countryCode = json['cc'];
+    if (ip is String && countryCode is String) {
+      return IpInfo(ip: ip, countryCode: countryCode);
+    }
+    throw const FormatException('invalid json');
   }
 }
 

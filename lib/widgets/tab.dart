@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:fl_clash/common/color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -65,11 +66,11 @@ class CommonTabBar<T extends Object> extends StatefulWidget {
     this.padding = _kHorizontalItemPadding,
     this.backgroundColor,
     this.proportionalWidth = false,
-  }) : assert(children.length >= 2),
-       assert(
-         groupValue == null || children.keys.contains(groupValue),
-         'The groupValue must be either null or one of the keys in the children map.',
-       );
+  })  : assert(children.length >= 2),
+        assert(
+          groupValue == null || children.keys.contains(groupValue),
+          'The groupValue must be either null or one of the keys in the children map.',
+        );
   final Map<T, Widget> children;
   final Set<T> disabledChildren;
   final T? groupValue;
@@ -321,15 +322,20 @@ class _CommonTabBarState<T extends Object> extends State<CommonTabBar<T>>
       }
 
       final TextDirection textDirection = Directionality.of(context);
-      final _SegmentLocation segmentLocation = switch (textDirection) {
-        TextDirection.ltr when index == 0 => _SegmentLocation.leftmost,
-        TextDirection.ltr when index == widget.children.length - 1 =>
-          _SegmentLocation.rightmost,
-        TextDirection.rtl when index == widget.children.length - 1 =>
-          _SegmentLocation.leftmost,
-        TextDirection.rtl when index == 0 => _SegmentLocation.rightmost,
-        TextDirection.ltr || TextDirection.rtl => _SegmentLocation.inbetween,
-      };
+      final _SegmentLocation segmentLocation;
+      if (textDirection == TextDirection.ltr && index == 0) {
+        segmentLocation = _SegmentLocation.leftmost;
+      } else if (textDirection == TextDirection.ltr &&
+          index == widget.children.length - 1) {
+        segmentLocation = _SegmentLocation.rightmost;
+      } else if (textDirection == TextDirection.rtl &&
+          index == widget.children.length - 1) {
+        segmentLocation = _SegmentLocation.leftmost;
+      } else if (textDirection == TextDirection.rtl && index == 0) {
+        segmentLocation = _SegmentLocation.rightmost;
+      } else {
+        segmentLocation = _SegmentLocation.inbetween;
+      }
       children.add(
         Semantics(
           button: true,
@@ -475,11 +481,18 @@ class _SegmentState<T> extends State<_Segment<T>>
 
   @override
   Widget build(BuildContext context) {
-    final Alignment scaleAlignment = switch (widget.segmentLocation) {
-      _SegmentLocation.leftmost => Alignment.centerLeft,
-      _SegmentLocation.rightmost => Alignment.centerRight,
-      _SegmentLocation.inbetween => Alignment.center,
-    };
+    final Alignment scaleAlignment;
+    switch (widget.segmentLocation) {
+      case _SegmentLocation.leftmost:
+        scaleAlignment = Alignment.centerLeft;
+        break;
+      case _SegmentLocation.rightmost:
+        scaleAlignment = Alignment.centerRight;
+        break;
+      case _SegmentLocation.inbetween:
+        scaleAlignment = Alignment.center;
+        break;
+    }
 
     return MetaData(
       behavior: HitTestBehavior.opaque,
@@ -487,21 +500,20 @@ class _SegmentState<T> extends State<_Segment<T>>
         alignment: Alignment.center,
         children: <Widget>[
           AnimatedOpacity(
-            opacity: widget.shouldFadeoutContent
-                ? _kContentPressedMinOpacity
-                : 1,
+            opacity:
+                widget.shouldFadeoutContent ? _kContentPressedMinOpacity : 1,
             duration: _kOpacityAnimationDuration,
             curve: Curves.ease,
             child: AnimatedDefaultTextStyle(
               style: DefaultTextStyle.of(context).style.merge(
-                TextStyle(
-                  fontWeight: widget.highlighted
-                      ? _kHighlightedFontWeight
-                      : _kFontWeight,
-                  fontSize: _kFontSize,
-                  color: widget.enabled ? null : _kDisabledContentColor,
-                ),
-              ),
+                    TextStyle(
+                      fontWeight: widget.highlighted
+                          ? _kHighlightedFontWeight
+                          : _kFontWeight,
+                      fontSize: _kFontSize,
+                      color: widget.enabled ? null : _kDisabledContentColor,
+                    ),
+                  ),
               duration: _kHighlightAnimationDuration,
               curve: Curves.ease,
               child: ScaleTransition(
@@ -591,7 +603,7 @@ class _SegmentSeparatorState extends State<_SegmentSeparator>
 
 class _CommonTabBarRenderWidget<T extends Object>
     extends MultiChildRenderObjectWidget {
-  const _CommonTabBarRenderWidget({
+  _CommonTabBarRenderWidget({
     super.key,
     super.children,
     required this.highlightedIndex,
@@ -639,24 +651,20 @@ enum _SegmentLocation { leftmost, rightmost, inbetween }
 
 class _RenderSegmentedControl<T extends Object> extends RenderBox
     with
-        ContainerRenderObjectMixin<
-          RenderBox,
-          ContainerBoxParentData<RenderBox>
-        >,
-        RenderBoxContainerDefaultsMixin<
-          RenderBox,
-          ContainerBoxParentData<RenderBox>
-        > {
+        ContainerRenderObjectMixin<RenderBox,
+            ContainerBoxParentData<RenderBox>>,
+        RenderBoxContainerDefaultsMixin<RenderBox,
+            ContainerBoxParentData<RenderBox>> {
   _RenderSegmentedControl({
     required int? highlightedIndex,
     required Color thumbColor,
     required double thumbScale,
     required bool proportionalWidth,
     required this.state,
-  }) : _highlightedIndex = highlightedIndex,
-       _thumbColor = thumbColor,
-       _thumbScale = thumbScale,
-       _proportionalWidth = proportionalWidth;
+  })  : _highlightedIndex = highlightedIndex,
+        _thumbColor = thumbColor,
+        _thumbScale = thumbScale,
+        _proportionalWidth = proportionalWidth;
 
   final _CommonTabBarState<T> state;
 
@@ -906,28 +914,7 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
     covariant BoxConstraints constraints,
     TextBaseline baseline,
   ) {
-    final List<double> segmentWidths = _getChildWidths(constraints);
-    final double childHeight = _getMaxChildHeight(
-      constraints,
-      constraints.maxWidth,
-    );
-
-    int index = 0;
-    BaselineOffset baselineOffset = BaselineOffset.noBaseline;
-    RenderBox? child = firstChild;
-    while (child != null) {
-      final BoxConstraints childConstraints = BoxConstraints.tight(
-        Size(segmentWidths[index], childHeight),
-      );
-      baselineOffset = baselineOffset.minOf(
-        BaselineOffset(child.getDryBaseline(childConstraints, baseline)),
-      );
-
-      child = nonSeparatorChildAfter(child);
-      index++;
-    }
-
-    return baselineOffset.offset;
+    return null;
   }
 
   @override
@@ -985,9 +972,9 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
     final double leftMost = firstChildOffset.dx;
     final double rightMost =
         (children.last.parentData! as _SegmentedControlContainerBoxParentData)
-            .offset
-            .dx +
-        children.last.size.width;
+                .offset
+                .dx +
+            children.last.size.width;
     assert(rightMost > leftMost);
     return Rect.fromLTRB(
       math.max(thumbRect.left, leftMost - _kThumbInsets.left),
@@ -1036,7 +1023,7 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
 
       final Rect unscaledThumbRect =
           state.thumbAnimatable?.evaluate(state.thumbController) ??
-          newThumbRect;
+              newThumbRect;
       currentThumbRect = unscaledThumbRect;
 
       final _SegmentLocation childLocation;
@@ -1047,13 +1034,20 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
       } else {
         childLocation = _SegmentLocation.inbetween;
       }
-      final double delta = switch (childLocation) {
-        _SegmentLocation.leftmost =>
-          unscaledThumbRect.width - unscaledThumbRect.width * thumbScale,
-        _SegmentLocation.rightmost =>
-          unscaledThumbRect.width * thumbScale - unscaledThumbRect.width,
-        _SegmentLocation.inbetween => 0,
-      };
+      final double delta;
+      switch (childLocation) {
+        case _SegmentLocation.leftmost:
+          delta =
+              unscaledThumbRect.width - unscaledThumbRect.width * thumbScale;
+          break;
+        case _SegmentLocation.rightmost:
+          delta =
+              unscaledThumbRect.width * thumbScale - unscaledThumbRect.width;
+          break;
+        case _SegmentLocation.inbetween:
+          delta = 0;
+          break;
+      }
       final Rect thumbRect = Rect.fromCenter(
         center: unscaledThumbRect.center - Offset(delta / 2, 0),
         width: unscaledThumbRect.width * thumbScale,

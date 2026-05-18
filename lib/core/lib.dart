@@ -42,7 +42,7 @@ class CoreLib extends CoreHandlerInterface {
       return false;
     }
     _connectedCompleter = Completer();
-    return service?.shutdown() ?? true;
+    return await service?.shutdown() ?? true;
   }
 
   @override

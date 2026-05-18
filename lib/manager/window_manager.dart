@@ -74,9 +74,7 @@ class _WindowContainerState extends ConsumerState<WindowManager>
   Future<void> onWindowResized() async {
     super.onWindowResized();
     final size = await windowManager.getSize();
-    ref
-        .read(windowSettingProvider.notifier)
-        .update(
+    ref.read(windowSettingProvider.notifier).update(
           (state) => state.copyWith(width: size.width, height: size.height),
         );
   }
@@ -192,7 +190,7 @@ class _WindowHeaderState extends State<WindowHeader> {
           },
           icon: ValueListenableBuilder(
             valueListenable: isPinNotifier,
-            builder: (_, value, _) {
+            builder: (_, value, __) {
               return value
                   ? const Icon(Icons.push_pin)
                   : const Icon(Icons.push_pin_outlined);
@@ -211,7 +209,7 @@ class _WindowHeaderState extends State<WindowHeader> {
           },
           icon: ValueListenableBuilder(
             valueListenable: isMaximizedNotifier,
-            builder: (_, value, _) {
+            builder: (_, value, __) {
               return value
                   ? const Icon(Icons.filter_none, size: 20)
                   : const Icon(Icons.crop_square);

@@ -17,25 +17,15 @@ class CommonPopScope extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: onPop == null ? true : false,
-      onPopInvokedWithResult: onPop == null
+    return WillPopScope(
+      onWillPop: onPop == null
           ? null
-          : (didPop, _) async {
-              if (didPop) {
-                return;
-              }
+          : () async {
               final res = await onPop!(context);
-              if (!context.mounted) {
-                return;
-              }
-              if (!res) {
-                return;
-              }
-              Navigator.of(context).pop();
-              if (onPopSuccess != null) {
+              if (res && onPopSuccess != null) {
                 await onPopSuccess!();
               }
+              return res;
             },
       child: child,
     );

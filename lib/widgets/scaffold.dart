@@ -10,8 +10,8 @@ import 'inherited.dart';
 
 typedef OnKeywordsUpdateCallback = void Function(List<String> keywords);
 
-typedef AppBarSearchStateBuilder =
-    AppBarSearchState? Function(AppBarSearchState? state);
+typedef AppBarSearchStateBuilder = AppBarSearchState? Function(
+    AppBarSearchState? state);
 
 class CommonScaffold extends StatefulWidget {
   final AppBar? appBar;
@@ -266,13 +266,11 @@ class CommonScaffoldState extends State<CommonScaffold> {
           widget.appBar ??
               ValueListenableBuilder<AppBarState>(
                 valueListenable: _appBarState,
-                builder: (_, state, _) {
+                builder: (_, state, __) {
                   return _buildAppBarWrap(
                     AppBar(
-                      automaticallyImplyLeading: backAction != null
-                          ? false
-                          : true,
-                      animateColor: true,
+                      automaticallyImplyLeading:
+                          backAction != null ? false : true,
                       centerTitle: widget.centerTitle ?? false,
                       leading: _buildLeading(backAction),
                       title: _buildTitle(state.searchState),
@@ -288,7 +286,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
               ),
           ValueListenableBuilder(
             valueListenable: _loadingNotifier,
-            builder: (_, value, _) {
+            builder: (_, value, __) {
               return value == true
                   ? const LinearProgressIndicator()
                   : Container();
@@ -309,7 +307,7 @@ class CommonScaffoldState extends State<CommonScaffold> {
         children: [
           ValueListenableBuilder(
             valueListenable: _keywordsNotifier,
-            builder: (_, keywords, _) {
+            builder: (_, keywords, __) {
               if (widget.onKeywordsUpdate != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   widget.onKeywordsUpdate!(keywords);

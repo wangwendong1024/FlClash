@@ -120,9 +120,8 @@ class _ScriptsViewState extends ConsumerState<ScriptsView> {
       newScript = newScript.copyWith(label: res);
     }
     if (newScript.label != script?.label) {
-      final isExits = ref
-          .read(scriptsProvider.notifier)
-          .isExits(newScript.label);
+      final isExits =
+          ref.read(scriptsProvider.notifier).isExits(newScript.label);
       if (isExits) {
         globalState.showMessage(
           message: TextSpan(
@@ -201,7 +200,7 @@ class _ScriptsViewState extends ConsumerState<ScriptsView> {
         actions: [
           if (selectedScriptId != null) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: () {
                   _handleDelScript(selectedScriptId);
                 },
@@ -210,15 +209,15 @@ class _ScriptsViewState extends ConsumerState<ScriptsView> {
             ),
             SizedBox(width: 2),
           ],
-          CommonMinFilledButtonTheme(
+          CommonMinElevatedButtonTheme(
             child: selectedScriptId != null
-                ? FilledButton(
+                ? ElevatedButton(
                     onPressed: () {
                       _handleToEditor(selectedScriptId);
                     },
                     child: Text(appLocalizations.edit),
                   )
-                : FilledButton.tonal(
+                : ElevatedButton(
                     onPressed: () {
                       _handleToEditor();
                     },

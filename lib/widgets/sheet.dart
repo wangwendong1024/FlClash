@@ -47,27 +47,26 @@ Future<T?> showSheet<T>({
   SheetProps props = const SheetProps(),
 }) {
   final isMobile = appController.isMobile;
-  return switch (isMobile) {
-    true => showModalBottomSheet<T>(
+  if (isMobile) {
+    return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: props.isScrollControlled,
       builder: (_) {
-        return builder(context, SheetType.bottomSheet);
+        final child = builder(context, SheetType.bottomSheet);
+        return props.useSafeArea ? SafeArea(child: child) : child;
       },
-      showDragHandle: false,
-      useSafeArea: props.useSafeArea,
-    ),
-    false => showModalSideSheet<T>(
-      useSafeArea: props.useSafeArea,
-      isScrollControlled: props.isScrollControlled,
-      context: context,
-      constraints: BoxConstraints(maxWidth: props.maxWidth ?? 360),
-      filter: props.blur ? commonFilter : null,
-      builder: (_) {
-        return builder(context, SheetType.sideSheet);
-      },
-    ),
-  };
+    );
+  }
+  return showModalSideSheet<T>(
+    useSafeArea: props.useSafeArea,
+    isScrollControlled: props.isScrollControlled,
+    context: context,
+    constraints: BoxConstraints(maxWidth: props.maxWidth ?? 360),
+    filter: props.blur ? commonFilter : null,
+    builder: (_) {
+      return builder(context, SheetType.sideSheet);
+    },
+  );
 }
 
 Future<T?> showExtend<T>(
@@ -76,18 +75,18 @@ Future<T?> showExtend<T>(
   ExtendProps props = const ExtendProps(),
 }) {
   final isMobile = appController.isMobile;
-  return switch (isMobile || props.forceFull) {
-    true => BaseNavigator.push(context, builder(context, SheetType.page)),
-    false => showModalSideSheet<T>(
-      useSafeArea: props.useSafeArea,
-      context: context,
-      constraints: BoxConstraints(maxWidth: props.maxWidth ?? 360),
-      filter: props.blur ? commonFilter : null,
-      builder: (context) {
-        return builder(context, SheetType.sideSheet);
-      },
-    ),
-  };
+  if (isMobile || props.forceFull) {
+    return BaseNavigator.push(context, builder(context, SheetType.page));
+  }
+  return showModalSideSheet<T>(
+    useSafeArea: props.useSafeArea,
+    context: context,
+    constraints: BoxConstraints(maxWidth: props.maxWidth ?? 360),
+    filter: props.blur ? commonFilter : null,
+    builder: (context) {
+      return builder(context, SheetType.sideSheet);
+    },
+  );
 }
 
 class AdaptiveSheetScaffold extends StatefulWidget {
@@ -117,12 +116,11 @@ class _AdaptiveSheetScaffoldState extends State<AdaptiveSheetScaffold> {
     final bottomSheet = widget.type == SheetType.bottomSheet;
     final sideSheet = widget.type == SheetType.sideSheet;
     final appBar = AppBar(
-      forceMaterialTransparency: bottomSheet ? true : false,
       automaticallyImplyLeading: bottomSheet
           ? false
           : widget.actions.isEmpty && sideSheet
-          ? false
-          : true,
+              ? false
+              : true,
       centerTitle:
           widget.centerTitle ?? (bottomSheet && widget.actions.isEmpty),
       backgroundColor: backgroundColor,

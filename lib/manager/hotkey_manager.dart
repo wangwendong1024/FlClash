@@ -32,14 +32,19 @@ class _HotKeyManagerState extends ConsumerState<HotKeyManager> {
     switch (action) {
       case HotAction.mode:
         appController.updateMode();
+        break;
       case HotAction.start:
         appController.updateStart();
+        break;
       case HotAction.view:
         appController.updateVisible();
+        break;
       case HotAction.proxy:
         appController.updateSystemProxy();
+        break;
       case HotAction.tun:
         appController.updateTun();
+        break;
     }
   }
 
@@ -47,25 +52,27 @@ class _HotKeyManagerState extends ConsumerState<HotKeyManager> {
     required List<HotKeyAction> hotKeyActions,
   }) async {
     await hotKeyManager.unregisterAll();
-    final hotkeyActionHandles = hotKeyActions
-        .where((hotKeyAction) {
-          return hotKeyAction.key != null && hotKeyAction.modifiers.isNotEmpty;
-        })
-        .map<Future>((hotKeyAction) async {
-          final modifiers = hotKeyAction.modifiers
-              .map((item) => item.toHotKeyModifier())
-              .toList();
-          final hotKey = HotKey(
-            key: PhysicalKeyboardKey(hotKeyAction.key!),
-            modifiers: modifiers,
-          );
-          return await hotKeyManager.register(
-            hotKey,
-            keyDownHandler: (_) {
-              _handleHotKeyAction(hotKeyAction.action);
-            },
-          );
-        });
+    final hotkeyActionHandles = hotKeyActions.where((hotKeyAction) {
+      return hotKeyAction.key != null && hotKeyAction.modifiers.isNotEmpty;
+    }).map<Future>((hotKeyAction) async {
+      final modifiers = hotKeyAction.modifiers
+          .map((item) => item.toHotKeyModifier())
+          .toList();
+      final keyCode = PhysicalKeyboardKey(hotKeyAction.key!).hotKeyCode;
+      if (keyCode == null) {
+        return;
+      }
+      final hotKey = HotKey(
+        keyCode,
+        modifiers: modifiers,
+      );
+      return await hotKeyManager.register(
+        hotKey,
+        keyDownHandler: (_) {
+          _handleHotKeyAction(hotKeyAction.action);
+        },
+      );
+    });
     await Future.wait(hotkeyActionHandles);
   }
 

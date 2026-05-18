@@ -104,7 +104,7 @@ class _GeoDataListItemState extends State<GeoDataListItem> {
 
   Widget _buildSubtitle() {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (_, ref, __) {
         final url = ref.watch(
           patchClashConfigProvider.select(
             (state) => state.geoXUrl.toJson()[geoItem.key],
@@ -153,7 +153,7 @@ class _GeoDataListItemState extends State<GeoDataListItem> {
                     SizedBox(
                       child: ValueListenableBuilder(
                         valueListenable: isUpdating,
-                        builder: (_, isUpdating, _) {
+                        builder: (_, isUpdating, __) {
                           return isUpdating
                               ? SizedBox(
                                   height: 30,

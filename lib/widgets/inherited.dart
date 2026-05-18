@@ -29,10 +29,8 @@ class CommonScaffoldFabExtendedProvider extends InheritedWidget {
   });
 
   static CommonScaffoldFabExtendedProvider? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<
-          CommonScaffoldFabExtendedProvider
-        >();
+    return context.dependOnInheritedWidgetOfExactType<
+        CommonScaffoldFabExtendedProvider>();
   }
 
   @override

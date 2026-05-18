@@ -123,17 +123,17 @@ class _CommonPopupBoxState extends State<CommonPopupBox> {
     _isOpen = true;
     Navigator.of(context)
         .push(
-          CommonPopupRoute(
-            barrierLabel: utils.id,
-            builder: (BuildContext context) {
-              return widget.popup;
-            },
-            offsetNotifier: _targetOffsetValueNotifier,
-          ),
-        )
+      CommonPopupRoute(
+        barrierLabel: utils.id,
+        builder: (BuildContext context) {
+          return widget.popup;
+        },
+        offsetNotifier: _targetOffsetValueNotifier,
+      ),
+    )
         .then((_) {
-          _isOpen = false;
-        });
+      _isOpen = false;
+    });
   }
 
   void _updateOffset() {
@@ -152,7 +152,7 @@ class _CommonPopupBoxState extends State<CommonPopupBox> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (_, _) {
+      builder: (_, __) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (_isOpen) {
             _updateOffset();
@@ -341,8 +341,7 @@ class _CommonPopupMenuItemsState extends State<_CommonPopupMenuItems> {
         Padding(
           padding: EdgeInsets.only(left: 8, top: 6, bottom: 2),
           child: Row(
-            spacing: 4,
-            children: [
+            children: <Widget>[
               IconButton(
                 icon: Icon(
                   Icons.arrow_back_outlined,
@@ -356,8 +355,8 @@ class _CommonPopupMenuItemsState extends State<_CommonPopupMenuItems> {
                 iconSize: 18,
                 style: ButtonStyle(
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  minimumSize: WidgetStatePropertyAll(Size.zero),
-                  padding: WidgetStatePropertyAll(EdgeInsets.all(8)),
+                  minimumSize: MaterialStatePropertyAll(Size.zero),
+                  padding: MaterialStatePropertyAll(EdgeInsets.all(8)),
                 ),
               ),
               if (_subTitle != null)
@@ -367,7 +366,7 @@ class _CommonPopupMenuItemsState extends State<_CommonPopupMenuItems> {
                     color: context.colorScheme.onSurfaceVariant.opacity80,
                   ),
                 ),
-            ],
+            ].separated(SizedBox(width: 4)).toList(),
           ),
         ),
         _CommonPopupMenuItems(
@@ -386,9 +385,8 @@ class _CommonPopupMenuItemsState extends State<_CommonPopupMenuItems> {
       secondCurve: Curves.easeOut,
       firstChild: _buildItems(widget.items),
       secondChild: _nextItems.isEmpty ? Container() : _buildSubMenu(),
-      crossSlideState: _status
-          ? CrossSlideState.showSecond
-          : CrossSlideState.showFirst,
+      crossSlideState:
+          _status ? CrossSlideState.showSecond : CrossSlideState.showFirst,
       duration: Duration(milliseconds: 250),
     );
   }

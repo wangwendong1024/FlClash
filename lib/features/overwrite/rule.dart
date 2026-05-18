@@ -1,5 +1,3 @@
-library;
-
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/clash_config.dart';
@@ -70,15 +68,16 @@ class RuleStatusItem extends StatelessWidget {
             onChange(!status);
           },
           child: ListTile(
-            minTileHeight: 0,
             minVerticalPadding: 0,
-            titleTextStyle: context.textTheme.bodyMedium?.toJetBrainsMono,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 16,
             ),
             trailing: Switch(value: status, onChanged: onChange),
-            title: Text(rule.value),
+            title: Text(
+              rule.value,
+              style: context.textTheme.bodyMedium?.toJetBrainsMono,
+            ),
           ),
         ),
       ),
@@ -101,7 +100,7 @@ class _AddOrEditRuleDialogState extends State<AddOrEditRuleDialog> {
   final _contentController = TextEditingController();
   bool _noResolve = false;
   bool _src = false;
-  List<DropdownMenuEntry> _targetItems = [];
+  List<DropdownMenuItem<String>> _targetItems = [];
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -113,7 +112,7 @@ class _AddOrEditRuleDialogState extends State<AddOrEditRuleDialog> {
   void _initState() {
     _targetItems = [
       ...RuleTarget.values.map(
-        (item) => DropdownMenuEntry(value: item.name, label: item.name),
+        (item) => DropdownMenuItem(value: item.name, child: Text(item.name)),
       ),
     ];
     if (widget.rule != null) {
@@ -127,7 +126,7 @@ class _AddOrEditRuleDialogState extends State<AddOrEditRuleDialog> {
     }
     _ruleAction = RuleAction.addedRuleActions.first;
     if (_targetItems.isNotEmpty) {
-      _ruleTargetController.text = _targetItems.first.value;
+      _ruleTargetController.text = _targetItems.first.value ?? '';
     }
   }
 
@@ -169,133 +168,131 @@ class _AddOrEditRuleDialogState extends State<AddOrEditRuleDialog> {
           child: Text(appLocalizations.confirm),
         ),
       ],
-      child: DropdownMenuTheme(
-        data: DropdownMenuThemeData(
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(),
-            labelStyle: context.textTheme.bodyLarge?.copyWith(
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-        child: Form(
-          key: _formKey,
-          child: LayoutBuilder(
-            builder: (_, constraints) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FilledButton.tonal(
-                    onPressed: () async {
-                      _ruleAction =
-                          await globalState.showCommonDialog<RuleAction>(
-                            filter: false,
-                            child: OptionsDialog<RuleAction>(
-                              title: appLocalizations.ruleName,
-                              options: RuleAction.addedRuleActions,
-                              textBuilder: (item) => item.value,
-                              value: _ruleAction,
-                            ),
-                          ) ??
-                          _ruleAction;
-                      setState(() {});
-                    },
-                    child: Text(_ruleAction.value),
+      child: Form(
+        key: _formKey,
+        child: LayoutBuilder(
+          builder: (_, constraints) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    _ruleAction =
+                        await globalState.showCommonDialog<RuleAction>(
+                              filter: false,
+                              child: OptionsDialog<RuleAction>(
+                                title: appLocalizations.ruleName,
+                                options: RuleAction.addedRuleActions,
+                                textBuilder: (item) => item.value,
+                                value: _ruleAction,
+                              ),
+                            ) ??
+                            _ruleAction;
+                    setState(() {});
+                  },
+                  child: Text(_ruleAction.value),
+                ),
+                SizedBox(height: 24),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  onFieldSubmitted: (_) {
+                    _handleSubmit();
+                  },
+                  controller: _contentController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: appLocalizations.content,
                   ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    onFieldSubmitted: (_) {
-                      _handleSubmit();
-                    },
-                    controller: _contentController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: appLocalizations.content,
-                    ),
-                    validator: (_) {
-                      if (_contentController.text.isEmpty) {
-                        return appLocalizations.emptyTip(
-                          appLocalizations.content,
-                        );
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  FormField<String>(
-                    validator: (_) {
-                      if (_ruleTargetController.text.isEmpty) {
-                        return appLocalizations.emptyTip(
-                          appLocalizations.ruleTarget,
-                        );
-                      }
-                      return null;
-                    },
-                    builder: (filed) {
-                      return DropdownMenu(
-                        controller: _ruleTargetController,
-                        label: Text(appLocalizations.ruleTarget),
-                        width: 200,
-                        menuHeight: 250,
-                        enableFilter: false,
-                        enableSearch: false,
-                        dropdownMenuEntries: _targetItems,
-                        errorText: filed.errorText,
+                  validator: (_) {
+                    if (_contentController.text.isEmpty) {
+                      return appLocalizations.emptyTip(
+                        appLocalizations.content,
                       );
-                    },
-                  ),
-                  if (_ruleAction.hasParams) ...[
-                    SizedBox(height: 20),
-                    Wrap(
-                      spacing: 8,
-                      children: [
-                        CommonCard(
-                          radius: 8,
-                          isSelected: _src,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            child: Text(
-                              appLocalizations.sourceIp,
-                              style: context.textTheme.bodyMedium,
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _src = !_src;
-                            });
-                          },
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 24),
+                FormField<String>(
+                  validator: (_) {
+                    if (_ruleTargetController.text.isEmpty) {
+                      return appLocalizations.emptyTip(
+                        appLocalizations.ruleTarget,
+                      );
+                    }
+                    return null;
+                  },
+                  builder: (filed) {
+                    return SizedBox(
+                      width: 200,
+                      child: DropdownButtonFormField<String>(
+                        value: _ruleTargetController.text.isEmpty
+                            ? null
+                            : _ruleTargetController.text,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: appLocalizations.ruleTarget,
+                          errorText: filed.errorText,
                         ),
-                        CommonCard(
-                          radius: 8,
-                          isSelected: _noResolve,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            child: Text(
-                              appLocalizations.noResolve,
-                              style: context.textTheme.bodyMedium,
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _noResolve = !_noResolve;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
+                        items: _targetItems,
+                        onChanged: (value) {
+                          _ruleTargetController.text = value ?? '';
+                          filed.didChange(value);
+                        },
+                      ),
+                    );
+                  },
+                ),
+                if (_ruleAction.hasParams) ...[
                   SizedBox(height: 20),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      CommonCard(
+                        radius: 8,
+                        isSelected: _src,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            appLocalizations.sourceIp,
+                            style: context.textTheme.bodyMedium,
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _src = !_src;
+                          });
+                        },
+                      ),
+                      CommonCard(
+                        radius: 8,
+                        isSelected: _noResolve,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            appLocalizations.noResolve,
+                            style: context.textTheme.bodyMedium,
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _noResolve = !_noResolve;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ],
-              );
-            },
-          ),
+                SizedBox(height: 20),
+              ],
+            );
+          },
         ),
       ),
     );

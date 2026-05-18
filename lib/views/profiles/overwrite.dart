@@ -48,8 +48,8 @@ class _OverwriteViewState extends ConsumerState<OverwriteView> {
     return CommonScaffold(
       title: appLocalizations.override,
       actions: [
-        CommonMinFilledButtonTheme(
-          child: FilledButton(
+        CommonMinElevatedButtonTheme(
+          child: ElevatedButton(
             onPressed: _handlePreview,
             child: Text(appLocalizations.preview),
           ),
@@ -75,27 +75,30 @@ class _Title extends ConsumerWidget {
   const _Title(this.profileId);
 
   String _getTitle(OverwriteType type) {
-    return switch (type) {
-      OverwriteType.standard => appLocalizations.standard,
-      OverwriteType.script => appLocalizations.script,
-      // OverwriteType.custom => appLocalizations.overwriteTypeCustom,
-    };
+    switch (type) {
+      case OverwriteType.standard:
+        return appLocalizations.standard;
+      case OverwriteType.script:
+        return appLocalizations.script;
+    }
   }
 
   IconData _getIcon(OverwriteType type) {
-    return switch (type) {
-      OverwriteType.standard => Icons.stars,
-      OverwriteType.script => Icons.rocket,
-      // OverwriteType.custom => Icons.dashboard_customize,
-    };
+    switch (type) {
+      case OverwriteType.standard:
+        return Icons.stars;
+      case OverwriteType.script:
+        return Icons.rocket;
+    }
   }
 
   String _getDesc(OverwriteType type) {
-    return switch (type) {
-      OverwriteType.standard => appLocalizations.standardModeDesc,
-      OverwriteType.script => appLocalizations.scriptModeDesc,
-      // OverwriteType.custom => appLocalizations.overwriteTypeCustomDesc,
-    };
+    switch (type) {
+      case OverwriteType.standard:
+        return appLocalizations.standardModeDesc;
+      case OverwriteType.script:
+        return appLocalizations.scriptModeDesc;
+    }
   }
 
   void _handleChangeType(WidgetRef ref, OverwriteType type) {
@@ -164,11 +167,12 @@ class _Content extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final overwriteType = ref.watch(overwriteTypeProvider(profileId));
-    return switch (overwriteType) {
-      OverwriteType.standard => _StandardContent(profileId),
-      OverwriteType.script => _ScriptContent(profileId),
-      // OverwriteType.custom => SliverToBoxAdapter(),
-    };
+    switch (overwriteType) {
+      case OverwriteType.standard:
+        return _StandardContent(profileId);
+      case OverwriteType.script:
+        return _ScriptContent(profileId);
+    }
   }
 }
 
@@ -203,8 +207,7 @@ class __StandardContentState extends ConsumerState<_StandardContent> {
   }
 
   void _handleSelectAll() {
-    final ids =
-        ref
+    final ids = ref
             .read(profileAddedRulesProvider(widget.profileId))
             .value
             ?.map((item) => item.id)
@@ -246,85 +249,81 @@ class __StandardContentState extends ConsumerState<_StandardContent> {
         Navigator.of(context).pop();
         return false;
       },
-      child: SliverMainAxisGroup(
-        slivers: [
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                InfoHeader(
-                  info: Info(label: appLocalizations.addedRules),
-                  actions: [
-                    if (selectedRules.isNotEmpty) ...[
-                      CommonMinIconButtonTheme(
-                        child: IconButton.filledTonal(
-                          onPressed: () {
-                            _handleDelete();
-                          },
-                          icon: Icon(Icons.delete),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                    ],
-                    CommonMinFilledButtonTheme(
-                      child: selectedRules.isNotEmpty
-                          ? FilledButton(
-                              onPressed: () {
-                                _handleSelectAll();
-                              },
-                              child: Text(appLocalizations.selectAll),
-                            )
-                          : FilledButton.tonal(
-                              onPressed: () {
-                                _handleAddOrUpdate();
-                              },
-                              child: Text(appLocalizations.add),
-                            ),
+      child: SliverToBoxAdapter(
+        child: Column(
+          children: [
+            SizedBox(height: 24),
+            InfoHeader(
+              info: Info(label: appLocalizations.addedRules),
+              actions: [
+                if (selectedRules.isNotEmpty) ...[
+                  CommonMinIconButtonTheme(
+                    child: IconButton(
+                      onPressed: () {
+                        _handleDelete();
+                      },
+                      icon: Icon(Icons.delete),
                     ),
-                  ],
+                  ),
+                  SizedBox(width: 8),
+                ],
+                CommonMinElevatedButtonTheme(
+                  child: selectedRules.isNotEmpty
+                      ? ElevatedButton(
+                          onPressed: () {
+                            _handleSelectAll();
+                          },
+                          child: Text(appLocalizations.selectAll),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            _handleAddOrUpdate();
+                          },
+                          child: Text(appLocalizations.add),
+                        ),
                 ),
               ],
             ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 8)),
-          Consumer(
-            builder: (_, ref, _) {
-              return SliverReorderableList(
-                itemCount: addedRules.length,
-                itemBuilder: (_, index) {
-                  final rule = addedRules[index];
-                  return ReorderableDelayedDragStartListener(
-                    key: ObjectKey(rule),
-                    index: index,
-                    child: RuleItem(
-                      isEditing: selectedRules.isNotEmpty,
-                      isSelected: selectedRules.contains(rule.id),
-                      rule: rule,
-                      onSelected: () {
-                        _handleSelected(rule.id);
-                      },
-                      onEdit: (rule) {
-                        _handleAddOrUpdate(rule);
-                      },
-                    ),
-                  );
-                },
-                onReorder: ref
-                    .read(profileAddedRulesProvider(widget.profileId).notifier)
-                    .order,
-              );
-            },
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
+            SizedBox(height: 8),
+            Consumer(
+              builder: (_, ref, __) {
+                return ReorderableListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  buildDefaultDragHandles: false,
+                  itemCount: addedRules.length,
+                  itemBuilder: (_, index) {
+                    final rule = addedRules[index];
+                    return ReorderableDelayedDragStartListener(
+                      key: ObjectKey(rule),
+                      index: index,
+                      child: RuleItem(
+                        isEditing: selectedRules.isNotEmpty,
+                        isSelected: selectedRules.contains(rule.id),
+                        rule: rule,
+                        onSelected: () {
+                          _handleSelected(rule.id);
+                        },
+                        onEdit: (rule) {
+                          _handleAddOrUpdate(rule);
+                        },
+                      ),
+                    );
+                  },
+                  onReorder: ref
+                      .read(
+                          profileAddedRulesProvider(widget.profileId).notifier)
+                      .order,
+                );
+              },
+            ),
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: CommonCard(
                 padding: EdgeInsets.zero,
                 radius: 18,
                 child: ListTile(
-                  minTileHeight: 0,
                   minVerticalPadding: 0,
-                  titleTextStyle: context.textTheme.bodyMedium?.toJetBrainsMono,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
@@ -351,8 +350,8 @@ class __StandardContentState extends ConsumerState<_StandardContent> {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -377,80 +376,73 @@ class _ScriptContent extends ConsumerWidget {
       profileProvider(profileId).select((state) => state?.scriptId),
     );
     final scripts = ref.watch(scriptsProvider).value ?? [];
-    return SliverMainAxisGroup(
-      slivers: [
-        SliverToBoxAdapter(child: SizedBox(height: 24)),
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              InfoHeader(info: Info(label: appLocalizations.overrideScript)),
-            ],
-          ),
-        ),
-        SliverToBoxAdapter(child: SizedBox(height: 8)),
-        Consumer(
-          builder: (_, ref, _) {
-            return SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverList.builder(
-                itemCount: scripts.length,
-                itemBuilder: (_, index) {
-                  final script = scripts[index];
-                  return Container(
-                    margin: EdgeInsets.symmetric(vertical: 4),
-                    child: CommonCard(
-                      padding: EdgeInsets.zero,
-                      type: CommonCardType.filled,
-                      radius: 18,
-                      child: ListTile(
-                        minLeadingWidth: 0,
-                        minTileHeight: 0,
-                        minVerticalPadding: 16,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                        ),
-                        title: Row(
-                          children: [
-                            SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: Radio(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                visualDensity: VisualDensity.compact,
-                                toggleable: true,
-                                value: script.id,
-                                groupValue: scriptId,
-                                onChanged: (_) {
-                                  _handleChange(ref, script.id);
-                                },
+    return SliverToBoxAdapter(
+      child: Column(
+        children: [
+          SizedBox(height: 24),
+          InfoHeader(info: Info(label: appLocalizations.overrideScript)),
+          SizedBox(height: 8),
+          Consumer(
+            builder: (_, ref, __) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: scripts.length,
+                  itemBuilder: (_, index) {
+                    final script = scripts[index];
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 4),
+                      child: CommonCard(
+                        padding: EdgeInsets.zero,
+                        type: CommonCardType.filled,
+                        radius: 18,
+                        child: ListTile(
+                          minLeadingWidth: 0,
+                          minVerticalPadding: 16,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                          ),
+                          title: Row(
+                            children: [
+                              SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: Radio(
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  visualDensity: VisualDensity.compact,
+                                  toggleable: true,
+                                  value: script.id,
+                                  groupValue: scriptId,
+                                  onChanged: (_) {
+                                    _handleChange(ref, script.id);
+                                  },
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 8),
-                            Flexible(child: Text(script.label)),
-                          ],
+                              SizedBox(width: 8),
+                              Flexible(child: Text(script.label)),
+                            ],
+                          ),
+                          onTap: () {
+                            _handleChange(ref, script.id);
+                          },
                         ),
-                        onTap: () {
-                          _handleChange(ref, script.id);
-                        },
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: CommonCard(
               padding: EdgeInsets.zero,
               radius: 18,
               child: ListTile(
-                minTileHeight: 0,
                 minVerticalPadding: 0,
-                titleTextStyle: context.textTheme.bodyMedium?.toJetBrainsMono,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 16,
@@ -474,8 +466,8 @@ class _ScriptContent extends ConsumerWidget {
               },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

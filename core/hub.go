@@ -1,7 +1,6 @@
 package main
 
 import (
-	"cmp"
 	"context"
 	"encoding/json"
 	"github.com/metacubex/mihomo/adapter"
@@ -329,7 +328,13 @@ func handleGetExternalProviders() string {
 		eps = append(eps, *externalProvider)
 	}
 	slices.SortFunc(eps, func(a, b ExternalProvider) int {
-		return cmp.Compare(a.Name, b.Name)
+		if a.Name < b.Name {
+			return -1
+		}
+		if a.Name > b.Name {
+			return 1
+		}
+		return 0
 	})
 	data, err := json.Marshal(eps)
 	if err != nil {

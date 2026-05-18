@@ -1,5 +1,6 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 
+import 'package:fl_clash/common/color.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -71,8 +72,7 @@ class _PaletteState extends State<Palette> {
     final center = Offset(size.width / 2, size.height / 2);
     final vector = offset - startPosition - center;
     final vectorLength = _Computer.vectorLength(vector);
-    isSquare =
-        vector.dx.abs() < effectiveSquareRadius &&
+    isSquare = vector.dx.abs() < effectiveSquareRadius &&
         vector.dy.abs() < effectiveSquareRadius;
     isTrack = vectorLength >= radius && vectorLength <= radiusOuter;
     if (isSquare) {
@@ -134,7 +134,7 @@ class _PaletteState extends State<Palette> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.controller,
-      builder: (_, _, _) {
+      builder: (_, __, ___) {
         return GestureDetector(
           dragStartBehavior: DragStartBehavior.down,
           onVerticalDragDown: (DragDownDetails details) =>
@@ -151,7 +151,7 @@ class _PaletteState extends State<Palette> {
             child: Focus(
               focusNode: _focusNode,
               child: MouseRegion(
-                cursor: WidgetStateMouseCursor.clickable,
+                cursor: MaterialStateMouseCursor.clickable,
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
@@ -225,7 +225,8 @@ class _ShadePainter extends CustomPainter {
     double radius,
     double trackWidth,
     double padding,
-  ) => (radius - trackWidth / 2 - padding) / math.sqrt(2);
+  ) =>
+      (radius - trackWidth / 2 - padding) / math.sqrt(2);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -343,7 +344,8 @@ class _ShadeThumbPainter extends CustomPainter {
     double radius,
     double thickness,
     double trackSquarePadding,
-  ) => (radius - thickness / 2 - trackSquarePadding) / math.sqrt(2);
+  ) =>
+      (radius - thickness / 2 - trackSquarePadding) / math.sqrt(2);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -390,7 +392,7 @@ class _ShadeThumbPainter extends CustomPainter {
 
 class _TrackThumbPainter extends CustomPainter {
   const _TrackThumbPainter({required this.colorHue, required this.thickness})
-    : super();
+      : super();
 
   final double colorHue;
   final double thickness;
@@ -440,15 +442,16 @@ class _Computer {
       0.5 - vectorY * 0.5 / squareRadius;
 
   static Offset hueToVector(double h, double radius, Offset center) => Offset(
-    math.cos(h) * radius + center.dx,
-    math.sin(h) * radius + center.dy,
-  );
+        math.cos(h) * radius + center.dx,
+        math.sin(h) * radius + center.dy,
+      );
 
   static double saturationToVector(
     double s,
     double squareRadius,
     double centerX,
-  ) => (s - 0.5) * squareRadius / 0.5 + centerX;
+  ) =>
+      (s - 0.5) * squareRadius / 0.5 + centerX;
 
   static double valueToVector(double l, double squareRadius, double centerY) =>
       (0.5 - l) * squareRadius / 0.5 + centerY;

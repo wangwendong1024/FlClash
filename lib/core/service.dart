@@ -76,15 +76,14 @@ class CoreService extends CoreHandlerInterface {
         .transform(utf8.decoder)
         .transform(LineSplitter())
         .listen((data) async {
-          final dataJson = await data.trim().commonToJSON<dynamic>();
-          handleResult(ActionResult.fromJson(dataJson));
-        })
-        .onDone(() {
-          _handleInvokeCrashEvent();
-          if (!_shutdownCompleter.isCompleted) {
-            _shutdownCompleter.complete(true);
-          }
-        });
+      final dataJson = await data.trim().commonToJSON<dynamic>();
+      handleResult(ActionResult.fromJson(dataJson));
+    }).onDone(() {
+      _handleInvokeCrashEvent();
+      if (!_shutdownCompleter.isCompleted) {
+        _shutdownCompleter.complete(true);
+      }
+    });
   }
 
   void _handleInvokeCrashEvent() {
@@ -190,15 +189,15 @@ class CoreService extends CoreHandlerInterface {
     _callbackCompleterMap[id] = Completer<T?>();
     sendMessage(json.encode(Action(id: id, method: method, data: data)));
     return (_callbackCompleterMap[id] as Completer<T?>).future.withTimeout(
-      timeout: timeout,
-      onLast: () {
-        final completer = _callbackCompleterMap[id];
-        completer?.safeCompleter(null);
-        _callbackCompleterMap.remove(id);
-      },
-      tag: id,
-      onTimeout: () => null,
-    );
+          timeout: timeout,
+          onLast: () {
+            final completer = _callbackCompleterMap[id];
+            completer?.safeCompleter(null);
+            _callbackCompleterMap.remove(id);
+          },
+          tag: id,
+          onTimeout: () => null,
+        );
   }
 
   @override

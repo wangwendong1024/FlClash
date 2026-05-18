@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 
 import 'package:fl_clash/common/color.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class _LineChartState extends State<LineChart>
       builder: (_, container) {
         return AnimatedBuilder(
           animation: _controller.view,
-          builder: (_, _) {
+          builder: (_, __) {
             return CustomPaint(
               painter: LineChartPainter(
                 prevRenderPoints: _prevRenderPoints,

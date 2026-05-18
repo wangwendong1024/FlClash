@@ -215,9 +215,7 @@ class BypassDomainItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(networkSettingProvider.notifier)
-              .update(
+          ref.read(networkSettingProvider.notifier).update(
                 (state) => state.copyWith(bypassDomain: List.from(items)),
               );
         },
@@ -305,9 +303,7 @@ class RouteAddressItem extends ConsumerWidget {
           titleBuilder: (item) => Text(item),
         ),
         onChanged: (items) {
-          ref
-              .read(patchClashConfigProvider.notifier)
-              .update(
+          ref.read(patchClashConfigProvider.notifier).update(
                 (state) => state.copyWith.tun(routeAddress: List.from(items)),
               );
         },

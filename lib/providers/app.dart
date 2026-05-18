@@ -6,11 +6,12 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:flutter/services.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/app.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class RealTunEnable extends _$RealTunEnable with AutoDisposeNotifierMixin {
   @override
   bool build() {
@@ -240,13 +241,15 @@ class SystemUiOverlayStyleState extends _$SystemUiOverlayStyleState
   }
 }
 
-@Riverpod(name: 'coreStatusProvider', keepAlive: true)
+@Riverpod(keepAlive: true)
 class _CoreStatus extends _$CoreStatus with AutoDisposeNotifierMixin {
   @override
   CoreStatus build() {
     return CoreStatus.disconnected;
   }
 }
+
+final coreStatusProvider = _coreStatusProvider;
 
 @riverpod
 class Query extends _$Query with AutoDisposeNotifierMixin {
@@ -367,31 +370,28 @@ class NetworkDetection extends _$NetworkDetection
   }
 }
 
-List<Override> buildAppStateOverrides(AppState appState) {
-  return [
-    initProvider.overrideWithBuild((_, _) => appState.isInit),
-    backBlockProvider.overrideWithBuild((_, _) => appState.backBlock),
-    currentPageLabelProvider.overrideWithBuild((_, _) => appState.pageLabel),
-    packagesProvider.overrideWithBuild((_, _) => appState.packages),
-    sortNumProvider.overrideWithBuild((_, _) => appState.sortNum),
-    viewSizeProvider.overrideWithBuild((_, _) => appState.viewSize),
-    sideWidthProvider.overrideWithBuild((_, _) => appState.sideWidth),
-    delayDataSourceProvider.overrideWithBuild((_, _) => appState.delayMap),
-    groupsProvider.overrideWithBuild((_, _) => appState.groups),
-    checkIpNumProvider.overrideWithBuild((_, _) => appState.checkIpNum),
-    systemBrightnessProvider.overrideWithBuild((_, _) => appState.brightness),
-    runTimeProvider.overrideWithBuild((_, _) => appState.runTime),
-    providersProvider.overrideWithBuild((_, _) => appState.providers),
-    localIpProvider.overrideWithBuild((_, _) => appState.localIp),
-    requestsProvider.overrideWithBuild((_, _) => appState.requests),
-    versionProvider.overrideWithBuild((_, _) => appState.version),
-    logsProvider.overrideWithBuild((_, _) => appState.logs),
-    trafficsProvider.overrideWithBuild((_, _) => appState.traffics),
-    totalTrafficProvider.overrideWithBuild((_, _) => appState.totalTraffic),
-    realTunEnableProvider.overrideWithBuild((_, _) => appState.realTunEnable),
-    systemUiOverlayStyleStateProvider.overrideWithBuild(
-      (_, _) => appState.systemUiOverlayStyle,
-    ),
-    coreStatusProvider.overrideWithBuild((_, _) => appState.coreStatus),
-  ];
+void restoreAppState(ProviderContainer container, AppState appState) {
+  container.read(initProvider.notifier).value = appState.isInit;
+  container.read(backBlockProvider.notifier).value = appState.backBlock;
+  container.read(currentPageLabelProvider.notifier).value = appState.pageLabel;
+  container.read(packagesProvider.notifier).value = appState.packages;
+  container.read(sortNumProvider.notifier).value = appState.sortNum;
+  container.read(viewSizeProvider.notifier).value = appState.viewSize;
+  container.read(sideWidthProvider.notifier).value = appState.sideWidth;
+  container.read(delayDataSourceProvider.notifier).value = appState.delayMap;
+  container.read(groupsProvider.notifier).value = appState.groups;
+  container.read(checkIpNumProvider.notifier).value = appState.checkIpNum;
+  container.read(systemBrightnessProvider.notifier).value = appState.brightness;
+  container.read(runTimeProvider.notifier).value = appState.runTime;
+  container.read(providersProvider.notifier).value = appState.providers;
+  container.read(localIpProvider.notifier).value = appState.localIp;
+  container.read(requestsProvider.notifier).value = appState.requests;
+  container.read(versionProvider.notifier).value = appState.version;
+  container.read(logsProvider.notifier).value = appState.logs;
+  container.read(trafficsProvider.notifier).value = appState.traffics;
+  container.read(totalTrafficProvider.notifier).value = appState.totalTraffic;
+  container.read(realTunEnableProvider.notifier).value = appState.realTunEnable;
+  container.read(systemUiOverlayStyleStateProvider.notifier).value =
+      appState.systemUiOverlayStyle;
+  container.read(coreStatusProvider.notifier).value = appState.coreStatus;
 }

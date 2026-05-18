@@ -58,12 +58,11 @@ class ProfilesDao extends DatabaseAccessor<Database> with _$ProfilesDaoMixin {
   ProfilesDao(super.attachedDatabase);
 
   Selectable<Profile> all() {
-    final stmt = profiles.select();
-    stmt.orderBy([
-      (t) => OrderingTerm(expression: t.order, nulls: NullsOrder.last),
-      (t) => OrderingTerm.asc(t.id),
-    ]);
-    return stmt.map((item) => item.toProfile());
+    return customSelect(
+      'SELECT * FROM "profiles" '
+      'ORDER BY ("order" IS NULL) ASC, "order" ASC, "id" ASC',
+      readsFrom: {profiles},
+    ).map((row) => profiles.map(row.data).toProfile());
   }
 
   Future<void> setAll(Iterable<Profile> profiles) async {

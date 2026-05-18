@@ -34,7 +34,7 @@ class AddProfileView extends StatelessWidget {
   Future<void> _toAdd() async {
     final url = await globalState.showCommonDialog<String>(
       child: InputDialog(
-        autovalidateMode: AutovalidateMode.onUnfocus,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         title: appLocalizations.importFromURL,
         labelText: appLocalizations.url,
         value: '',

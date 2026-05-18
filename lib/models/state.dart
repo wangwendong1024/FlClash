@@ -234,11 +234,14 @@ extension PackageListSelectorStateExt on PackageListSelectorState {
       if (isSelectA != isSelectB) {
         return isSelectA ? -1 : 1;
       }
-      return switch (sort) {
-        AccessSortType.none => 0,
-        AccessSortType.name => a.label.compareTo(b.label),
-        AccessSortType.time => b.lastUpdateTime.compareTo(a.lastUpdateTime),
-      };
+      switch (sort) {
+        case AccessSortType.none:
+          return 0;
+        case AccessSortType.name:
+          return a.label.compareTo(b.label);
+        case AccessSortType.time:
+          return b.lastUpdateTime.compareTo(a.lastUpdateTime);
+      }
     });
   }
 }

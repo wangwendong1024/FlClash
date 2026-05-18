@@ -103,9 +103,7 @@ class DeveloperView extends ConsumerWidget {
                 delegate: SwitchDelegate(
                   value: enable,
                   onChanged: (value) {
-                    ref
-                        .read(appSettingProvider.notifier)
-                        .update(
+                    ref.read(appSettingProvider.notifier).update(
                           (state) => state.copyWith(developerMode: value),
                         );
                   },

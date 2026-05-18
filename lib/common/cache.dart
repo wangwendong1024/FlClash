@@ -14,7 +14,7 @@ class LocalImageCacheManager extends CacheManager {
   }
 
   LocalImageCacheManager._()
-    : super(Config(key, fileService: _LocalImageCacheFileService()));
+      : super(Config(key, fileService: _LocalImageCacheFileService()));
 }
 
 class _LocalImageCacheFileService extends FileService {
@@ -52,7 +52,8 @@ class _LocalImageResponse implements FileServiceResponse {
       _response.data!.stream.transform(uint8ListToListIntConverter);
 
   @override
-  int? get contentLength => _response.data?.contentLength;
+  int? get contentLength =>
+      int.tryParse(_header(HttpHeaders.contentLengthHeader) ?? '');
 
   @override
   DateTime get validTill {

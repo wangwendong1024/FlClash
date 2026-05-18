@@ -57,8 +57,8 @@ class InfoHeader extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: context.colorScheme.onSurfaceVariant,
-                      ),
+                            color: context.colorScheme.onSurfaceVariant,
+                          ),
                     ),
                   ),
                 ),
@@ -107,10 +107,10 @@ class CommonCard extends StatelessWidget {
   final CommonCardType type;
   final double? radius;
 
-  // final WidgetStateProperty<Color?>? backgroundColor;
-  // final WidgetStateProperty<BorderSide?>? borderSide;
+  // final MaterialStateProperty<Color?>? backgroundColor;
+  // final MaterialStateProperty<BorderSide?>? borderSide;
 
-  BorderSide getBorderSide(BuildContext context, Set<WidgetState> states) {
+  BorderSide getBorderSide(BuildContext context, Set<MaterialState> states) {
     final colorScheme = context.colorScheme;
     if (type == CommonCardType.filled) {
       return BorderSide.none;
@@ -118,9 +118,9 @@ class CommonCard extends StatelessWidget {
     final hoverColor = isSelected
         ? colorScheme.primary.opacity80
         : colorScheme.primary.opacity60;
-    if (states.contains(WidgetState.hovered) ||
-        states.contains(WidgetState.focused) ||
-        states.contains(WidgetState.pressed)) {
+    if (states.contains(MaterialState.hovered) ||
+        states.contains(MaterialState.focused) ||
+        states.contains(MaterialState.pressed)) {
       return BorderSide(color: hoverColor);
     }
     return BorderSide(
@@ -130,7 +130,7 @@ class CommonCard extends StatelessWidget {
     );
   }
 
-  Color? getBackgroundColor(BuildContext context, Set<WidgetState> states) {
+  Color? getBackgroundColor(BuildContext context, Set<MaterialState> states) {
     final colorScheme = context.colorScheme;
     if (type == CommonCardType.filled) {
       if (isSelected) {
@@ -144,7 +144,7 @@ class CommonCard extends StatelessWidget {
     return colorScheme.surfaceContainerLow;
   }
 
-  Color? getForegroundColor(BuildContext context, Set<WidgetState> states) {
+  Color? getForegroundColor(BuildContext context, Set<MaterialState> states) {
     final colorScheme = context.colorScheme;
     if (type == CommonCardType.filled) {
       if (isSelected) {
@@ -186,21 +186,19 @@ class CommonCard extends StatelessWidget {
       onLongPress: onLongPress,
       clipBehavior: Clip.antiAlias,
       style: ButtonStyle(
-        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
-        shape: WidgetStatePropertyAll(
+        padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+        shape: MaterialStatePropertyAll(
           RoundedSuperellipseBorder(
             borderRadius: BorderRadius.circular(radius ?? 14),
           ),
         ),
-        iconColor: WidgetStatePropertyAll(context.colorScheme.primary),
-        iconSize: WidgetStateProperty.all(20),
-        backgroundColor: WidgetStateProperty.resolveWith(
+        backgroundColor: MaterialStateProperty.resolveWith(
           (states) => getBackgroundColor(context, states),
         ),
-        foregroundColor: WidgetStateProperty.resolveWith(
+        foregroundColor: MaterialStateProperty.resolveWith(
           (states) => getForegroundColor(context, states),
         ),
-        side: WidgetStateProperty.resolveWith(
+        side: MaterialStateProperty.resolveWith(
           (states) => getBorderSide(context, states),
         ),
       ),
@@ -208,10 +206,10 @@ class CommonCard extends StatelessWidget {
       child: childWidget,
     );
 
-    return switch (enterAnimated) {
-      true => FadeScaleEnterBox(child: card),
-      false => card,
-    };
+    if (enterAnimated) {
+      return FadeScaleEnterBox(child: card);
+    }
+    return card;
   }
 }
 

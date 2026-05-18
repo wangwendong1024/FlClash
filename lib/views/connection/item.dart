@@ -32,10 +32,10 @@ class TrackerInfoItem extends ConsumerWidget {
 
   String _getSourceText(TrackerInfo trackerInfo) {
     final progress = trackerInfo.progressText.isNotEmpty
-        ? '${trackerInfo.progressText} · '
+        ? '${trackerInfo.progressText} 路 '
         : '';
     final traffic = Traffic(up: trackerInfo.upload, down: trackerInfo.download);
-    return '${trackerInfo.start.lastUpdateTimeDesc} · $progress${traffic.desc}';
+    return '${trackerInfo.start.lastUpdateTimeDesc} 路 $progress${traffic.desc}';
   }
 
   @override
@@ -80,13 +80,12 @@ class TrackerInfoItem extends ConsumerWidget {
     final subTitle = SizedBox(
       height: subTitleHeight,
       child: Row(
-        spacing: 8,
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
             child: ListView.separated(
-              separatorBuilder: (_, _) => SizedBox(width: 6),
+              separatorBuilder: (_, __) => SizedBox(width: 6),
               padding: EdgeInsets.zero,
               scrollDirection: Axis.horizontal,
               itemCount: trackerInfo.chains.length,
@@ -106,7 +105,7 @@ class TrackerInfoItem extends ConsumerWidget {
             ),
           ),
           if (trailing != null) trailing!,
-        ],
+        ].separated(SizedBox(width: 8)).toList(),
       ),
     );
     final icon = value
@@ -160,11 +159,10 @@ class TrackerInfoItem extends ConsumerWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 12,
             children: [
               if (icon != null) icon,
               Flexible(child: title),
-            ],
+            ].separated(SizedBox(width: 12)).toList(),
           ),
           const SizedBox(height: 8),
           subTitle,
@@ -235,11 +233,10 @@ class TrackerInfoDetailView extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 20,
         children: [
           Text(appLocalizations.proxyChains),
           Flexible(child: chains),
-        ],
+        ].separated(SizedBox(width: 20)).toList(),
       ),
     );
   }
@@ -251,12 +248,10 @@ class TrackerInfoDetailView extends StatelessWidget {
   }) {
     return ListItem(
       title: Row(
-        spacing: 16,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            spacing: 4,
             children: [
               Text(title),
               if (quickCopy)
@@ -269,10 +264,10 @@ class TrackerInfoDetailView extends StatelessWidget {
                     onPressed: () {},
                   ),
                 ),
-            ],
+            ].separated(SizedBox(width: 4)).toList(),
           ),
           Flexible(child: Text(desc, textAlign: TextAlign.end)),
-        ],
+        ].separated(SizedBox(width: 16)).toList(),
       ),
     );
   }

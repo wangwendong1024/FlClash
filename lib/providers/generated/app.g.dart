@@ -6,1839 +6,895 @@ part of '../app.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint, type=warning
-
-@ProviderFor(RealTunEnable)
-const realTunEnableProvider = RealTunEnableProvider._();
-
-final class RealTunEnableProvider
-    extends $NotifierProvider<RealTunEnable, bool> {
-  const RealTunEnableProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'realTunEnableProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$realTunEnableHash();
-
-  @$internal
-  @override
-  RealTunEnable create() => RealTunEnable();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
-String _$realTunEnableHash() => r'f2c88f5031d1f97665c10f70121082c4f6d6c99d';
-
-abstract class _$RealTunEnable extends $Notifier<bool> {
-  bool build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Logs)
-const logsProvider = LogsProvider._();
-
-final class LogsProvider extends $NotifierProvider<Logs, FixedList<Log>> {
-  const LogsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'logsProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$logsHash();
-
-  @$internal
-  @override
-  Logs create() => Logs();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(FixedList<Log> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<FixedList<Log>>(value),
-    );
-  }
-}
-
-String _$logsHash() => r'f327fa8d05527172a647adf07771c797fb436bfd';
-
-abstract class _$Logs extends $Notifier<FixedList<Log>> {
-  FixedList<Log> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<FixedList<Log>, FixedList<Log>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<FixedList<Log>, FixedList<Log>>,
-              FixedList<Log>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Requests)
-const requestsProvider = RequestsProvider._();
-
-final class RequestsProvider
-    extends $NotifierProvider<Requests, FixedList<TrackerInfo>> {
-  const RequestsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'requestsProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$requestsHash();
-
-  @$internal
-  @override
-  Requests create() => Requests();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(FixedList<TrackerInfo> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<FixedList<TrackerInfo>>(value),
-    );
-  }
-}
-
-String _$requestsHash() => r'32e4f0141a66b27732f8156a55a6fb23d74cfc07';
-
-abstract class _$Requests extends $Notifier<FixedList<TrackerInfo>> {
-  FixedList<TrackerInfo> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref =
-        this.ref as $Ref<FixedList<TrackerInfo>, FixedList<TrackerInfo>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<FixedList<TrackerInfo>, FixedList<TrackerInfo>>,
-              FixedList<TrackerInfo>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Providers)
-const providersProvider = ProvidersProvider._();
-
-final class ProvidersProvider
-    extends $NotifierProvider<Providers, List<ExternalProvider>> {
-  const ProvidersProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'providersProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$providersHash();
-
-  @$internal
-  @override
-  Providers create() => Providers();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<ExternalProvider> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<ExternalProvider>>(value),
-    );
-  }
-}
-
-String _$providersHash() => r'8752fd5059f1ff767a7dabd0a4ab92effe2f2651';
-
-abstract class _$Providers extends $Notifier<List<ExternalProvider>> {
-  List<ExternalProvider> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref =
-        this.ref as $Ref<List<ExternalProvider>, List<ExternalProvider>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<List<ExternalProvider>, List<ExternalProvider>>,
-              List<ExternalProvider>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Packages)
-const packagesProvider = PackagesProvider._();
-
-final class PackagesProvider
-    extends $NotifierProvider<Packages, List<Package>> {
-  const PackagesProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'packagesProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$packagesHash();
-
-  @$internal
-  @override
-  Packages create() => Packages();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<Package> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<Package>>(value),
-    );
-  }
-}
-
-String _$packagesHash() => r'93c92438ed777ec4c3017b90c22f4ddd1c02e931';
-
-abstract class _$Packages extends $Notifier<List<Package>> {
-  List<Package> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<List<Package>, List<Package>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<List<Package>, List<Package>>,
-              List<Package>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(SystemBrightness)
-const systemBrightnessProvider = SystemBrightnessProvider._();
-
-final class SystemBrightnessProvider
-    extends $NotifierProvider<SystemBrightness, Brightness> {
-  const SystemBrightnessProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'systemBrightnessProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$systemBrightnessHash();
-
-  @$internal
-  @override
-  SystemBrightness create() => SystemBrightness();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Brightness value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Brightness>(value),
-    );
-  }
-}
-
-String _$systemBrightnessHash() => r'5b8c93dc20f048b12cdad42b301afe8b9aa864cf';
-
-abstract class _$SystemBrightness extends $Notifier<Brightness> {
-  Brightness build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<Brightness, Brightness>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<Brightness, Brightness>,
-              Brightness,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Traffics)
-const trafficsProvider = TrafficsProvider._();
-
-final class TrafficsProvider
-    extends $NotifierProvider<Traffics, FixedList<Traffic>> {
-  const TrafficsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'trafficsProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$trafficsHash();
-
-  @$internal
-  @override
-  Traffics create() => Traffics();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(FixedList<Traffic> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<FixedList<Traffic>>(value),
-    );
-  }
-}
-
-String _$trafficsHash() => r'00b83d393175b51abcef277417fb3d9b70cc247f';
-
-abstract class _$Traffics extends $Notifier<FixedList<Traffic>> {
-  FixedList<Traffic> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<FixedList<Traffic>, FixedList<Traffic>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<FixedList<Traffic>, FixedList<Traffic>>,
-              FixedList<Traffic>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(TotalTraffic)
-const totalTrafficProvider = TotalTrafficProvider._();
-
-final class TotalTrafficProvider
-    extends $NotifierProvider<TotalTraffic, Traffic> {
-  const TotalTrafficProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'totalTrafficProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$totalTrafficHash();
-
-  @$internal
-  @override
-  TotalTraffic create() => TotalTraffic();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Traffic value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Traffic>(value),
-    );
-  }
-}
-
-String _$totalTrafficHash() => r'00c5b34834882c4db0eacf948121ddbe9921728a';
-
-abstract class _$TotalTraffic extends $Notifier<Traffic> {
-  Traffic build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<Traffic, Traffic>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<Traffic, Traffic>,
-              Traffic,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(LocalIp)
-const localIpProvider = LocalIpProvider._();
-
-final class LocalIpProvider extends $NotifierProvider<LocalIp, String?> {
-  const LocalIpProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'localIpProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$localIpHash();
-
-  @$internal
-  @override
-  LocalIp create() => LocalIp();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(String? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<String?>(value),
-    );
-  }
-}
-
-String _$localIpHash() => r'7daf4c498425db64db4e33b10c870d8fa10695d8';
-
-abstract class _$LocalIp extends $Notifier<String?> {
-  String? build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<String?, String?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<String?, String?>,
-              String?,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(RunTime)
-const runTimeProvider = RunTimeProvider._();
-
-final class RunTimeProvider extends $NotifierProvider<RunTime, int?> {
-  const RunTimeProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'runTimeProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$runTimeHash();
-
-  @$internal
-  @override
-  RunTime create() => RunTime();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(int? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<int?>(value),
-    );
-  }
-}
-
-String _$runTimeHash() => r'665a3a58487bb59aa54c3f797db0627986aa878f';
-
-abstract class _$RunTime extends $Notifier<int?> {
-  int? build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<int?, int?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<int?, int?>,
-              int?,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(ViewSize)
-const viewSizeProvider = ViewSizeProvider._();
-
-final class ViewSizeProvider extends $NotifierProvider<ViewSize, Size> {
-  const ViewSizeProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'viewSizeProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$viewSizeHash();
-
-  @$internal
-  @override
-  ViewSize create() => ViewSize();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Size value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Size>(value),
-    );
-  }
-}
-
-String _$viewSizeHash() => r'3f355412237dc1234cca0d97972ac2eef1eb4792';
-
-abstract class _$ViewSize extends $Notifier<Size> {
-  Size build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<Size, Size>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<Size, Size>,
-              Size,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(SideWidth)
-const sideWidthProvider = SideWidthProvider._();
-
-final class SideWidthProvider extends $NotifierProvider<SideWidth, double> {
-  const SideWidthProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'sideWidthProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$sideWidthHash();
-
-  @$internal
-  @override
-  SideWidth create() => SideWidth();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
-  }
-}
-
-String _$sideWidthHash() => r'2f849d52dab271831bad68b07c1f90b5c18c0cc4';
-
-abstract class _$SideWidth extends $Notifier<double> {
-  double build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<double, double>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<double, double>,
-              double,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(viewWidth)
-const viewWidthProvider = ViewWidthProvider._();
-
-final class ViewWidthProvider
-    extends $FunctionalProvider<double, double, double>
-    with $Provider<double> {
-  const ViewWidthProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'viewWidthProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$viewWidthHash();
-
-  @$internal
-  @override
-  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  double create(Ref ref) {
-    return viewWidth(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
-  }
-}
-
 String _$viewWidthHash() => r'5ee8f1bdebe44760f7333f88127108f5ffd70214';
 
-@ProviderFor(viewMode)
-const viewModeProvider = ViewModeProvider._();
+/// See also [viewWidth].
+@ProviderFor(viewWidth)
+final viewWidthProvider = Provider<double>.internal(
+  viewWidth,
+  name: r'viewWidthProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$viewWidthHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-final class ViewModeProvider
-    extends $FunctionalProvider<ViewMode, ViewMode, ViewMode>
-    with $Provider<ViewMode> {
-  const ViewModeProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'viewModeProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$viewModeHash();
-
-  @$internal
-  @override
-  $ProviderElement<ViewMode> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  ViewMode create(Ref ref) {
-    return viewMode(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ViewMode value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<ViewMode>(value),
-    );
-  }
-}
-
+typedef ViewWidthRef = ProviderRef<double>;
 String _$viewModeHash() => r'6822e9dc28c813afe1ed743feea464f0d33c805c';
 
-@ProviderFor(isMobileView)
-const isMobileViewProvider = IsMobileViewProvider._();
+/// See also [viewMode].
+@ProviderFor(viewMode)
+final viewModeProvider = Provider<ViewMode>.internal(
+  viewMode,
+  name: r'viewModeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$viewModeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-final class IsMobileViewProvider extends $FunctionalProvider<bool, bool, bool>
-    with $Provider<bool> {
-  const IsMobileViewProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'isMobileViewProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$isMobileViewHash();
-
-  @$internal
-  @override
-  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  bool create(Ref ref) {
-    return isMobileView(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
+typedef ViewModeRef = ProviderRef<ViewMode>;
 String _$isMobileViewHash() => r'1d75bccb4f50ae206bf43b68df869a5d95e5ea5f';
 
-@ProviderFor(viewHeight)
-const viewHeightProvider = ViewHeightProvider._();
+/// See also [isMobileView].
+@ProviderFor(isMobileView)
+final isMobileViewProvider = Provider<bool>.internal(
+  isMobileView,
+  name: r'isMobileViewProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$isMobileViewHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-final class ViewHeightProvider
-    extends $FunctionalProvider<double, double, double>
-    with $Provider<double> {
-  const ViewHeightProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'viewHeightProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$viewHeightHash();
-
-  @$internal
-  @override
-  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  double create(Ref ref) {
-    return viewHeight(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
-  }
-}
-
+typedef IsMobileViewRef = ProviderRef<bool>;
 String _$viewHeightHash() => r'dc3fc18337b5ce9fc953d994c380e8f1fa49f352';
 
-@ProviderFor(Init)
-const initProvider = InitProvider._();
+/// See also [viewHeight].
+@ProviderFor(viewHeight)
+final viewHeightProvider = Provider<double>.internal(
+  viewHeight,
+  name: r'viewHeightProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$viewHeightHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-final class InitProvider extends $NotifierProvider<Init, bool> {
-  const InitProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'initProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+typedef ViewHeightRef = ProviderRef<double>;
+String _$realTunEnableHash() => r'26ba5bc8e202658b14c382419f5b9b8ea946479b';
 
-  @override
-  String debugGetCreateSourceHash() => _$initHash();
+/// See also [RealTunEnable].
+@ProviderFor(RealTunEnable)
+final realTunEnableProvider = NotifierProvider<RealTunEnable, bool>.internal(
+  RealTunEnable.new,
+  name: r'realTunEnableProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$realTunEnableHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-  @$internal
-  @override
-  Init create() => Init();
+typedef _$RealTunEnable = Notifier<bool>;
+String _$logsHash() => r'f327fa8d05527172a647adf07771c797fb436bfd';
 
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
+/// See also [Logs].
+@ProviderFor(Logs)
+final logsProvider = NotifierProvider<Logs, FixedList<Log>>.internal(
+  Logs.new,
+  name: r'logsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$logsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
+typedef _$Logs = Notifier<FixedList<Log>>;
+String _$requestsHash() => r'32e4f0141a66b27732f8156a55a6fb23d74cfc07';
+
+/// See also [Requests].
+@ProviderFor(Requests)
+final requestsProvider =
+    NotifierProvider<Requests, FixedList<TrackerInfo>>.internal(
+  Requests.new,
+  name: r'requestsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$requestsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Requests = Notifier<FixedList<TrackerInfo>>;
+String _$providersHash() => r'8752fd5059f1ff767a7dabd0a4ab92effe2f2651';
+
+/// See also [Providers].
+@ProviderFor(Providers)
+final providersProvider =
+    NotifierProvider<Providers, List<ExternalProvider>>.internal(
+  Providers.new,
+  name: r'providersProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$providersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Providers = Notifier<List<ExternalProvider>>;
+String _$packagesHash() => r'93c92438ed777ec4c3017b90c22f4ddd1c02e931';
+
+/// See also [Packages].
+@ProviderFor(Packages)
+final packagesProvider = NotifierProvider<Packages, List<Package>>.internal(
+  Packages.new,
+  name: r'packagesProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$packagesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Packages = Notifier<List<Package>>;
+String _$systemBrightnessHash() => r'5b8c93dc20f048b12cdad42b301afe8b9aa864cf';
+
+/// See also [SystemBrightness].
+@ProviderFor(SystemBrightness)
+final systemBrightnessProvider =
+    NotifierProvider<SystemBrightness, Brightness>.internal(
+  SystemBrightness.new,
+  name: r'systemBrightnessProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$systemBrightnessHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SystemBrightness = Notifier<Brightness>;
+String _$trafficsHash() => r'00b83d393175b51abcef277417fb3d9b70cc247f';
+
+/// See also [Traffics].
+@ProviderFor(Traffics)
+final trafficsProvider =
+    NotifierProvider<Traffics, FixedList<Traffic>>.internal(
+  Traffics.new,
+  name: r'trafficsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$trafficsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Traffics = Notifier<FixedList<Traffic>>;
+String _$totalTrafficHash() => r'00c5b34834882c4db0eacf948121ddbe9921728a';
+
+/// See also [TotalTraffic].
+@ProviderFor(TotalTraffic)
+final totalTrafficProvider = NotifierProvider<TotalTraffic, Traffic>.internal(
+  TotalTraffic.new,
+  name: r'totalTrafficProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$totalTrafficHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TotalTraffic = Notifier<Traffic>;
+String _$localIpHash() => r'7daf4c498425db64db4e33b10c870d8fa10695d8';
+
+/// See also [LocalIp].
+@ProviderFor(LocalIp)
+final localIpProvider = NotifierProvider<LocalIp, String?>.internal(
+  LocalIp.new,
+  name: r'localIpProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$localIpHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$LocalIp = Notifier<String?>;
+String _$runTimeHash() => r'665a3a58487bb59aa54c3f797db0627986aa878f';
+
+/// See also [RunTime].
+@ProviderFor(RunTime)
+final runTimeProvider = NotifierProvider<RunTime, int?>.internal(
+  RunTime.new,
+  name: r'runTimeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$runTimeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RunTime = Notifier<int?>;
+String _$viewSizeHash() => r'3f355412237dc1234cca0d97972ac2eef1eb4792';
+
+/// See also [ViewSize].
+@ProviderFor(ViewSize)
+final viewSizeProvider = NotifierProvider<ViewSize, Size>.internal(
+  ViewSize.new,
+  name: r'viewSizeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$viewSizeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ViewSize = Notifier<Size>;
+String _$sideWidthHash() => r'2f849d52dab271831bad68b07c1f90b5c18c0cc4';
+
+/// See also [SideWidth].
+@ProviderFor(SideWidth)
+final sideWidthProvider = NotifierProvider<SideWidth, double>.internal(
+  SideWidth.new,
+  name: r'sideWidthProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sideWidthHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SideWidth = Notifier<double>;
 String _$initHash() => r'0fcded1ed3c62f2658898dee845455e412b171b1';
 
-abstract class _$Init extends $Notifier<bool> {
-  bool build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [Init].
+@ProviderFor(Init)
+final initProvider = NotifierProvider<Init, bool>.internal(
+  Init.new,
+  name: r'initProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$initHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(CurrentPageLabel)
-const currentPageLabelProvider = CurrentPageLabelProvider._();
-
-final class CurrentPageLabelProvider
-    extends $NotifierProvider<CurrentPageLabel, PageLabel> {
-  const CurrentPageLabelProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'currentPageLabelProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$currentPageLabelHash();
-
-  @$internal
-  @override
-  CurrentPageLabel create() => CurrentPageLabel();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(PageLabel value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<PageLabel>(value),
-    );
-  }
-}
-
+typedef _$Init = Notifier<bool>;
 String _$currentPageLabelHash() => r'3a5fcd2d50e018ae379cdcd835cfa72ccf8720b8';
 
-abstract class _$CurrentPageLabel extends $Notifier<PageLabel> {
-  PageLabel build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<PageLabel, PageLabel>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<PageLabel, PageLabel>,
-              PageLabel,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [CurrentPageLabel].
+@ProviderFor(CurrentPageLabel)
+final currentPageLabelProvider =
+    NotifierProvider<CurrentPageLabel, PageLabel>.internal(
+  CurrentPageLabel.new,
+  name: r'currentPageLabelProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentPageLabelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(SortNum)
-const sortNumProvider = SortNumProvider._();
-
-final class SortNumProvider extends $NotifierProvider<SortNum, int> {
-  const SortNumProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'sortNumProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$sortNumHash();
-
-  @$internal
-  @override
-  SortNum create() => SortNum();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(int value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<int>(value),
-    );
-  }
-}
-
+typedef _$CurrentPageLabel = Notifier<PageLabel>;
 String _$sortNumHash() => r'6682f00d1f87cb17f294ad181ac96bf4dc6edb52';
 
-abstract class _$SortNum extends $Notifier<int> {
-  int build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<int, int>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<int, int>,
-              int,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [SortNum].
+@ProviderFor(SortNum)
+final sortNumProvider = NotifierProvider<SortNum, int>.internal(
+  SortNum.new,
+  name: r'sortNumProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$sortNumHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(CheckIpNum)
-const checkIpNumProvider = CheckIpNumProvider._();
-
-final class CheckIpNumProvider extends $NotifierProvider<CheckIpNum, int> {
-  const CheckIpNumProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'checkIpNumProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$checkIpNumHash();
-
-  @$internal
-  @override
-  CheckIpNum create() => CheckIpNum();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(int value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<int>(value),
-    );
-  }
-}
-
+typedef _$SortNum = Notifier<int>;
 String _$checkIpNumHash() => r'e66b46fae31f3683698dc55533fbdd240aff44fe';
 
-abstract class _$CheckIpNum extends $Notifier<int> {
-  int build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<int, int>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<int, int>,
-              int,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [CheckIpNum].
+@ProviderFor(CheckIpNum)
+final checkIpNumProvider = NotifierProvider<CheckIpNum, int>.internal(
+  CheckIpNum.new,
+  name: r'checkIpNumProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$checkIpNumHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(BackBlock)
-const backBlockProvider = BackBlockProvider._();
-
-final class BackBlockProvider extends $NotifierProvider<BackBlock, bool> {
-  const BackBlockProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'backBlockProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$backBlockHash();
-
-  @$internal
-  @override
-  BackBlock create() => BackBlock();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
+typedef _$CheckIpNum = Notifier<int>;
 String _$backBlockHash() => r'76e821bab72717698f0a5f10e9d2a8909918ae0d';
 
-abstract class _$BackBlock extends $Notifier<bool> {
-  bool build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [BackBlock].
+@ProviderFor(BackBlock)
+final backBlockProvider = NotifierProvider<BackBlock, bool>.internal(
+  BackBlock.new,
+  name: r'backBlockProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$backBlockHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(Version)
-const versionProvider = VersionProvider._();
-
-final class VersionProvider extends $NotifierProvider<Version, int> {
-  const VersionProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'versionProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$versionHash();
-
-  @$internal
-  @override
-  Version create() => Version();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(int value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<int>(value),
-    );
-  }
-}
-
+typedef _$BackBlock = Notifier<bool>;
 String _$versionHash() => r'00b43faa4061121d30a0612ed275644a402ce3fa';
 
-abstract class _$Version extends $Notifier<int> {
-  int build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<int, int>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<int, int>,
-              int,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [Version].
+@ProviderFor(Version)
+final versionProvider = NotifierProvider<Version, int>.internal(
+  Version.new,
+  name: r'versionProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$versionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(Groups)
-const groupsProvider = GroupsProvider._();
-
-final class GroupsProvider extends $NotifierProvider<Groups, List<Group>> {
-  const GroupsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'groupsProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$groupsHash();
-
-  @$internal
-  @override
-  Groups create() => Groups();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<Group> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<Group>>(value),
-    );
-  }
-}
-
+typedef _$Version = Notifier<int>;
 String _$groupsHash() => r'180ede48880a239add201c111ae45b2a6d98f3a5';
 
-abstract class _$Groups extends $Notifier<List<Group>> {
-  List<Group> build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<List<Group>, List<Group>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<List<Group>, List<Group>>,
-              List<Group>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [Groups].
+@ProviderFor(Groups)
+final groupsProvider = NotifierProvider<Groups, List<Group>>.internal(
+  Groups.new,
+  name: r'groupsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$groupsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(DelayDataSource)
-const delayDataSourceProvider = DelayDataSourceProvider._();
-
-final class DelayDataSourceProvider
-    extends $NotifierProvider<DelayDataSource, DelayMap> {
-  const DelayDataSourceProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'delayDataSourceProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$delayDataSourceHash();
-
-  @$internal
-  @override
-  DelayDataSource create() => DelayDataSource();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(DelayMap value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<DelayMap>(value),
-    );
-  }
-}
-
+typedef _$Groups = Notifier<List<Group>>;
 String _$delayDataSourceHash() => r'9737cf2d943cb9b5504a5ec8ace20b0a9380b197';
 
-abstract class _$DelayDataSource extends $Notifier<DelayMap> {
-  DelayMap build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<DelayMap, DelayMap>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<DelayMap, DelayMap>,
-              DelayMap,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [DelayDataSource].
+@ProviderFor(DelayDataSource)
+final delayDataSourceProvider =
+    NotifierProvider<DelayDataSource, Map<String, Map<String, int?>>>.internal(
+  DelayDataSource.new,
+  name: r'delayDataSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$delayDataSourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@ProviderFor(SystemUiOverlayStyleState)
-const systemUiOverlayStyleStateProvider = SystemUiOverlayStyleStateProvider._();
-
-final class SystemUiOverlayStyleStateProvider
-    extends $NotifierProvider<SystemUiOverlayStyleState, SystemUiOverlayStyle> {
-  const SystemUiOverlayStyleStateProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'systemUiOverlayStyleStateProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$systemUiOverlayStyleStateHash();
-
-  @$internal
-  @override
-  SystemUiOverlayStyleState create() => SystemUiOverlayStyleState();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(SystemUiOverlayStyle value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<SystemUiOverlayStyle>(value),
-    );
-  }
-}
-
+typedef _$DelayDataSource = Notifier<Map<String, Map<String, int?>>>;
 String _$systemUiOverlayStyleStateHash() =>
     r'c5ba11d1c6eceef95f80b129e4d2a8ab7ecb7916';
 
-abstract class _$SystemUiOverlayStyleState
-    extends $Notifier<SystemUiOverlayStyle> {
-  SystemUiOverlayStyle build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<SystemUiOverlayStyle, SystemUiOverlayStyle>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<SystemUiOverlayStyle, SystemUiOverlayStyle>,
-              SystemUiOverlayStyle,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [SystemUiOverlayStyleState].
+@ProviderFor(SystemUiOverlayStyleState)
+final systemUiOverlayStyleStateProvider =
+    NotifierProvider<SystemUiOverlayStyleState, SystemUiOverlayStyle>.internal(
+  SystemUiOverlayStyleState.new,
+  name: r'systemUiOverlayStyleStateProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$systemUiOverlayStyleStateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
+typedef _$SystemUiOverlayStyleState = Notifier<SystemUiOverlayStyle>;
+String _$coreStatusHash() => r'fcddd10c30f6019d12db7d91e8fc9cb8fbce0c85';
+
+/// See also [_CoreStatus].
 @ProviderFor(_CoreStatus)
-const coreStatusProvider = _CoreStatusProvider._();
+final _coreStatusProvider = NotifierProvider<_CoreStatus, CoreStatus>.internal(
+  _CoreStatus.new,
+  name: r'_coreStatusProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$coreStatusHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-final class _CoreStatusProvider
-    extends $NotifierProvider<_CoreStatus, CoreStatus> {
-  const _CoreStatusProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'coreStatusProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$_coreStatusHash();
-
-  @$internal
-  @override
-  _CoreStatus create() => _CoreStatus();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(CoreStatus value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<CoreStatus>(value),
-    );
-  }
-}
-
-String _$_coreStatusHash() => r'e2e7fe37f66b906877e678149d09c656993e1405';
-
-abstract class _$CoreStatus extends $Notifier<CoreStatus> {
-  CoreStatus build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<CoreStatus, CoreStatus>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<CoreStatus, CoreStatus>,
-              CoreStatus,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
-
-@ProviderFor(Query)
-const queryProvider = QueryFamily._();
-
-final class QueryProvider extends $NotifierProvider<Query, String> {
-  const QueryProvider._({
-    required QueryFamily super.from,
-    required QueryTag super.argument,
-  }) : super(
-         retry: null,
-         name: r'queryProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$queryHash();
-
-  @override
-  String toString() {
-    return r'queryProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  Query create() => Query();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(String value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<String>(value),
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is QueryProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
+typedef _$CoreStatus = Notifier<CoreStatus>;
 String _$queryHash() => r'b6be53823f3351ee2bf1c0d147c0ccf5f31bb8b5';
 
-final class QueryFamily extends $Family
-    with $ClassFamilyOverride<Query, String, String, String, QueryTag> {
-  const QueryFamily._()
-    : super(
-        retry: null,
-        name: r'queryProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
 
-  QueryProvider call(QueryTag tag) =>
-      QueryProvider._(argument: tag, from: this);
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
 
-  @override
-  String toString() => r'queryProvider';
-}
-
-abstract class _$Query extends $Notifier<String> {
-  late final _$args = ref.$arg as QueryTag;
-  QueryTag get tag => _$args;
-
-  String build(QueryTag tag);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build(_$args);
-    final ref = this.ref as $Ref<String, String>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<String, String>,
-              String,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
 
-@ProviderFor(Loading)
-const loadingProvider = LoadingFamily._();
+abstract class _$Query extends BuildlessAutoDisposeNotifier<String> {
+  late final QueryTag tag;
 
-final class LoadingProvider extends $NotifierProvider<Loading, bool> {
-  const LoadingProvider._({
-    required LoadingFamily super.from,
-    required LoadingTag super.argument,
-  }) : super(
-         retry: null,
-         name: r'loadingProvider',
-         isAutoDispose: false,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
+  String build(
+    QueryTag tag,
+  );
+}
 
-  @override
-  String debugGetCreateSourceHash() => _$loadingHash();
+/// See also [Query].
+@ProviderFor(Query)
+const queryProvider = QueryFamily();
 
-  @override
-  String toString() {
-    return r'loadingProvider'
-        ''
-        '($argument)';
-  }
+/// See also [Query].
+class QueryFamily extends Family<String> {
+  /// See also [Query].
+  const QueryFamily();
 
-  @$internal
-  @override
-  Loading create() => Loading();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
+  /// See also [Query].
+  QueryProvider call(
+    QueryTag tag,
+  ) {
+    return QueryProvider(
+      tag,
     );
   }
 
   @override
+  QueryProvider getProviderOverride(
+    covariant QueryProvider provider,
+  ) {
+    return call(
+      provider.tag,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'queryProvider';
+}
+
+/// See also [Query].
+class QueryProvider extends AutoDisposeNotifierProviderImpl<Query, String> {
+  /// See also [Query].
+  QueryProvider(
+    this.tag,
+  ) : super.internal(
+          () => Query()..tag = tag,
+          from: queryProvider,
+          name: r'queryProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$queryHash,
+          dependencies: QueryFamily._dependencies,
+          allTransitiveDependencies: QueryFamily._allTransitiveDependencies,
+        );
+
+  final QueryTag tag;
+
+  @override
   bool operator ==(Object other) {
-    return other is LoadingProvider && other.argument == argument;
+    return other is QueryProvider && other.tag == tag;
   }
 
   @override
   int get hashCode {
-    return argument.hashCode;
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, tag.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  String runNotifierBuild(
+    covariant Query notifier,
+  ) {
+    return notifier.build(
+      tag,
+    );
   }
 }
 
 String _$loadingHash() => r'f4c58da7e5869c3e114b76439f3169b31d2e5b71';
 
-final class LoadingFamily extends $Family
-    with $ClassFamilyOverride<Loading, bool, bool, bool, LoadingTag> {
-  const LoadingFamily._()
-    : super(
-        retry: null,
-        name: r'loadingProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: false,
-      );
+abstract class _$Loading extends BuildlessNotifier<bool> {
+  late final LoadingTag tag;
 
-  LoadingProvider call(LoadingTag tag) =>
-      LoadingProvider._(argument: tag, from: this);
-
-  @override
-  String toString() => r'loadingProvider';
+  bool build(
+    LoadingTag tag,
+  );
 }
 
-abstract class _$Loading extends $Notifier<bool> {
-  late final _$args = ref.$arg as LoadingTag;
-  LoadingTag get tag => _$args;
+/// See also [Loading].
+@ProviderFor(Loading)
+const loadingProvider = LoadingFamily();
 
-  bool build(LoadingTag tag);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build(_$args);
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [Loading].
+class LoadingFamily extends Family<bool> {
+  /// See also [Loading].
+  const LoadingFamily();
 
-@ProviderFor(SelectedItems)
-const selectedItemsProvider = SelectedItemsFamily._();
-
-final class SelectedItemsProvider
-    extends $NotifierProvider<SelectedItems, Set<dynamic>> {
-  const SelectedItemsProvider._({
-    required SelectedItemsFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'selectedItemsProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$selectedItemsHash();
-
-  @override
-  String toString() {
-    return r'selectedItemsProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  SelectedItems create() => SelectedItems();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Set<dynamic> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<Set<dynamic>>(value),
+  /// See also [Loading].
+  LoadingProvider call(
+    LoadingTag tag,
+  ) {
+    return LoadingProvider(
+      tag,
     );
   }
 
   @override
+  LoadingProvider getProviderOverride(
+    covariant LoadingProvider provider,
+  ) {
+    return call(
+      provider.tag,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'loadingProvider';
+}
+
+/// See also [Loading].
+class LoadingProvider extends NotifierProviderImpl<Loading, bool> {
+  /// See also [Loading].
+  LoadingProvider(
+    this.tag,
+  ) : super.internal(
+          () => Loading()..tag = tag,
+          from: loadingProvider,
+          name: r'loadingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$loadingHash,
+          dependencies: LoadingFamily._dependencies,
+          allTransitiveDependencies: LoadingFamily._allTransitiveDependencies,
+        );
+
+  final LoadingTag tag;
+
+  @override
   bool operator ==(Object other) {
-    return other is SelectedItemsProvider && other.argument == argument;
+    return other is LoadingProvider && other.tag == tag;
   }
 
   @override
   int get hashCode {
-    return argument.hashCode;
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, tag.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  bool runNotifierBuild(
+    covariant Loading notifier,
+  ) {
+    return notifier.build(
+      tag,
+    );
   }
 }
 
 String _$selectedItemsHash() => r'05ef5c5584cbac90d416e5c4fe53ec9e29604020';
 
-final class SelectedItemsFamily extends $Family
-    with
-        $ClassFamilyOverride<
-          SelectedItems,
-          Set<dynamic>,
-          Set<dynamic>,
-          Set<dynamic>,
-          String
-        > {
-  const SelectedItemsFamily._()
-    : super(
-        retry: null,
-        name: r'selectedItemsProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
+abstract class _$SelectedItems
+    extends BuildlessAutoDisposeNotifier<Set<dynamic>> {
+  late final String key;
 
-  SelectedItemsProvider call(String key) =>
-      SelectedItemsProvider._(argument: key, from: this);
-
-  @override
-  String toString() => r'selectedItemsProvider';
+  Set<dynamic> build(
+    String key,
+  );
 }
 
-abstract class _$SelectedItems extends $Notifier<Set<dynamic>> {
-  late final _$args = ref.$arg as String;
-  String get key => _$args;
+/// See also [SelectedItems].
+@ProviderFor(SelectedItems)
+const selectedItemsProvider = SelectedItemsFamily();
 
-  Set<dynamic> build(String key);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build(_$args);
-    final ref = this.ref as $Ref<Set<dynamic>, Set<dynamic>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<Set<dynamic>, Set<dynamic>>,
-              Set<dynamic>,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [SelectedItems].
+class SelectedItemsFamily extends Family<Set<dynamic>> {
+  /// See also [SelectedItems].
+  const SelectedItemsFamily();
 
-@ProviderFor(SelectedItem)
-const selectedItemProvider = SelectedItemFamily._();
-
-final class SelectedItemProvider
-    extends $NotifierProvider<SelectedItem, dynamic> {
-  const SelectedItemProvider._({
-    required SelectedItemFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'selectedItemProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$selectedItemHash();
-
-  @override
-  String toString() {
-    return r'selectedItemProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  SelectedItem create() => SelectedItem();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(dynamic value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<dynamic>(value),
+  /// See also [SelectedItems].
+  SelectedItemsProvider call(
+    String key,
+  ) {
+    return SelectedItemsProvider(
+      key,
     );
   }
 
   @override
+  SelectedItemsProvider getProviderOverride(
+    covariant SelectedItemsProvider provider,
+  ) {
+    return call(
+      provider.key,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'selectedItemsProvider';
+}
+
+/// See also [SelectedItems].
+class SelectedItemsProvider
+    extends AutoDisposeNotifierProviderImpl<SelectedItems, Set<dynamic>> {
+  /// See also [SelectedItems].
+  SelectedItemsProvider(
+    this.key,
+  ) : super.internal(
+          () => SelectedItems()..key = key,
+          from: selectedItemsProvider,
+          name: r'selectedItemsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$selectedItemsHash,
+          dependencies: SelectedItemsFamily._dependencies,
+          allTransitiveDependencies:
+              SelectedItemsFamily._allTransitiveDependencies,
+        );
+
+  final String key;
+
+  @override
   bool operator ==(Object other) {
-    return other is SelectedItemProvider && other.argument == argument;
+    return other is SelectedItemsProvider && other.key == key;
   }
 
   @override
   int get hashCode {
-    return argument.hashCode;
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, key.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  Set<dynamic> runNotifierBuild(
+    covariant SelectedItems notifier,
+  ) {
+    return notifier.build(
+      key,
+    );
   }
 }
 
 String _$selectedItemHash() => r'b50be0386d53ee8441c37d1a2a4c25640ce10766';
 
-final class SelectedItemFamily extends $Family
-    with $ClassFamilyOverride<SelectedItem, dynamic, dynamic, dynamic, String> {
-  const SelectedItemFamily._()
-    : super(
-        retry: null,
-        name: r'selectedItemProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
+abstract class _$SelectedItem extends BuildlessAutoDisposeNotifier<dynamic> {
+  late final String key;
 
-  SelectedItemProvider call(String key) =>
-      SelectedItemProvider._(argument: key, from: this);
-
-  @override
-  String toString() => r'selectedItemProvider';
+  dynamic build(
+    String key,
+  );
 }
 
-abstract class _$SelectedItem extends $Notifier<dynamic> {
-  late final _$args = ref.$arg as String;
-  String get key => _$args;
+/// See also [SelectedItem].
+@ProviderFor(SelectedItem)
+const selectedItemProvider = SelectedItemFamily();
 
-  dynamic build(String key);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build(_$args);
-    final ref = this.ref as $Ref<dynamic, dynamic>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<dynamic, dynamic>,
-              dynamic,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [SelectedItem].
+class SelectedItemFamily extends Family<dynamic> {
+  /// See also [SelectedItem].
+  const SelectedItemFamily();
 
-@ProviderFor(IsUpdating)
-const isUpdatingProvider = IsUpdatingFamily._();
-
-final class IsUpdatingProvider extends $NotifierProvider<IsUpdating, bool> {
-  const IsUpdatingProvider._({
-    required IsUpdatingFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'isUpdatingProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$isUpdatingHash();
-
-  @override
-  String toString() {
-    return r'isUpdatingProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  IsUpdating create() => IsUpdating();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
+  /// See also [SelectedItem].
+  SelectedItemProvider call(
+    String key,
+  ) {
+    return SelectedItemProvider(
+      key,
     );
   }
 
   @override
+  SelectedItemProvider getProviderOverride(
+    covariant SelectedItemProvider provider,
+  ) {
+    return call(
+      provider.key,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'selectedItemProvider';
+}
+
+/// See also [SelectedItem].
+class SelectedItemProvider
+    extends AutoDisposeNotifierProviderImpl<SelectedItem, dynamic> {
+  /// See also [SelectedItem].
+  SelectedItemProvider(
+    this.key,
+  ) : super.internal(
+          () => SelectedItem()..key = key,
+          from: selectedItemProvider,
+          name: r'selectedItemProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$selectedItemHash,
+          dependencies: SelectedItemFamily._dependencies,
+          allTransitiveDependencies:
+              SelectedItemFamily._allTransitiveDependencies,
+        );
+
+  final String key;
+
+  @override
   bool operator ==(Object other) {
-    return other is IsUpdatingProvider && other.argument == argument;
+    return other is SelectedItemProvider && other.key == key;
   }
 
   @override
   int get hashCode {
-    return argument.hashCode;
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, key.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  dynamic runNotifierBuild(
+    covariant SelectedItem notifier,
+  ) {
+    return notifier.build(
+      key,
+    );
   }
 }
 
 String _$isUpdatingHash() => r'934cc96cbf8cf6909d27867455a31bf3008470e6';
 
-final class IsUpdatingFamily extends $Family
-    with $ClassFamilyOverride<IsUpdating, bool, bool, bool, String> {
-  const IsUpdatingFamily._()
-    : super(
-        retry: null,
-        name: r'isUpdatingProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
+abstract class _$IsUpdating extends BuildlessAutoDisposeNotifier<bool> {
+  late final String name;
 
-  IsUpdatingProvider call(String name) =>
-      IsUpdatingProvider._(argument: name, from: this);
-
-  @override
-  String toString() => r'isUpdatingProvider';
+  bool build(
+    String name,
+  );
 }
 
-abstract class _$IsUpdating extends $Notifier<bool> {
-  late final _$args = ref.$arg as String;
-  String get name => _$args;
+/// See also [IsUpdating].
+@ProviderFor(IsUpdating)
+const isUpdatingProvider = IsUpdatingFamily();
 
-  bool build(String name);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build(_$args);
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
+/// See also [IsUpdating].
+class IsUpdatingFamily extends Family<bool> {
+  /// See also [IsUpdating].
+  const IsUpdatingFamily();
+
+  /// See also [IsUpdating].
+  IsUpdatingProvider call(
+    String name,
+  ) {
+    return IsUpdatingProvider(
+      name,
+    );
   }
+
+  @override
+  IsUpdatingProvider getProviderOverride(
+    covariant IsUpdatingProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'isUpdatingProvider';
 }
 
-@ProviderFor(NetworkDetection)
-const networkDetectionProvider = NetworkDetectionProvider._();
+/// See also [IsUpdating].
+class IsUpdatingProvider
+    extends AutoDisposeNotifierProviderImpl<IsUpdating, bool> {
+  /// See also [IsUpdating].
+  IsUpdatingProvider(
+    this.name,
+  ) : super.internal(
+          () => IsUpdating()..name = name,
+          from: isUpdatingProvider,
+          name: r'isUpdatingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$isUpdatingHash,
+          dependencies: IsUpdatingFamily._dependencies,
+          allTransitiveDependencies:
+              IsUpdatingFamily._allTransitiveDependencies,
+        );
 
-final class NetworkDetectionProvider
-    extends $NotifierProvider<NetworkDetection, NetworkDetectionState> {
-  const NetworkDetectionProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'networkDetectionProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  final String name;
 
   @override
-  String debugGetCreateSourceHash() => _$networkDetectionHash();
+  bool operator ==(Object other) {
+    return other is IsUpdatingProvider && other.name == name;
+  }
 
-  @$internal
   @override
-  NetworkDetection create() => NetworkDetection();
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
 
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(NetworkDetectionState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<NetworkDetectionState>(value),
+    return _SystemHash.finish(hash);
+  }
+
+  @override
+  bool runNotifierBuild(
+    covariant IsUpdating notifier,
+  ) {
+    return notifier.build(
+      name,
     );
   }
 }
 
 String _$networkDetectionHash() => r'501babec2bbf2a38e4fef96cf20c76e9352bc5ee';
 
-abstract class _$NetworkDetection extends $Notifier<NetworkDetectionState> {
-  NetworkDetectionState build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final created = build();
-    final ref = this.ref as $Ref<NetworkDetectionState, NetworkDetectionState>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<NetworkDetectionState, NetworkDetectionState>,
-              NetworkDetectionState,
-              Object?,
-              Object?
-            >;
-    element.handleValue(ref, created);
-  }
-}
+/// See also [NetworkDetection].
+@ProviderFor(NetworkDetection)
+final networkDetectionProvider =
+    NotifierProvider<NetworkDetection, NetworkDetectionState>.internal(
+  NetworkDetection.new,
+  name: r'networkDetectionProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$networkDetectionHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NetworkDetection = Notifier<NetworkDetectionState>;
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -82,10 +82,9 @@ class HomePage extends StatelessWidget {
               }
             },
             child: Consumer(
-              builder: (_, ref, _) {
-                final navigationItems = ref
-                    .watch(currentNavigationItemsStateProvider)
-                    .value;
+              builder: (_, ref, __) {
+                final navigationItems =
+                    ref.watch(currentNavigationItemsStateProvider).value;
                 final isMobile = ref.watch(isMobileViewProvider);
                 return _HomePageView(
                   navigationItems: navigationItems,
@@ -98,7 +97,8 @@ class HomePage extends StatelessWidget {
                           ? navigationView
                           : Navigator(
                               pages: [MaterialPage(child: navigationView)],
-                              onDidRemovePage: (_) {},
+                              onPopPage: (route, result) =>
+                                  route.didPop(result),
                             ),
                     );
                     return view;
@@ -208,11 +208,11 @@ class _HomePageViewState extends ConsumerState<_HomePageView> {
 
 class _NavigationBarDefaultsM3 extends NavigationBarThemeData {
   _NavigationBarDefaultsM3(this.context)
-    : super(
-        height: 80.0,
-        elevation: 3.0,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      );
+      : super(
+          height: 80.0,
+          elevation: 3.0,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        );
 
   final BuildContext context;
   late final ColorScheme _colors = Theme.of(context).colorScheme;
@@ -228,15 +228,15 @@ class _NavigationBarDefaultsM3 extends NavigationBarThemeData {
   Color? get surfaceTintColor => Colors.transparent;
 
   @override
-  WidgetStateProperty<IconThemeData?>? get iconTheme {
-    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+  MaterialStateProperty<IconThemeData?>? get iconTheme {
+    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       return IconThemeData(
         size: 24.0,
-        color: states.contains(WidgetState.disabled)
+        color: states.contains(MaterialState.disabled)
             ? _colors.onSurfaceVariant.opacity38
-            : states.contains(WidgetState.selected)
-            ? _colors.onSecondaryContainer
-            : _colors.onSurfaceVariant,
+            : states.contains(MaterialState.selected)
+                ? _colors.onSecondaryContainer
+                : _colors.onSurfaceVariant,
       );
     });
   }
@@ -248,16 +248,16 @@ class _NavigationBarDefaultsM3 extends NavigationBarThemeData {
   ShapeBorder? get indicatorShape => const StadiumBorder();
 
   @override
-  WidgetStateProperty<TextStyle?>? get labelTextStyle {
-    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+  MaterialStateProperty<TextStyle?>? get labelTextStyle {
+    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       final TextStyle style = _textTheme.labelMedium!;
       return style.apply(
         overflow: TextOverflow.ellipsis,
-        color: states.contains(WidgetState.disabled)
+        color: states.contains(MaterialState.disabled)
             ? _colors.onSurfaceVariant.opacity38
-            : states.contains(WidgetState.selected)
-            ? _colors.onSurface
-            : _colors.onSurfaceVariant,
+            : states.contains(MaterialState.selected)
+                ? _colors.onSurface
+                : _colors.onSurfaceVariant,
       );
     });
   }

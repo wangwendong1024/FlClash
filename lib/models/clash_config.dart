@@ -196,13 +196,13 @@ extension TunExt on Tun {
     final mRouteAddress = routeMode == RouteMode.bypassPrivate
         ? defaultBypassPrivateRouteAddress
         : routeAddress;
-    return switch (system.isDesktop) {
-      true => copyWith(autoRoute: true, routeAddress: []),
-      false => copyWith(
-        autoRoute: mRouteAddress.isEmpty ? true : false,
-        routeAddress: mRouteAddress,
-      ),
-    };
+    if (system.isDesktop) {
+      return copyWith(autoRoute: true, routeAddress: []);
+    }
+    return copyWith(
+      autoRoute: mRouteAddress.isEmpty ? true : false,
+      routeAddress: mRouteAddress,
+    );
   }
 }
 
@@ -214,7 +214,7 @@ abstract class FallbackFilter with _$FallbackFilter {
     @Default(['gfw']) List<String> geosite,
     @Default(['240.0.0.0/4']) List<String> ipcidr,
     @Default(['+.google.com', '+.facebook.com', '+.youtube.com'])
-    List<String> domain,
+        List<String> domain,
   }) = _FallbackFilter;
 
   factory FallbackFilter.fromJson(Map<String, Object?> json) =>
@@ -224,41 +224,53 @@ abstract class FallbackFilter with _$FallbackFilter {
 @freezed
 abstract class Dns with _$Dns {
   const factory Dns({
-    @Default(true) bool enable,
-    @Default('0.0.0.0:1053') String listen,
-    @Default(false) @JsonKey(name: 'prefer-h3') bool preferH3,
-    @Default(true) @JsonKey(name: 'use-hosts') bool useHosts,
-    @Default(true) @JsonKey(name: 'use-system-hosts') bool useSystemHosts,
-    @Default(false) @JsonKey(name: 'respect-rules') bool respectRules,
-    @Default(false) bool ipv6,
+    @Default(true)
+        bool enable,
+    @Default('0.0.0.0:1053')
+        String listen,
+    @Default(false)
+    @JsonKey(name: 'prefer-h3')
+        bool preferH3,
+    @Default(true)
+    @JsonKey(name: 'use-hosts')
+        bool useHosts,
+    @Default(true)
+    @JsonKey(name: 'use-system-hosts')
+        bool useSystemHosts,
+    @Default(false)
+    @JsonKey(name: 'respect-rules')
+        bool respectRules,
+    @Default(false)
+        bool ipv6,
     @Default(['223.5.5.5'])
     @JsonKey(name: 'default-nameserver')
-    List<String> defaultNameserver,
+        List<String> defaultNameserver,
     @Default(DnsMode.fakeIp)
     @JsonKey(name: 'enhanced-mode')
-    DnsMode enhancedMode,
+        DnsMode enhancedMode,
     @Default('198.18.0.1/16')
     @JsonKey(name: 'fake-ip-range')
-    String fakeIpRange,
+        String fakeIpRange,
     @Default(['*.lan', 'localhost.ptlogin2.qq.com'])
     @JsonKey(name: 'fake-ip-filter')
-    List<String> fakeIpFilter,
+        List<String> fakeIpFilter,
     @Default({
       'www.baidu.com': '114.114.114.114',
       '+.internal.crop.com': '10.0.0.1',
       'geosite:cn': 'https://doh.pub/dns-query',
     })
     @JsonKey(name: 'nameserver-policy')
-    Map<String, String> nameserverPolicy,
+        Map<String, String> nameserverPolicy,
     @Default(['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'])
-    List<String> nameserver,
-    @Default(['tls://8.8.4.4', 'tls://1.1.1.1']) List<String> fallback,
+        List<String> nameserver,
+    @Default(['tls://8.8.4.4', 'tls://1.1.1.1'])
+        List<String> fallback,
     @Default(['https://doh.pub/dns-query'])
     @JsonKey(name: 'proxy-server-nameserver')
-    List<String> proxyServerNameserver,
+        List<String> proxyServerNameserver,
     @Default(FallbackFilter())
     @JsonKey(name: 'fallback-filter')
-    FallbackFilter fallbackFilter,
+        FallbackFilter fallbackFilter,
   }) = _Dns;
 
   factory Dns.fromJson(Map<String, Object?> json) => _$DnsFromJson(json);
@@ -278,19 +290,19 @@ abstract class GeoXUrl with _$GeoXUrl {
     @Default(
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb',
     )
-    String mmdb,
+        String mmdb,
     @Default(
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb',
     )
-    String asn,
+        String asn,
     @Default(
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat',
     )
-    String geoip,
+        String geoip,
     @Default(
       'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
     )
-    String geosite,
+        String geosite,
   }) = _GeoXUrl;
 
   factory GeoXUrl.fromJson(Map<String, Object?> json) =>
@@ -428,10 +440,10 @@ abstract class ClashConfigSnippet with _$ClashConfigSnippet {
     @JsonKey(fromJson: _genRule, name: 'rules') @Default([]) List<Rule> rule,
     @JsonKey(name: 'rule-providers', fromJson: _genRuleProviders)
     @Default([])
-    List<RuleProvider> ruleProvider,
+        List<RuleProvider> ruleProvider,
     @JsonKey(name: 'sub-rules', fromJson: _genSubRules)
     @Default([])
-    List<SubRule> subRules,
+        List<SubRule> subRules,
   }) = _ClashConfigSnippet;
 
   factory ClashConfigSnippet.fromJson(Map<String, Object?> json) =>
@@ -441,41 +453,70 @@ abstract class ClashConfigSnippet with _$ClashConfigSnippet {
 @freezed
 abstract class ClashConfig with _$ClashConfig {
   const factory ClashConfig({
-    @Default(defaultMixedPort) @JsonKey(name: 'mixed-port') int mixedPort,
-    @Default(0) @JsonKey(name: 'socks-port') int socksPort,
-    @Default(0) @JsonKey(name: 'port') int port,
-    @Default(0) @JsonKey(name: 'redir-port') int redirPort,
-    @Default(0) @JsonKey(name: 'tproxy-port') int tproxyPort,
-    @Default(Mode.rule) Mode mode,
-    @Default(false) @JsonKey(name: 'allow-lan') bool allowLan,
-    @Default(LogLevel.error) @JsonKey(name: 'log-level') LogLevel logLevel,
-    @Default(false) bool ipv6,
+    @Default(defaultMixedPort)
+    @JsonKey(name: 'mixed-port')
+        int mixedPort,
+    @Default(0)
+    @JsonKey(name: 'socks-port')
+        int socksPort,
+    @Default(0)
+    @JsonKey(name: 'port')
+        int port,
+    @Default(0)
+    @JsonKey(name: 'redir-port')
+        int redirPort,
+    @Default(0)
+    @JsonKey(name: 'tproxy-port')
+        int tproxyPort,
+    @Default(Mode.rule)
+        Mode mode,
+    @Default(false)
+    @JsonKey(name: 'allow-lan')
+        bool allowLan,
+    @Default(LogLevel.error)
+    @JsonKey(name: 'log-level')
+        LogLevel logLevel,
+    @Default(false)
+        bool ipv6,
     @Default(FindProcessMode.always)
     @JsonKey(
       name: 'find-process-mode',
       unknownEnumValue: FindProcessMode.always,
     )
-    FindProcessMode findProcessMode,
+        FindProcessMode findProcessMode,
     @Default(defaultKeepAliveInterval)
     @JsonKey(name: 'keep-alive-interval')
-    int keepAliveInterval,
-    @Default(true) @JsonKey(name: 'unified-delay') bool unifiedDelay,
-    @Default(true) @JsonKey(name: 'tcp-concurrent') bool tcpConcurrent,
-    @Default(defaultTun) @JsonKey(fromJson: Tun.safeFormJson) Tun tun,
-    @Default(defaultDns) @JsonKey(fromJson: Dns.safeDnsFromJson) Dns dns,
+        int keepAliveInterval,
+    @Default(true)
+    @JsonKey(name: 'unified-delay')
+        bool unifiedDelay,
+    @Default(true)
+    @JsonKey(name: 'tcp-concurrent')
+        bool tcpConcurrent,
+    @Default(defaultTun)
+    @JsonKey(fromJson: Tun.safeFormJson)
+        Tun tun,
+    @Default(defaultDns)
+    @JsonKey(fromJson: Dns.safeDnsFromJson)
+        Dns dns,
     @Default(defaultGeoXUrl)
     @JsonKey(name: 'geox-url', fromJson: GeoXUrl.safeFormJson)
-    GeoXUrl geoXUrl,
+        GeoXUrl geoXUrl,
     @Default(GeodataLoader.memconservative)
     @JsonKey(name: 'geodata-loader')
-    GeodataLoader geodataLoader,
-    @Default([]) @JsonKey(name: 'proxy-groups') List<ProxyGroup> proxyGroups,
-    @Default([]) List<String> rule,
-    @JsonKey(name: 'global-ua') String? globalUa,
+        GeodataLoader geodataLoader,
+    @Default([])
+    @JsonKey(name: 'proxy-groups')
+        List<ProxyGroup> proxyGroups,
+    @Default([])
+        List<String> rule,
+    @JsonKey(name: 'global-ua')
+        String? globalUa,
     @Default(ExternalControllerStatus.close)
     @JsonKey(name: 'external-controller')
-    ExternalControllerStatus externalController,
-    @Default({}) Map<String, String> hosts,
+        ExternalControllerStatus externalController,
+    @Default({})
+        Map<String, String> hosts,
   }) = _ClashConfig;
 
   factory ClashConfig.fromJson(Map<String, Object?> json) =>

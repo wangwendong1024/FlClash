@@ -45,14 +45,20 @@ enum GroupType {
   Relay;
 
   static GroupType parseProfileType(String type) {
-    return switch (type) {
-      'url-test' => URLTest,
-      'select' => Selector,
-      'fallback' => Fallback,
-      'load-balance' => LoadBalance,
-      'relay' => Relay,
-      String() => throw UnimplementedError(),
-    };
+    switch (type) {
+      case 'url-test':
+        return URLTest;
+      case 'select':
+        return Selector;
+      case 'fallback':
+        return Fallback;
+      case 'load-balance':
+        return LoadBalance;
+      case 'relay':
+        return Relay;
+      default:
+        throw UnimplementedError();
+    }
   }
 }
 
@@ -92,13 +98,18 @@ enum LogLevel { debug, info, warning, error, silent }
 
 extension LogLevelExt on LogLevel {
   Color? get color {
-    return switch (this) {
-      LogLevel.silent => Colors.grey.shade700,
-      LogLevel.debug => Colors.grey.shade400,
-      LogLevel.info => null,
-      LogLevel.warning => Colors.orangeAccent.darken(),
-      LogLevel.error => Colors.redAccent,
-    };
+    switch (this) {
+      case LogLevel.silent:
+        return Colors.grey.shade700;
+      case LogLevel.debug:
+        return Colors.grey.shade400;
+      case LogLevel.info:
+        return null;
+      case LogLevel.warning:
+        return Colors.orangeAccent.darken();
+      case LogLevel.error:
+        return Colors.redAccent;
+    }
   }
 }
 
@@ -183,17 +194,149 @@ enum KeyboardModifier {
 }
 
 extension KeyboardModifierExt on KeyboardModifier {
-  HotKeyModifier toHotKeyModifier() {
-    return switch (this) {
-      KeyboardModifier.alt => HotKeyModifier.alt,
-      KeyboardModifier.capsLock => HotKeyModifier.capsLock,
-      KeyboardModifier.control => HotKeyModifier.control,
-      KeyboardModifier.fn => HotKeyModifier.fn,
-      KeyboardModifier.meta => HotKeyModifier.meta,
-      KeyboardModifier.shift => HotKeyModifier.shift,
-    };
+  KeyModifier toHotKeyModifier() {
+    switch (this) {
+      case KeyboardModifier.alt:
+        return KeyModifier.alt;
+      case KeyboardModifier.capsLock:
+        return KeyModifier.capsLock;
+      case KeyboardModifier.control:
+        return KeyModifier.control;
+      case KeyboardModifier.fn:
+        return KeyModifier.fn;
+      case KeyboardModifier.meta:
+        return KeyModifier.meta;
+      case KeyboardModifier.shift:
+        return KeyModifier.shift;
+    }
   }
 }
+
+extension PhysicalKeyboardKeyHotKeyExt on PhysicalKeyboardKey {
+  KeyCode? get hotKeyCode => _physicalKeyToHotKeyCode[this];
+}
+
+final _physicalKeyToHotKeyCode = <PhysicalKeyboardKey, KeyCode>{
+  PhysicalKeyboardKey.keyA: KeyCode.keyA,
+  PhysicalKeyboardKey.keyB: KeyCode.keyB,
+  PhysicalKeyboardKey.keyC: KeyCode.keyC,
+  PhysicalKeyboardKey.keyD: KeyCode.keyD,
+  PhysicalKeyboardKey.keyE: KeyCode.keyE,
+  PhysicalKeyboardKey.keyF: KeyCode.keyF,
+  PhysicalKeyboardKey.keyG: KeyCode.keyG,
+  PhysicalKeyboardKey.keyH: KeyCode.keyH,
+  PhysicalKeyboardKey.keyI: KeyCode.keyI,
+  PhysicalKeyboardKey.keyJ: KeyCode.keyJ,
+  PhysicalKeyboardKey.keyK: KeyCode.keyK,
+  PhysicalKeyboardKey.keyL: KeyCode.keyL,
+  PhysicalKeyboardKey.keyM: KeyCode.keyM,
+  PhysicalKeyboardKey.keyN: KeyCode.keyN,
+  PhysicalKeyboardKey.keyO: KeyCode.keyO,
+  PhysicalKeyboardKey.keyP: KeyCode.keyP,
+  PhysicalKeyboardKey.keyQ: KeyCode.keyQ,
+  PhysicalKeyboardKey.keyR: KeyCode.keyR,
+  PhysicalKeyboardKey.keyS: KeyCode.keyS,
+  PhysicalKeyboardKey.keyT: KeyCode.keyT,
+  PhysicalKeyboardKey.keyU: KeyCode.keyU,
+  PhysicalKeyboardKey.keyV: KeyCode.keyV,
+  PhysicalKeyboardKey.keyW: KeyCode.keyW,
+  PhysicalKeyboardKey.keyX: KeyCode.keyX,
+  PhysicalKeyboardKey.keyY: KeyCode.keyY,
+  PhysicalKeyboardKey.keyZ: KeyCode.keyZ,
+  PhysicalKeyboardKey.digit1: KeyCode.digit1,
+  PhysicalKeyboardKey.digit2: KeyCode.digit2,
+  PhysicalKeyboardKey.digit3: KeyCode.digit3,
+  PhysicalKeyboardKey.digit4: KeyCode.digit4,
+  PhysicalKeyboardKey.digit5: KeyCode.digit5,
+  PhysicalKeyboardKey.digit6: KeyCode.digit6,
+  PhysicalKeyboardKey.digit7: KeyCode.digit7,
+  PhysicalKeyboardKey.digit8: KeyCode.digit8,
+  PhysicalKeyboardKey.digit9: KeyCode.digit9,
+  PhysicalKeyboardKey.digit0: KeyCode.digit0,
+  PhysicalKeyboardKey.enter: KeyCode.enter,
+  PhysicalKeyboardKey.escape: KeyCode.escape,
+  PhysicalKeyboardKey.backspace: KeyCode.backspace,
+  PhysicalKeyboardKey.tab: KeyCode.tab,
+  PhysicalKeyboardKey.space: KeyCode.space,
+  PhysicalKeyboardKey.minus: KeyCode.minus,
+  PhysicalKeyboardKey.equal: KeyCode.equal,
+  PhysicalKeyboardKey.bracketLeft: KeyCode.bracketLeft,
+  PhysicalKeyboardKey.bracketRight: KeyCode.bracketRight,
+  PhysicalKeyboardKey.backslash: KeyCode.backslash,
+  PhysicalKeyboardKey.semicolon: KeyCode.semicolon,
+  PhysicalKeyboardKey.quote: KeyCode.quote,
+  PhysicalKeyboardKey.backquote: KeyCode.backquote,
+  PhysicalKeyboardKey.comma: KeyCode.comma,
+  PhysicalKeyboardKey.period: KeyCode.period,
+  PhysicalKeyboardKey.slash: KeyCode.slash,
+  PhysicalKeyboardKey.capsLock: KeyCode.capsLock,
+  PhysicalKeyboardKey.f1: KeyCode.f1,
+  PhysicalKeyboardKey.f2: KeyCode.f2,
+  PhysicalKeyboardKey.f3: KeyCode.f3,
+  PhysicalKeyboardKey.f4: KeyCode.f4,
+  PhysicalKeyboardKey.f5: KeyCode.f5,
+  PhysicalKeyboardKey.f6: KeyCode.f6,
+  PhysicalKeyboardKey.f7: KeyCode.f7,
+  PhysicalKeyboardKey.f8: KeyCode.f8,
+  PhysicalKeyboardKey.f9: KeyCode.f9,
+  PhysicalKeyboardKey.f10: KeyCode.f10,
+  PhysicalKeyboardKey.f11: KeyCode.f11,
+  PhysicalKeyboardKey.f12: KeyCode.f12,
+  PhysicalKeyboardKey.printScreen: KeyCode.printScreen,
+  PhysicalKeyboardKey.scrollLock: KeyCode.scrollLock,
+  PhysicalKeyboardKey.pause: KeyCode.pause,
+  PhysicalKeyboardKey.insert: KeyCode.insert,
+  PhysicalKeyboardKey.home: KeyCode.home,
+  PhysicalKeyboardKey.pageUp: KeyCode.pageUp,
+  PhysicalKeyboardKey.delete: KeyCode.delete,
+  PhysicalKeyboardKey.end: KeyCode.end,
+  PhysicalKeyboardKey.pageDown: KeyCode.pageDown,
+  PhysicalKeyboardKey.arrowRight: KeyCode.arrowRight,
+  PhysicalKeyboardKey.arrowLeft: KeyCode.arrowLeft,
+  PhysicalKeyboardKey.arrowDown: KeyCode.arrowDown,
+  PhysicalKeyboardKey.arrowUp: KeyCode.arrowUp,
+  PhysicalKeyboardKey.numLock: KeyCode.numLock,
+  PhysicalKeyboardKey.numpadDivide: KeyCode.numpadDivide,
+  PhysicalKeyboardKey.numpadMultiply: KeyCode.numpadMultiply,
+  PhysicalKeyboardKey.numpadSubtract: KeyCode.numpadSubtract,
+  PhysicalKeyboardKey.numpadAdd: KeyCode.numpadAdd,
+  PhysicalKeyboardKey.numpadEnter: KeyCode.numpadEnter,
+  PhysicalKeyboardKey.numpad1: KeyCode.numpad1,
+  PhysicalKeyboardKey.numpad2: KeyCode.numpad2,
+  PhysicalKeyboardKey.numpad3: KeyCode.numpad3,
+  PhysicalKeyboardKey.numpad4: KeyCode.numpad4,
+  PhysicalKeyboardKey.numpad5: KeyCode.numpad5,
+  PhysicalKeyboardKey.numpad6: KeyCode.numpad6,
+  PhysicalKeyboardKey.numpad7: KeyCode.numpad7,
+  PhysicalKeyboardKey.numpad8: KeyCode.numpad8,
+  PhysicalKeyboardKey.numpad9: KeyCode.numpad9,
+  PhysicalKeyboardKey.numpad0: KeyCode.numpad0,
+  PhysicalKeyboardKey.numpadDecimal: KeyCode.numpadDecimal,
+  PhysicalKeyboardKey.intlBackslash: KeyCode.intlBackslash,
+  PhysicalKeyboardKey.contextMenu: KeyCode.contextMenu,
+  PhysicalKeyboardKey.power: KeyCode.power,
+  PhysicalKeyboardKey.numpadEqual: KeyCode.numpadEqual,
+  PhysicalKeyboardKey.f13: KeyCode.f13,
+  PhysicalKeyboardKey.f14: KeyCode.f14,
+  PhysicalKeyboardKey.f15: KeyCode.f15,
+  PhysicalKeyboardKey.f16: KeyCode.f16,
+  PhysicalKeyboardKey.f17: KeyCode.f17,
+  PhysicalKeyboardKey.f18: KeyCode.f18,
+  PhysicalKeyboardKey.f19: KeyCode.f19,
+  PhysicalKeyboardKey.f20: KeyCode.f20,
+  PhysicalKeyboardKey.f21: KeyCode.f21,
+  PhysicalKeyboardKey.f22: KeyCode.f22,
+  PhysicalKeyboardKey.f23: KeyCode.f23,
+  PhysicalKeyboardKey.f24: KeyCode.f24,
+  PhysicalKeyboardKey.controlLeft: KeyCode.controlLeft,
+  PhysicalKeyboardKey.shiftLeft: KeyCode.shiftLeft,
+  PhysicalKeyboardKey.altLeft: KeyCode.altLeft,
+  PhysicalKeyboardKey.metaLeft: KeyCode.metaLeft,
+  PhysicalKeyboardKey.controlRight: KeyCode.controlRight,
+  PhysicalKeyboardKey.shiftRight: KeyCode.shiftRight,
+  PhysicalKeyboardKey.altRight: KeyCode.altRight,
+  PhysicalKeyboardKey.metaRight: KeyCode.metaRight,
+};
 
 enum HotAction { start, view, mode, proxy, tun }
 
@@ -386,14 +529,14 @@ enum RuleAction {
 
 extension RuleActionExt on RuleAction {
   bool get hasParams => [
-    RuleAction.GEOIP,
-    RuleAction.IP_ASN,
-    RuleAction.SRC_IP_ASN,
-    RuleAction.IP_CIDR,
-    RuleAction.IP_CIDR6,
-    RuleAction.IP_SUFFIX,
-    RuleAction.RULE_SET,
-  ].contains(this);
+        RuleAction.GEOIP,
+        RuleAction.IP_ASN,
+        RuleAction.SRC_IP_ASN,
+        RuleAction.IP_CIDR,
+        RuleAction.IP_CIDR6,
+        RuleAction.IP_SUFFIX,
+        RuleAction.RULE_SET,
+      ].contains(this);
 }
 
 enum OverrideRuleType { override, added }

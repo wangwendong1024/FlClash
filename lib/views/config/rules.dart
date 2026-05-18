@@ -39,7 +39,7 @@ class _AddedRulesViewState extends ConsumerState<AddedRulesView> {
   void _handleSelectAll() {
     final ids =
         ref.read(globalRulesProvider).value?.map((item) => item.id).toSet() ??
-        {};
+            {};
     ref.read(selectedItemsProvider(_key).notifier).update((selected) {
       return selected.containsAll(ids) ? {} : ids;
     });
@@ -78,20 +78,20 @@ class _AddedRulesViewState extends ConsumerState<AddedRulesView> {
         actions: [
           if (selectedRules.isNotEmpty) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: _handleDelete,
                 icon: Icon(Icons.delete),
               ),
             ),
             SizedBox(width: 2),
           ],
-          CommonMinFilledButtonTheme(
+          CommonMinElevatedButtonTheme(
             child: selectedRules.isNotEmpty
-                ? FilledButton(
+                ? ElevatedButton(
                     onPressed: _handleSelectAll,
                     child: Text(appLocalizations.selectAll),
                   )
-                : FilledButton.tonal(
+                : ElevatedButton(
                     onPressed: () {
                       _handleAddOrUpdate();
                     },

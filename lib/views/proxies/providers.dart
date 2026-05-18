@@ -110,10 +110,10 @@ class ProviderItem extends StatelessWidget {
   String _buildProviderDesc() {
     final baseInfo = provider.updateAt.lastUpdateTimeDesc;
     final count = provider.count;
-    return switch (count == 0) {
-      true => baseInfo,
-      false => '$baseInfo  ·  $count${appLocalizations.entries}',
-    };
+    if (count == 0) {
+      return baseInfo;
+    }
+    return '$baseInfo  ·  $count${appLocalizations.entries}';
   }
 
   @override
@@ -143,7 +143,7 @@ class ProviderItem extends StatelessWidget {
               ),
               if (provider.vehicleType == 'HTTP')
                 Consumer(
-                  builder: (_, ref, _) {
+                  builder: (_, ref, __) {
                     final isUpdating = ref.watch(
                       isUpdatingProvider(provider.updatingKey),
                     );

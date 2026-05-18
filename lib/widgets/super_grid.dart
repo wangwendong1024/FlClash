@@ -154,7 +154,7 @@ class SuperGridState extends State<SuperGrid> with TickerProviderStateMixin {
     }
     if (_scrollable != scrollable) {
       _edgeDraggingAutoScroller = EdgeDraggingAutoScroller(
-        Scrollable.of(context),
+        Scrollable.of(context)!,
         onScrollViewScrolled: () {
           _edgeDraggingAutoScroller?.startAutoScrollIfNecessary(_dragRect);
         },
@@ -359,13 +359,11 @@ class SuperGridState extends State<SuperGrid> with TickerProviderStateMixin {
       }
       double offsetX = 0;
       double span = 0;
-      for (
-        int j = 0;
-        span < size.width &&
-            j < length &&
-            _containerSize.width.moreOrEqual(offsetX + size.width);
-        j++
-      ) {
+      for (int j = 0;
+          span < size.width &&
+              j < length &&
+              _containerSize.width.moreOrEqual(offsetX + size.width);
+          j++) {
         final tempOffset = offsets[j];
         if (offset.dy.moreOrEqual(tempOffset.dy)) {
           span = tempOffset.dx - offsetX;
@@ -428,10 +426,10 @@ class SuperGridState extends State<SuperGrid> with TickerProviderStateMixin {
     required int index,
   }) {
     final target = DragTarget<int>(
-      builder: (_, _, _) {
+      builder: (_, __, ___) {
         return AbsorbPointer(child: item);
       },
-      onWillAcceptWithDetails: (_) {
+      onWillAccept: (_) {
         debouncer.call(
           FunctionTag.handleWill,
           _handleWill,
@@ -540,7 +538,7 @@ class SuperGridState extends State<SuperGrid> with TickerProviderStateMixin {
   Widget _buildFakeTransformWidget() {
     return ValueListenableBuilder<bool>(
       valueListenable: _animating,
-      builder: (_, animating, _) {
+      builder: (_, animating, __) {
         final index = _dragIndexNotifier.value;
         if (!animating || _fakeDragWidgetAnimation == null || index == -1) {
           return Container();
@@ -582,7 +580,7 @@ class SuperGridState extends State<SuperGrid> with TickerProviderStateMixin {
           _buildInactivate(
             ValueListenableBuilder(
               valueListenable: _childrenNotifier,
-              builder: (_, children, _) {
+              builder: (_, children, __) {
                 _onChildrenChange();
                 return Grid(
                   axisDirection: AxisDirection.down,
@@ -682,7 +680,7 @@ class _DeletableContainerState extends State<_DeletableContainer>
               child: SizedBox(
                 width: 24,
                 height: 24,
-                child: IconButton.filled(
+                child: IconButton(
                   iconSize: 20,
                   padding: EdgeInsets.all(2),
                   onPressed: _handleDel,

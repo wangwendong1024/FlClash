@@ -19,11 +19,11 @@ class CommonFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        floatingActionButtonTheme: Theme.of(context).floatingActionButtonTheme
-            .copyWith(
-              extendedIconLabelSpacing: 0,
-              extendedPadding: EdgeInsets.all(16),
-            ),
+        floatingActionButtonTheme:
+            Theme.of(context).floatingActionButtonTheme.copyWith(
+                  extendedIconLabelSpacing: 0,
+                  extendedPadding: EdgeInsets.all(16),
+                ),
       ),
       child: FloatingActionButtonExtendedBuilder(
         builder: (isExtended) {

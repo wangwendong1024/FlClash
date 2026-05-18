@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_js/flutter_js.dart';
 import 'package:material_color_utilities/palettes/core_palette.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:riverpod/riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -64,8 +65,7 @@ class GlobalState {
   Future<void> _initDynamicColor() async {
     try {
       corePalette = await DynamicColorPlugin.getCorePalette();
-      accentColor =
-          await DynamicColorPlugin.getAccentColor() ??
+      accentColor = await DynamicColorPlugin.getAccentColor() ??
           Color(defaultPrimaryColor);
     } catch (_) {}
   }
@@ -81,7 +81,6 @@ class GlobalState {
       totalTraffic: Traffic(),
       systemUiOverlayStyle: const SystemUiOverlayStyle(),
     );
-    final appStateOverrides = buildAppStateOverrides(appState);
     packageInfo = await PackageInfo.fromPlatform();
     final configMap = await preferences.getConfigMap();
     final config = await migration.migrationIfNeeded(
@@ -96,10 +95,9 @@ class GlobalState {
         return config;
       },
     );
-    final configOverrides = buildConfigOverrides(config);
-    final container = ProviderContainer(
-      overrides: [...appStateOverrides, ...configOverrides],
-    );
+    final container = ProviderContainer();
+    restoreAppState(container, appState);
+    restoreConfig(container, config);
     final profiles = await database.profilesDao.all().get();
     container.read(profilesProvider.notifier).setAndReorder(profiles);
     await AppLocalizations.load(
@@ -235,7 +233,7 @@ class GlobalState {
                   );
                 },
                 itemCount: messages.length,
-                separatorBuilder: (_, _) => Divider(height: 0),
+                separatorBuilder: (_, __) => Divider(height: 0),
               ),
             ),
           );
@@ -297,10 +295,12 @@ class GlobalState {
     if (res.isError) {
       throw res.stringResult;
     }
-    final value = switch (res.rawResult is ffi.Pointer) {
-      true => runtime.convertValue<Map<String, dynamic>>(res),
-      false => Map<String, dynamic>.from(res.rawResult),
-    };
+    final Map<String, dynamic>? value;
+    if (res.rawResult is ffi.Pointer) {
+      value = runtime.convertValue<Map<String, dynamic>>(res);
+    } else {
+      value = Map<String, dynamic>.from(res.rawResult);
+    }
     return value ?? config;
   }
 }

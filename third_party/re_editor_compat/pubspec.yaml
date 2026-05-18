@@ -1,0 +1,12 @@
+name: re_editor
+description: Flutter 3.3 compatible editor shim for FlClash.
+version: 0.1.1
+publish_to: none
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+  flutter: '>=3.3.10'
+
+dependencies:
+  flutter:
+    sdk: flutter

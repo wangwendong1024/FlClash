@@ -219,8 +219,8 @@ extension StateControllerExt on AppController {
   }
 
   String get ua => _ref.read(patchClashConfigProvider).globalUa.takeFirstValid([
-    globalState.packageInfo.ua,
-  ]);
+        globalState.packageInfo.ua,
+      ]);
 
   Profile? get currentProfile {
     return _ref.read(currentProfileProvider);
@@ -286,9 +286,8 @@ extension ProfilesControllerExt on AppController {
   Future<void> autoUpdateProfiles() async {
     for (final profile in _ref.read(profilesProvider)) {
       if (!profile.autoUpdate) continue;
-      final isNotNeedUpdate = profile.lastUpdateDate
-          ?.add(profile.autoUpdateDuration)
-          .isBeforeNow;
+      final isNotNeedUpdate =
+          profile.lastUpdateDate?.add(profile.autoUpdateDuration).isBeforeNow;
       if (isNotNeedUpdate == false || profile.type == ProfileType.file) {
         continue;
       }
@@ -512,8 +511,8 @@ extension ProxiesControllerExt on AppController {
   }
 
   Future<void> updateProviders() async {
-    _ref.read(providersProvider.notifier).value = await coreController
-        .getExternalProviders();
+    _ref.read(providersProvider.notifier).value =
+        await coreController.getExternalProviders();
   }
 
   Future<String> updateProvider(
@@ -860,7 +859,7 @@ extension SystemControllerExt on AppController {
     });
     try {
       await Future.wait([
-        if (needSave) preferences.saveConfig(config),
+        if (needSave) preferences.saveConfig(this.config),
         if (macOS != null) macOS!.updateDns(true),
         if (proxy != null) proxy!.stopProxy(),
         if (tray != null) tray!.destroy(),
@@ -878,7 +877,7 @@ extension SystemControllerExt on AppController {
     }
     if (_ref.read(appSettingProvider).minimizeOnExit) {
       if (system.isDesktop) {
-        await preferences.saveConfig(config);
+        await preferences.saveConfig(this.config);
       }
       await system.back();
     } else {
@@ -1073,7 +1072,7 @@ extension BackBlockControllExt on AppController {
 extension StoreControllerExt on AppController {
   void savePreferencesDebounce() {
     debouncer.call(FunctionTag.savePreferences, () async {
-      await preferences.saveConfig(config);
+      await preferences.saveConfig(this.config);
     });
   }
 
@@ -1138,8 +1137,8 @@ extension CommonControllerExt on AppController {
     );
     final traffic = await coreController.getTraffic(onlyStatisticsProxy);
     _ref.read(trafficsProvider.notifier).addTraffic(traffic);
-    _ref.read(totalTrafficProvider.notifier).value = await coreController
-        .getTotalTraffic(onlyStatisticsProxy);
+    _ref.read(totalTrafficProvider.notifier).value =
+        await coreController.getTotalTraffic(onlyStatisticsProxy);
   }
 
   Future<T?> loadingRun<T>(

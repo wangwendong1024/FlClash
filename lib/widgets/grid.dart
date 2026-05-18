@@ -19,7 +19,7 @@ class Grid extends MultiChildRenderObjectWidget {
 
   final TextDirection textDirection;
 
-  const Grid({
+  Grid({
     super.key,
     this.mainAxisSpacing = 0,
     this.crossAxisSpacing = 0,
@@ -28,12 +28,12 @@ class Grid extends MultiChildRenderObjectWidget {
     TextDirection? textDirection,
     this.mainAxisExtent,
     List<Widget>? children,
-  }) : crossAxisCount = crossAxisCount ?? 1,
-       axisDirection = axisDirection ?? AxisDirection.down,
-       textDirection = textDirection ?? TextDirection.ltr,
-       super(children: children ?? const []);
+  })  : crossAxisCount = crossAxisCount ?? 1,
+        axisDirection = axisDirection ?? AxisDirection.down,
+        textDirection = textDirection ?? TextDirection.ltr,
+        super(children: children ?? const []);
 
-  const Grid.baseGap({
+  Grid.baseGap({
     Key? key,
     double mainAxisSpacing = 8.0,
     double crossAxisSpacing = 8.0,
@@ -43,15 +43,15 @@ class Grid extends MultiChildRenderObjectWidget {
     double? mainAxisExtent,
     List<Widget>? children,
   }) : this(
-         key: key,
-         mainAxisSpacing: mainAxisSpacing,
-         crossAxisSpacing: crossAxisSpacing,
-         crossAxisCount: crossAxisCount,
-         axisDirection: axisDirection,
-         textDirection: textDirection,
-         mainAxisExtent: mainAxisExtent,
-         children: children,
-       );
+          key: key,
+          mainAxisSpacing: mainAxisSpacing,
+          crossAxisSpacing: crossAxisSpacing,
+          crossAxisCount: crossAxisCount,
+          axisDirection: axisDirection,
+          textDirection: textDirection,
+          mainAxisExtent: mainAxisExtent,
+          children: children,
+        );
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -88,12 +88,12 @@ class RenderGrid extends RenderBox
     required AxisDirection axisDirection,
     required TextDirection textDirection,
     double? mainAxisExtent,
-  }) : _crossAxisCount = crossAxisCount,
-       _crossAxisSpacing = crossAxisSpacing,
-       _mainAxisSpacing = mainAxisSpacing,
-       _axisDirection = axisDirection,
-       _textDirection = textDirection,
-       _mainAxisExtent = mainAxisExtent;
+  })  : _crossAxisCount = crossAxisCount,
+        _crossAxisSpacing = crossAxisSpacing,
+        _mainAxisSpacing = mainAxisSpacing,
+        _axisDirection = axisDirection,
+        _textDirection = textDirection,
+        _mainAxisExtent = mainAxisExtent;
 
   int _crossAxisCount;
 
@@ -238,13 +238,11 @@ class RenderGrid extends RenderBox
             ? BoxConstraints.tightFor(width: crossAxisExtent)
             : BoxConstraints.tightFor(height: crossAxisExtent);
         _layoutChild(child, childConstraints, parentUsesSize: true);
-        mainAxisExtent = mainAxis == Axis.vertical
-            ? child.size.height
-            : child.size.width;
+        mainAxisExtent =
+            mainAxis == Axis.vertical ? child.size.height : child.size.width;
       } else {
         final mainAxisCellCount = childParentData.mainAxisCellCount ?? 1;
-        mainAxisExtent =
-            (this.mainAxisExtent ?? stride) * mainAxisCellCount -
+        mainAxisExtent = (this.mainAxisExtent ?? stride) * mainAxisCellCount -
             mainAxisSpacing;
         childParentData.realMainAxisExtent = mainAxisExtent;
         final childSize = mainAxis == Axis.vertical
@@ -274,8 +272,7 @@ class RenderGrid extends RenderBox
         final childParentData = _getParentData(child);
         final offset = childParentData.offset;
         final crossAxisOffset = offset.getCrossAxisOffset(mainAxis);
-        final mainAxisOffset =
-            mainAxisExtent -
+        final mainAxisOffset = mainAxisExtent -
             offset.getMainAxisOffset(mainAxis) -
             childParentData.realMainAxisExtent!;
         final newOffset = mainAxis == Axis.vertical
@@ -385,13 +382,11 @@ _Origin _getOrigin(List<double> offsets, int crossAxisCount) {
     }
     int start = 0;
     int span = 0;
-    for (
-      int j = 0;
-      span < crossAxisCount &&
-          j < length &&
-          length - j >= crossAxisCount - span;
-      j++
-    ) {
+    for (int j = 0;
+        span < crossAxisCount &&
+            j < length &&
+            length - j >= crossAxisCount - span;
+        j++) {
       if (offset.moreOrEqual(offsets[j])) {
         span++;
         if (span == crossAxisCount) {

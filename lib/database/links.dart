@@ -1,10 +1,6 @@
 part of 'database.dart';
 
 @DataClassName('RawProfileRuleLink')
-@TableIndex(
-  name: 'idx_profile_scene_order',
-  columns: {#profileId, #scene, #order},
-)
 class ProfileRuleLinks extends Table {
   @override
   String get tableName => 'profile_rule_mapping';
@@ -12,10 +8,10 @@ class ProfileRuleLinks extends Table {
   TextColumn get id => text()();
 
   IntColumn get profileId => integer().nullable().references(
-    Profiles,
-    #id,
-    onDelete: KeyAction.cascade,
-  )();
+        Profiles,
+        #id,
+        onDelete: KeyAction.cascade,
+      )();
 
   IntColumn get ruleId =>
       integer().references(Rules, #id, onDelete: KeyAction.cascade)();

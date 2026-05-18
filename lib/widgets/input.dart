@@ -32,34 +32,32 @@ class OptionsDialog<T> extends StatelessWidget {
     return CommonDialog(
       title: title,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: RadioGroup(
-        onChanged: (value) {
-          Navigator.of(context).pop(value);
-        },
-        groupValue: value,
-        child: Wrap(
-          children: [
-            for (final option in options)
-              Builder(
-                builder: (context) {
-                  if (value == option) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Scrollable.ensureVisible(context);
-                    });
-                  }
-                  return ListItem.radio(
-                    delegate: RadioDelegate(
-                      value: option,
-                      onTab: () {
-                        Navigator.of(context).pop(option);
-                      },
-                    ),
-                    title: Text(textBuilder(option)),
-                  );
-                },
-              ),
-          ],
-        ),
+      child: Wrap(
+        children: [
+          for (final option in options)
+            Builder(
+              builder: (context) {
+                if (value == option) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Scrollable.ensureVisible(context);
+                  });
+                }
+                return ListItem.radio(
+                  delegate: RadioDelegate<T>(
+                    value: option,
+                    groupValue: value,
+                    onChanged: (value) {
+                      Navigator.of(context).pop(value);
+                    },
+                    onTab: () {
+                      Navigator.of(context).pop(option);
+                    },
+                  ),
+                  title: Text(textBuilder(option)),
+                );
+              },
+            ),
+        ],
       ),
     );
   }
@@ -297,9 +295,8 @@ class _ListInputPageState extends ConsumerState<ListInputPage> {
 
   void _handleDelete() {
     final selectedItems = ref.read(selectedItemsProvider(_key));
-    final newItems = _items
-        .where((item) => !selectedItems.contains(item))
-        .toList();
+    final newItems =
+        _items.where((item) => !selectedItems.contains(item)).toList();
     _items = newItems;
     ref.read(selectedItemsProvider(_key).notifier).value = {};
     setState(() {});
@@ -369,7 +366,7 @@ class _ListInputPageState extends ConsumerState<ListInputPage> {
         actions: [
           if (selectedItems.isNotEmpty) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: _handleDelete,
                 icon: Icon(Icons.delete),
               ),
@@ -377,20 +374,20 @@ class _ListInputPageState extends ConsumerState<ListInputPage> {
             SizedBox(width: 2),
           ] else if (!stringListEquality.equals(_items, _originItems)) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: _handleReset,
                 icon: const Icon(Icons.replay),
               ),
             ),
             SizedBox(width: 2),
           ],
-          CommonMinFilledButtonTheme(
+          CommonMinElevatedButtonTheme(
             child: selectedItems.isNotEmpty
-                ? FilledButton(
+                ? ElevatedButton(
                     onPressed: _handleSelectAll,
                     child: Text(appLocalizations.selectAll),
                   )
-                : FilledButton.tonal(
+                : ElevatedButton(
                     onPressed: () {
                       _handleAddOrEdit();
                     },
@@ -550,9 +547,8 @@ class _MapInputPageState extends ConsumerState<MapInputPage> {
 
   void _handleDelete() {
     final selectedItems = ref.read(selectedItemsProvider(_key));
-    final newItems = _items
-        .where((item) => !selectedItems.contains(item.key))
-        .toList();
+    final newItems =
+        _items.where((item) => !selectedItems.contains(item.key)).toList();
     _items = newItems;
     ref.read(selectedItemsProvider(_key).notifier).value = {};
     setState(() {});
@@ -622,7 +618,7 @@ class _MapInputPageState extends ConsumerState<MapInputPage> {
         actions: [
           if (selectedItems.isNotEmpty) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: _handleDelete,
                 icon: Icon(Icons.delete),
               ),
@@ -633,20 +629,20 @@ class _MapInputPageState extends ConsumerState<MapInputPage> {
             _originItems,
           )) ...[
             CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
+              child: IconButton(
                 onPressed: _handleReset,
                 icon: const Icon(Icons.replay),
               ),
             ),
             SizedBox(width: 2),
           ],
-          CommonMinFilledButtonTheme(
+          CommonMinElevatedButtonTheme(
             child: selectedItems.isNotEmpty
-                ? FilledButton(
+                ? ElevatedButton(
                     onPressed: _handleSelectAll,
                     child: Text(appLocalizations.selectAll),
                   )
-                : FilledButton.tonal(
+                : ElevatedButton(
                     onPressed: () {
                       _handleAddOrEdit();
                     },

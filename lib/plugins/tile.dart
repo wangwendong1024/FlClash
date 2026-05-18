@@ -5,7 +5,7 @@ import 'package:fl_clash/common/system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-abstract mixin class TileListener {
+mixin TileListener {
   void onStart() {}
 
   void onStop() {}

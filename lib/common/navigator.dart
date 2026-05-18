@@ -237,8 +237,8 @@ class _CommonPageTransitionState extends State<CommonPageTransition> {
     if (!widget.linearTransition) {
       _primaryPositionCurve = CurvedAnimation(
         parent: widget.primaryRouteAnimation,
-        curve: Curves.fastEaseInToSlowEaseOut,
-        reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
+        curve: Curves.easeInOutCubic,
+        reverseCurve: Curves.easeInOutCubic.flipped,
       );
       _secondaryPositionCurve = CurvedAnimation(
         parent: widget.secondaryRouteAnimation,
@@ -252,22 +252,22 @@ class _CommonPageTransitionState extends State<CommonPageTransition> {
     }
     _primaryPositionAnimation =
         (_primaryPositionCurve ?? widget.primaryRouteAnimation).drive(
-          _kRightMiddleTween,
-        );
+      _kRightMiddleTween,
+    );
     _secondaryPositionAnimation =
         (_secondaryPositionCurve ?? widget.secondaryRouteAnimation).drive(
-          _kMiddleLeftTween,
-        );
+      _kMiddleLeftTween,
+    );
     _primaryShadowAnimation =
         (_primaryShadowCurve ?? widget.primaryRouteAnimation).drive(
-          DecorationTween(
-            begin: const _CommonEdgeShadowDecoration(),
-            end: _CommonEdgeShadowDecoration(<Color>[
-              Color(0x04000000),
-              Colors.transparent,
-            ]),
-          ),
-        );
+      DecorationTween(
+        begin: const _CommonEdgeShadowDecoration(),
+        end: _CommonEdgeShadowDecoration(<Color>[
+          Color(0x04000000),
+          Colors.transparent,
+        ]),
+      ),
+    );
   }
 
   @override
@@ -303,7 +303,7 @@ class _CommonEdgeShadowDecoration extends Decoration {
 
 class _CommonEdgeShadowPainter extends BoxPainter {
   _CommonEdgeShadowPainter(this._decoration, super.onChanged)
-    : assert(_decoration._colors == null || _decoration._colors.length > 1);
+      : assert(_decoration._colors == null || _decoration._colors!.length > 1);
 
   final _CommonEdgeShadowDecoration _decoration;
 
@@ -320,10 +320,18 @@ class _CommonEdgeShadowPainter extends BoxPainter {
 
     final TextDirection? textDirection = configuration.textDirection;
     assert(textDirection != null);
-    final (double shadowDirection, double start) = switch (textDirection!) {
-      TextDirection.rtl => (1, offset.dx + configuration.size!.width),
-      TextDirection.ltr => (-1, offset.dx),
-    };
+    final double shadowDirection;
+    final double start;
+    switch (textDirection!) {
+      case TextDirection.rtl:
+        shadowDirection = 1;
+        start = offset.dx + configuration.size!.width;
+        break;
+      case TextDirection.ltr:
+        shadowDirection = -1;
+        start = offset.dx;
+        break;
+    }
 
     int bandColorIndex = 0;
     for (int dx = 0; dx < shadowWidth; dx += 1) {

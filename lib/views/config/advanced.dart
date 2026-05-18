@@ -40,7 +40,7 @@ class AdvancedConfigView extends StatelessWidget {
             title: 'DNS',
             actions: [
               Consumer(
-                builder: (_, ref, _) {
+                builder: (_, ref, __) {
                   return IconButton(
                     onPressed: () async {
                       final res = await globalState.showMessage(
@@ -74,7 +74,7 @@ class AdvancedConfigView extends StatelessWidget {
       ListItem.open(
         title: Text(appLocalizations.script),
         subtitle: Text(appLocalizations.overrideScript),
-        leading: const Icon(Icons.rocket, fontWeight: FontWeight.w900),
+        leading: const Icon(Icons.rocket),
         delegate: OpenDelegate(widget: const ScriptsView(), blur: false),
       ),
     ];

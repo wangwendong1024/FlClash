@@ -6,38 +6,35 @@ part of '../core.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_SetupParams _$SetupParamsFromJson(Map<String, dynamic> json) => _SetupParams(
-  selectedMap: Map<String, String>.from(json['selected-map'] as Map),
-  testUrl: json['test-url'] as String,
-);
+_$_SetupParams _$$_SetupParamsFromJson(Map<String, dynamic> json) =>
+    _$_SetupParams(
+      selectedMap: Map<String, String>.from(json['selected-map'] as Map),
+      testUrl: json['test-url'] as String,
+    );
 
-Map<String, dynamic> _$SetupParamsToJson(_SetupParams instance) =>
+Map<String, dynamic> _$$_SetupParamsToJson(_$_SetupParams instance) =>
     <String, dynamic>{
       'selected-map': instance.selectedMap,
       'test-url': instance.testUrl,
     };
 
-_UpdateParams _$UpdateParamsFromJson(Map<String, dynamic> json) =>
-    _UpdateParams(
+_$_UpdateParams _$$_UpdateParamsFromJson(Map<String, dynamic> json) =>
+    _$_UpdateParams(
       tun: Tun.fromJson(json['tun'] as Map<String, dynamic>),
-      mixedPort: (json['mixed-port'] as num).toInt(),
+      mixedPort: json['mixed-port'] as int,
       allowLan: json['allow-lan'] as bool,
-      findProcessMode: $enumDecode(
-        _$FindProcessModeEnumMap,
-        json['find-process-mode'],
-      ),
+      findProcessMode:
+          $enumDecode(_$FindProcessModeEnumMap, json['find-process-mode']),
       mode: $enumDecode(_$ModeEnumMap, json['mode']),
       logLevel: $enumDecode(_$LogLevelEnumMap, json['log-level']),
       ipv6: json['ipv6'] as bool,
       tcpConcurrent: json['tcp-concurrent'] as bool,
       externalController: $enumDecode(
-        _$ExternalControllerStatusEnumMap,
-        json['external-controller'],
-      ),
+          _$ExternalControllerStatusEnumMap, json['external-controller']),
       unifiedDelay: json['unified-delay'] as bool,
     );
 
-Map<String, dynamic> _$UpdateParamsToJson(_UpdateParams instance) =>
+Map<String, dynamic> _$$_UpdateParamsToJson(_$_UpdateParams instance) =>
     <String, dynamic>{
       'tun': instance.tun,
       'mixed-port': instance.mixedPort,
@@ -76,28 +73,27 @@ const _$ExternalControllerStatusEnumMap = {
   ExternalControllerStatus.open: '127.0.0.1:9090',
 };
 
-_VpnOptions _$VpnOptionsFromJson(Map<String, dynamic> json) => _VpnOptions(
-  enable: json['enable'] as bool,
-  port: (json['port'] as num).toInt(),
-  ipv6: json['ipv6'] as bool,
-  dnsHijacking: json['dnsHijacking'] as bool,
-  accessControlProps: AccessControlProps.fromJson(
-    json['accessControlProps'] as Map<String, dynamic>,
-  ),
-  allowBypass: json['allowBypass'] as bool,
-  systemProxy: json['systemProxy'] as bool,
-  bypassDomain: (json['bypassDomain'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  stack: json['stack'] as String,
-  routeAddress:
-      (json['routeAddress'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-);
+_$_VpnOptions _$$_VpnOptionsFromJson(Map<String, dynamic> json) =>
+    _$_VpnOptions(
+      enable: json['enable'] as bool,
+      port: json['port'] as int,
+      ipv6: json['ipv6'] as bool,
+      dnsHijacking: json['dnsHijacking'] as bool,
+      accessControlProps: AccessControlProps.fromJson(
+          json['accessControlProps'] as Map<String, dynamic>),
+      allowBypass: json['allowBypass'] as bool,
+      systemProxy: json['systemProxy'] as bool,
+      bypassDomain: (json['bypassDomain'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      stack: json['stack'] as String,
+      routeAddress: (json['routeAddress'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+    );
 
-Map<String, dynamic> _$VpnOptionsToJson(_VpnOptions instance) =>
+Map<String, dynamic> _$$_VpnOptionsToJson(_$_VpnOptions instance) =>
     <String, dynamic>{
       'enable': instance.enable,
       'port': instance.port,
@@ -111,48 +107,51 @@ Map<String, dynamic> _$VpnOptionsToJson(_VpnOptions instance) =>
       'routeAddress': instance.routeAddress,
     };
 
-_InitParams _$InitParamsFromJson(Map<String, dynamic> json) => _InitParams(
-  homeDir: json['home-dir'] as String,
-  version: (json['version'] as num).toInt(),
-);
+_$_InitParams _$$_InitParamsFromJson(Map<String, dynamic> json) =>
+    _$_InitParams(
+      homeDir: json['home-dir'] as String,
+      version: json['version'] as int,
+    );
 
-Map<String, dynamic> _$InitParamsToJson(_InitParams instance) =>
+Map<String, dynamic> _$$_InitParamsToJson(_$_InitParams instance) =>
     <String, dynamic>{
       'home-dir': instance.homeDir,
       'version': instance.version,
     };
 
-_ChangeProxyParams _$ChangeProxyParamsFromJson(Map<String, dynamic> json) =>
-    _ChangeProxyParams(
+_$_ChangeProxyParams _$$_ChangeProxyParamsFromJson(Map<String, dynamic> json) =>
+    _$_ChangeProxyParams(
       groupName: json['group-name'] as String,
       proxyName: json['proxy-name'] as String,
     );
 
-Map<String, dynamic> _$ChangeProxyParamsToJson(_ChangeProxyParams instance) =>
+Map<String, dynamic> _$$_ChangeProxyParamsToJson(
+        _$_ChangeProxyParams instance) =>
     <String, dynamic>{
       'group-name': instance.groupName,
       'proxy-name': instance.proxyName,
     };
 
-_UpdateGeoDataParams _$UpdateGeoDataParamsFromJson(Map<String, dynamic> json) =>
-    _UpdateGeoDataParams(
+_$_UpdateGeoDataParams _$$_UpdateGeoDataParamsFromJson(
+        Map<String, dynamic> json) =>
+    _$_UpdateGeoDataParams(
       geoType: json['geo-type'] as String,
       geoName: json['geo-name'] as String,
     );
 
-Map<String, dynamic> _$UpdateGeoDataParamsToJson(
-  _UpdateGeoDataParams instance,
-) => <String, dynamic>{
-  'geo-type': instance.geoType,
-  'geo-name': instance.geoName,
-};
+Map<String, dynamic> _$$_UpdateGeoDataParamsToJson(
+        _$_UpdateGeoDataParams instance) =>
+    <String, dynamic>{
+      'geo-type': instance.geoType,
+      'geo-name': instance.geoName,
+    };
 
-_CoreEvent _$CoreEventFromJson(Map<String, dynamic> json) => _CoreEvent(
-  type: $enumDecode(_$CoreEventTypeEnumMap, json['type']),
-  data: json['data'],
-);
+_$_CoreEvent _$$_CoreEventFromJson(Map<String, dynamic> json) => _$_CoreEvent(
+      type: $enumDecode(_$CoreEventTypeEnumMap, json['type']),
+      data: json['data'],
+    );
 
-Map<String, dynamic> _$CoreEventToJson(_CoreEvent instance) =>
+Map<String, dynamic> _$$_CoreEventToJson(_$_CoreEvent instance) =>
     <String, dynamic>{
       'type': _$CoreEventTypeEnumMap[instance.type]!,
       'data': instance.data,
@@ -166,13 +165,13 @@ const _$CoreEventTypeEnumMap = {
   CoreEventType.crash: 'crash',
 };
 
-_InvokeMessage _$InvokeMessageFromJson(Map<String, dynamic> json) =>
-    _InvokeMessage(
+_$_InvokeMessage _$$_InvokeMessageFromJson(Map<String, dynamic> json) =>
+    _$_InvokeMessage(
       type: $enumDecode(_$InvokeMessageTypeEnumMap, json['type']),
       data: json['data'],
     );
 
-Map<String, dynamic> _$InvokeMessageToJson(_InvokeMessage instance) =>
+Map<String, dynamic> _$$_InvokeMessageToJson(_$_InvokeMessage instance) =>
     <String, dynamic>{
       'type': _$InvokeMessageTypeEnumMap[instance.type]!,
       'data': instance.data,
@@ -183,58 +182,59 @@ const _$InvokeMessageTypeEnumMap = {
   InvokeMessageType.process: 'process',
 };
 
-_Delay _$DelayFromJson(Map<String, dynamic> json) => _Delay(
-  name: json['name'] as String,
-  url: json['url'] as String,
-  value: (json['value'] as num?)?.toInt(),
-);
+_$_Delay _$$_DelayFromJson(Map<String, dynamic> json) => _$_Delay(
+      name: json['name'] as String,
+      url: json['url'] as String,
+      value: json['value'] as int?,
+    );
 
-Map<String, dynamic> _$DelayToJson(_Delay instance) => <String, dynamic>{
-  'name': instance.name,
-  'url': instance.url,
-  'value': instance.value,
-};
+Map<String, dynamic> _$$_DelayToJson(_$_Delay instance) => <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+      'value': instance.value,
+    };
 
-_Now _$NowFromJson(Map<String, dynamic> json) =>
-    _Now(name: json['name'] as String, value: json['value'] as String);
+_$_Now _$$_NowFromJson(Map<String, dynamic> json) => _$_Now(
+      name: json['name'] as String,
+      value: json['value'] as String,
+    );
 
-Map<String, dynamic> _$NowToJson(_Now instance) => <String, dynamic>{
-  'name': instance.name,
-  'value': instance.value,
-};
+Map<String, dynamic> _$$_NowToJson(_$_Now instance) => <String, dynamic>{
+      'name': instance.name,
+      'value': instance.value,
+    };
 
-_ProviderSubscriptionInfo _$ProviderSubscriptionInfoFromJson(
-  Map<String, dynamic> json,
-) => _ProviderSubscriptionInfo(
-  upload: (json['UPLOAD'] as num?)?.toInt() ?? 0,
-  download: (json['DOWNLOAD'] as num?)?.toInt() ?? 0,
-  total: (json['TOTAL'] as num?)?.toInt() ?? 0,
-  expire: (json['EXPIRE'] as num?)?.toInt() ?? 0,
-);
+_$_ProviderSubscriptionInfo _$$_ProviderSubscriptionInfoFromJson(
+        Map<String, dynamic> json) =>
+    _$_ProviderSubscriptionInfo(
+      upload: json['UPLOAD'] as int? ?? 0,
+      download: json['DOWNLOAD'] as int? ?? 0,
+      total: json['TOTAL'] as int? ?? 0,
+      expire: json['EXPIRE'] as int? ?? 0,
+    );
 
-Map<String, dynamic> _$ProviderSubscriptionInfoToJson(
-  _ProviderSubscriptionInfo instance,
-) => <String, dynamic>{
-  'UPLOAD': instance.upload,
-  'DOWNLOAD': instance.download,
-  'TOTAL': instance.total,
-  'EXPIRE': instance.expire,
-};
+Map<String, dynamic> _$$_ProviderSubscriptionInfoToJson(
+        _$_ProviderSubscriptionInfo instance) =>
+    <String, dynamic>{
+      'UPLOAD': instance.upload,
+      'DOWNLOAD': instance.download,
+      'TOTAL': instance.total,
+      'EXPIRE': instance.expire,
+    };
 
-_ExternalProvider _$ExternalProviderFromJson(Map<String, dynamic> json) =>
-    _ExternalProvider(
+_$_ExternalProvider _$$_ExternalProviderFromJson(Map<String, dynamic> json) =>
+    _$_ExternalProvider(
       name: json['name'] as String,
       type: json['type'] as String,
       path: json['path'] as String?,
-      count: (json['count'] as num).toInt(),
+      count: json['count'] as int,
       subscriptionInfo: subscriptionInfoFormCore(
-        json['subscription-info'] as Map<String, Object?>?,
-      ),
+          json['subscription-info'] as Map<String, Object?>?),
       vehicleType: json['vehicle-type'] as String,
       updateAt: DateTime.parse(json['update-at'] as String),
     );
 
-Map<String, dynamic> _$ExternalProviderToJson(_ExternalProvider instance) =>
+Map<String, dynamic> _$$_ExternalProviderToJson(_$_ExternalProvider instance) =>
     <String, dynamic>{
       'name': instance.name,
       'type': instance.type,
@@ -245,17 +245,17 @@ Map<String, dynamic> _$ExternalProviderToJson(_ExternalProvider instance) =>
       'update-at': instance.updateAt.toIso8601String(),
     };
 
-_Action _$ActionFromJson(Map<String, dynamic> json) => _Action(
-  method: $enumDecode(_$ActionMethodEnumMap, json['method']),
-  data: json['data'],
-  id: json['id'] as String,
-);
+_$_Action _$$_ActionFromJson(Map<String, dynamic> json) => _$_Action(
+      method: $enumDecode(_$ActionMethodEnumMap, json['method']),
+      data: json['data'],
+      id: json['id'] as String,
+    );
 
-Map<String, dynamic> _$ActionToJson(_Action instance) => <String, dynamic>{
-  'method': _$ActionMethodEnumMap[instance.method]!,
-  'data': instance.data,
-  'id': instance.id,
-};
+Map<String, dynamic> _$$_ActionToJson(_$_Action instance) => <String, dynamic>{
+      'method': _$ActionMethodEnumMap[instance.method]!,
+      'data': instance.data,
+      'id': instance.id,
+    };
 
 const _$ActionMethodEnumMap = {
   ActionMethod.message: 'message',
@@ -299,25 +299,28 @@ const _$ActionMethodEnumMap = {
   ActionMethod.getCurrentProfileName: 'getCurrentProfileName',
 };
 
-_ProxiesData _$ProxiesDataFromJson(Map<String, dynamic> json) => _ProxiesData(
-  proxies: json['proxies'] as Map<String, dynamic>,
-  all: (json['all'] as List<dynamic>).map((e) => e as String).toList(),
-);
+_$_ProxiesData _$$_ProxiesDataFromJson(Map<String, dynamic> json) =>
+    _$_ProxiesData(
+      proxies: json['proxies'] as Map<String, dynamic>,
+      all: (json['all'] as List<dynamic>).map((e) => e as String).toList(),
+    );
 
-Map<String, dynamic> _$ProxiesDataToJson(_ProxiesData instance) =>
-    <String, dynamic>{'proxies': instance.proxies, 'all': instance.all};
+Map<String, dynamic> _$$_ProxiesDataToJson(_$_ProxiesData instance) =>
+    <String, dynamic>{
+      'proxies': instance.proxies,
+      'all': instance.all,
+    };
 
-_ActionResult _$ActionResultFromJson(Map<String, dynamic> json) =>
-    _ActionResult(
+_$_ActionResult _$$_ActionResultFromJson(Map<String, dynamic> json) =>
+    _$_ActionResult(
       method: $enumDecode(_$ActionMethodEnumMap, json['method']),
       data: json['data'],
       id: json['id'] as String?,
-      code:
-          $enumDecodeNullable(_$ResultTypeEnumMap, json['code']) ??
+      code: $enumDecodeNullable(_$ResultTypeEnumMap, json['code']) ??
           ResultType.success,
     );
 
-Map<String, dynamic> _$ActionResultToJson(_ActionResult instance) =>
+Map<String, dynamic> _$$_ActionResultToJson(_$_ActionResult instance) =>
     <String, dynamic>{
       'method': _$ActionMethodEnumMap[instance.method]!,
       'data': instance.data,
@@ -325,4 +328,7 @@ Map<String, dynamic> _$ActionResultToJson(_ActionResult instance) =>
       'code': _$ResultTypeEnumMap[instance.code]!,
     };
 
-const _$ResultTypeEnumMap = {ResultType.success: 0, ResultType.error: -1};
+const _$ResultTypeEnumMap = {
+  ResultType.success: 0,
+  ResultType.error: -1,
+};

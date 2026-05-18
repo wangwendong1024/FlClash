@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compatibility shim for Flutter 3.3 Android embedding detection. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.follow.clash">
+    <application>
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+</manifest>

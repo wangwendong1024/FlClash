@@ -121,9 +121,7 @@ class _ThemeModeItem extends ConsumerWidget {
               return CommonCard(
                 isSelected: themeModeItem.themeMode == themeMode,
                 onPressed: () {
-                  ref
-                      .read(themeSettingProvider.notifier)
-                      .update(
+                  ref.read(themeSettingProvider.notifier).update(
                         (state) =>
                             state.copyWith(themeMode: themeModeItem.themeMode),
                       );
@@ -142,7 +140,7 @@ class _ThemeModeItem extends ConsumerWidget {
                 ),
               );
             },
-            separatorBuilder: (_, _) {
+            separatorBuilder: (_, __) {
               return const SizedBox(width: 16);
             },
           ),
@@ -298,16 +296,16 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
           ),
           actions: genActions([
             if (_removablePrimaryColor == null)
-              FilledButton(
-                style: FilledButton.styleFrom(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
                   visualDensity: VisualDensity.compact,
                 ),
                 onPressed: _handleChangeSchemeVariant,
                 child: Text(Intl.message('${schemeVariant.name}Scheme')),
               ),
             if (_removablePrimaryColor != null)
-              FilledButton(
-                style: FilledButton.styleFrom(
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
                   visualDensity: VisualDensity.compact,
                 ),
                 onPressed: () {
@@ -318,7 +316,7 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
                 child: Text(appLocalizations.cancel),
               ),
             if (_removablePrimaryColor == null && !isEquals)
-              IconButton.filledTonal(
+              IconButton(
                 iconSize: 20,
                 padding: EdgeInsets.all(4),
                 visualDensity: VisualDensity.compact,
@@ -349,9 +347,8 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
                             EffectGestureDetector(
                               child: ColorSchemeBox(
                                 isSelected: color == primaryColor,
-                                primaryColor: color != null
-                                    ? Color(color)
-                                    : null,
+                                primaryColor:
+                                    color != null ? Color(color) : null,
                                 onPressed: () {
                                   setState(() {
                                     _removablePrimaryColor = null;
@@ -375,7 +372,7 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
                               Container(
                                 color: Colors.white.opacity0,
                                 padding: EdgeInsets.all(8),
-                                child: IconButton.filledTonal(
+                                child: IconButton(
                                   onPressed: _handleDel,
                                   padding: EdgeInsets.all(12),
                                   iconSize: 30,
@@ -393,7 +390,7 @@ class _PrimaryColorItemState extends ConsumerState<_PrimaryColorItem> {
                         width: itemWidth,
                         height: itemWidth,
                         padding: EdgeInsets.all(4),
-                        child: IconButton.filledTonal(
+                        child: IconButton(
                           onPressed: _handleAdd,
                           iconSize: 32,
                           icon: Icon(
@@ -428,8 +425,8 @@ class _PrueBlackItem extends ConsumerWidget {
         title: Text(
           appLocalizations.pureBlackMode,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: context.colorScheme.onSurfaceVariant,
-          ),
+                color: context.colorScheme.onSurfaceVariant,
+              ),
         ),
         delegate: SwitchDelegate(
           value: prueBlack,
@@ -465,15 +462,13 @@ class _TextScaleFactorItem extends ConsumerWidget {
               title: Text(
                 appLocalizations.textScale,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: context.colorScheme.onSurfaceVariant,
-                ),
+                      color: context.colorScheme.onSurfaceVariant,
+                    ),
               ),
               delegate: SwitchDelegate(
                 value: textScale.enable,
                 onChanged: (value) {
-                  ref
-                      .read(themeSettingProvider.notifier)
-                      .update(
+                  ref.read(themeSettingProvider.notifier).update(
                         (state) => state.copyWith.textScale(enable: value),
                       );
                 },
@@ -485,7 +480,6 @@ class _TextScaleFactorItem extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              spacing: 32,
               children: [
                 Expanded(
                   child: DisabledMask(
@@ -495,14 +489,11 @@ class _TextScaleFactorItem extends ConsumerWidget {
                       child: SliderTheme(
                         data: _SliderDefaultsM3(context),
                         child: Slider(
-                          padding: EdgeInsets.zero,
                           min: minTextScale,
                           max: maxTextScale,
                           value: textScale.scale,
                           onChanged: (value) {
-                            ref
-                                .read(themeSettingProvider.notifier)
-                                .update(
+                            ref.read(themeSettingProvider.notifier).update(
                                   (state) =>
                                       state.copyWith.textScale(scale: value),
                                 );
@@ -516,7 +507,7 @@ class _TextScaleFactorItem extends ConsumerWidget {
                   padding: EdgeInsets.only(right: 4),
                   child: Text(process, style: context.textTheme.titleMedium),
                 ),
-              ],
+              ].separated(SizedBox(width: 32)).toList(),
             ),
           ),
         ],
@@ -548,7 +539,7 @@ class _PaletteDialogState extends State<_PaletteDialog> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(_controller.value.toARGB32());
+            Navigator.of(context).pop(_controller.value.value);
           },
           child: Text(appLocalizations.confirm),
         ),
@@ -564,10 +555,10 @@ class _PaletteDialogState extends State<_PaletteDialog> {
           SizedBox(height: 24),
           ValueListenableBuilder(
             valueListenable: _controller,
-            builder: (_, color, _) {
+            builder: (_, color, __) {
               return PrimaryColorBox(
                 primaryColor: color,
-                child: FilledButton(
+                child: ElevatedButton(
                   onPressed: () {},
                   child: Text(_controller.value.hex),
                 ),
@@ -626,14 +617,14 @@ class _SliderDefaultsM3 extends SliderThemeData {
 
   @override
   Color? get overlayColor =>
-      WidgetStateColor.resolveWith((Set<WidgetState> states) {
-        if (states.contains(WidgetState.dragged)) {
+      MaterialStateColor.resolveWith((Set<MaterialState> states) {
+        if (states.contains(MaterialState.dragged)) {
           return _colors.primary.withOpacity(0.1);
         }
-        if (states.contains(WidgetState.hovered)) {
+        if (states.contains(MaterialState.hovered)) {
           return _colors.primary.withOpacity(0.08);
         }
-        if (states.contains(WidgetState.focused)) {
+        if (states.contains(MaterialState.focused)) {
           return _colors.primary.withOpacity(0.1);
         }
 
@@ -642,21 +633,21 @@ class _SliderDefaultsM3 extends SliderThemeData {
 
   @override
   TextStyle? get valueIndicatorTextStyle => Theme.of(
-    context,
-  ).textTheme.labelLarge!.copyWith(color: _colors.onInverseSurface);
+        context,
+      ).textTheme.labelLarge!.copyWith(color: _colors.onInverseSurface);
 
   @override
   Color? get valueIndicatorColor => _colors.inverseSurface;
 
   @override
   SliderComponentShape? get valueIndicatorShape =>
-      const RoundedRectSliderValueIndicatorShape();
+      const PaddleSliderValueIndicatorShape();
 
   @override
-  SliderComponentShape? get thumbShape => const HandleThumbShape();
+  SliderComponentShape? get thumbShape => const RoundSliderThumbShape();
 
   @override
-  SliderTrackShape? get trackShape => const GappedSliderTrackShape();
+  SliderTrackShape? get trackShape => const RoundedRectSliderTrackShape();
 
   @override
   SliderComponentShape? get overlayShape => const RoundSliderOverlayShape();
@@ -666,18 +657,18 @@ class _SliderDefaultsM3 extends SliderThemeData {
       const RoundSliderTickMarkShape(tickMarkRadius: 4.0 / 2);
 
   @override
-  WidgetStateProperty<Size?>? get thumbSize {
-    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-      if (states.contains(WidgetState.disabled)) {
+  MaterialStateProperty<Size?>? get thumbSize {
+    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled)) {
         return const Size(4.0, 44.0);
       }
-      if (states.contains(WidgetState.hovered)) {
+      if (states.contains(MaterialState.hovered)) {
         return const Size(4.0, 44.0);
       }
-      if (states.contains(WidgetState.focused)) {
+      if (states.contains(MaterialState.focused)) {
         return const Size(2.0, 44.0);
       }
-      if (states.contains(WidgetState.pressed)) {
+      if (states.contains(MaterialState.pressed)) {
         return const Size(2.0, 44.0);
       }
       return const Size(4.0, 44.0);

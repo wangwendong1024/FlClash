@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -44,10 +45,7 @@ extension ColorExtension on Color {
   }
 
   int get value32bit {
-    return _floatToInt8(a) << 24 |
-        _floatToInt8(r) << 16 |
-        _floatToInt8(g) << 8 |
-        _floatToInt8(b) << 0;
+    return value;
   }
 
   int get alpha8bit => (0xff000000 & value32bit) >> 24;
@@ -57,10 +55,6 @@ extension ColorExtension on Color {
   int get green8bit => (0x0000ff00 & value32bit) >> 8;
 
   int get blue8bit => (0x000000ff & value32bit) >> 0;
-
-  int _floatToInt8(double x) {
-    return (x * 255.0).round() & 0xff;
-  }
 
   Color lighten([double amount = 10]) {
     if (amount <= 0) return this;
@@ -74,7 +68,7 @@ extension ColorExtension on Color {
   }
 
   String get hex {
-    final value = toARGB32();
+    final value = value32bit;
     final red = (value >> 16) & 0xFF;
     final green = (value >> 8) & 0xFF;
     final blue = value & 0xFF;
@@ -119,12 +113,153 @@ extension ColorExtension on Color {
 }
 
 extension ColorSchemeExtension on ColorScheme {
+  Color get surfaceContainer => surface;
+
+  Color get surfaceContainerLow => surface;
+
+  Color get surfaceContainerHigh => surfaceVariant;
+
+  Color get surfaceContainerHighest => surfaceVariant;
+
+  Color get outlineVariant => outline;
+
+  Color get onPrimaryFixedVariant => onPrimary;
+
   ColorScheme toPureBlack(bool isPrueBlack) => isPrueBlack
       ? copyWith(
           surface: Colors.black,
-          surfaceContainer: surfaceContainer.darken(
-            5,
-          ),
         )
       : this;
+}
+
+class Easing {
+  const Easing._();
+
+  static const Curve standardDecelerate = Curves.easeOutCubic;
+  static const Curve emphasizedDecelerate = Curves.easeOutCubic;
+  static const Curve emphasizedAccelerate = Curves.easeInCubic;
+  static const Curve legacyDecelerate = Curves.easeOutCubic;
+}
+
+class RoundedSuperellipseBorder extends RoundedRectangleBorder {
+  const RoundedSuperellipseBorder({
+    BorderSide side = BorderSide.none,
+    BorderRadiusGeometry borderRadius = BorderRadius.zero,
+  }) : super(side: side, borderRadius: borderRadius);
+}
+
+class StarBorder extends CircleBorder {
+  const StarBorder({
+    int points = 5,
+    double innerRadiusRatio = 0.4,
+    double pointRounding = 0,
+    double valleyRounding = 0,
+    double rotation = 0,
+    double squash = 0,
+    BorderSide side = BorderSide.none,
+  }) : super(side: side);
+
+  const StarBorder.polygon({
+    int sides = 5,
+    double pointRounding = 0,
+    double valleyRounding = 0,
+    double rotation = 0,
+    BorderSide side = BorderSide.none,
+  }) : super(side: side);
+}
+
+class RSuperellipse {
+  final RRect rrect;
+
+  const RSuperellipse._(this.rrect);
+
+  RSuperellipse inflate(double delta) {
+    return RSuperellipse._(rrect.inflate(delta));
+  }
+
+  factory RSuperellipse.fromRectAndRadius(Rect rect, Radius radius) {
+    return RSuperellipse._(RRect.fromRectAndRadius(rect, radius));
+  }
+
+  factory RSuperellipse.fromRectAndCorners(
+    Rect rect, {
+    Radius topLeft = Radius.zero,
+    Radius topRight = Radius.zero,
+    Radius bottomLeft = Radius.zero,
+    Radius bottomRight = Radius.zero,
+  }) {
+    return RSuperellipse._(
+      RRect.fromRectAndCorners(
+        rect,
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
+    );
+  }
+
+  factory RSuperellipse.fromLTRBAndCorners(
+    double left,
+    double top,
+    double right,
+    double bottom, {
+    Radius topLeft = Radius.zero,
+    Radius topRight = Radius.zero,
+    Radius bottomLeft = Radius.zero,
+    Radius bottomRight = Radius.zero,
+  }) {
+    return RSuperellipse._(
+      RRect.fromLTRBAndCorners(
+        left,
+        top,
+        right,
+        bottom,
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
+    );
+  }
+}
+
+extension CanvasSuperellipseCompat on ui.Canvas {
+  void drawRSuperellipse(RSuperellipse superellipse, Paint paint) {
+    drawRRect(superellipse.rrect, paint);
+  }
+}
+
+extension PathSuperellipseCompat on Path {
+  void addRSuperellipse(RSuperellipse superellipse) {
+    addRRect(superellipse.rrect);
+  }
+}
+
+class ClipRSuperellipse extends StatelessWidget {
+  final BorderRadiusGeometry borderRadius;
+  final Widget child;
+  final Clip clipBehavior;
+
+  const ClipRSuperellipse({
+    super.key,
+    required this.borderRadius,
+    required this.child,
+    this.clipBehavior = Clip.antiAlias,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      clipBehavior: clipBehavior,
+      child: child,
+    );
+  }
+}
+
+class LinearBorder extends RoundedRectangleBorder {
+  const LinearBorder._() : super();
+
+  static const LinearBorder none = LinearBorder._();
 }

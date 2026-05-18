@@ -126,7 +126,7 @@ class AppSidebarContainer extends ConsumerWidget {
 
   // Widget _buildLoading() {
   //   return Consumer(
-  //     builder: (_, ref, _) {
+  //     builder: (_, ref, __) {
   //       final loading = ref.watch(loadingProvider);
   //       final isMobileView = ref.watch(isMobileViewProvider);
   //       return loading && !isMobileView
@@ -160,7 +160,7 @@ class AppSidebarContainer extends ConsumerWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(sideWidthProvider.notifier).value =
           ref.read(viewSizeProvider.select((state) => state.width)) -
-          contentWidth;
+              contentWidth;
     });
   }
 
@@ -196,16 +196,13 @@ class AppSidebarContainer extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: NavigationRail(
-                            scrollable: true,
                             minExtendedWidth: 200,
                             backgroundColor: Colors.transparent,
                             selectedLabelTextStyle: context
-                                .textTheme
-                                .labelLarge!
+                                .textTheme.labelLarge!
                                 .copyWith(color: context.colorScheme.onSurface),
                             unselectedLabelTextStyle: context
-                                .textTheme
-                                .labelLarge!
+                                .textTheme.labelLarge!
                                 .copyWith(color: context.colorScheme.onSurface),
                             destinations: navigationItems
                                 .map(
@@ -234,9 +231,7 @@ class AppSidebarContainer extends ConsumerWidget {
                 const SizedBox(height: 16),
                 IconButton(
                   onPressed: () {
-                    ref
-                        .read(appSettingProvider.notifier)
-                        .update(
+                    ref.read(appSettingProvider.notifier).update(
                           (state) =>
                               state.copyWith(showLabel: !state.showLabel),
                         );

@@ -93,18 +93,17 @@ class _AccessViewState extends ConsumerState<AccessView> {
     }
     final selectedPackageNames =
         (await appController.loadingRun<List<String>>(() async {
-          return await app?.getChinaPackageNames() ?? [];
-        }, tag: LoadingTag.access))?.toSet() ??
-        {};
+              return await app?.getChinaPackageNames() ?? [];
+            }, tag: LoadingTag.access))
+                ?.toSet() ??
+            {};
     final acceptList = packageNames
         .where((item) => !selectedPackageNames.contains(item))
         .toList();
     final rejectList = packageNames
         .where((item) => selectedPackageNames.contains(item))
         .toList();
-    ref
-        .read(accessControlStateProvider.notifier)
-        .update(
+    ref.read(accessControlStateProvider.notifier).update(
           (state) =>
               state.copyWith(acceptList: acceptList, rejectList: rejectList),
         );
@@ -179,9 +178,7 @@ class _AccessViewState extends ConsumerState<AccessView> {
 
   void _handleSave() {
     final accessControl = ref.read(accessControlStateProvider);
-    ref
-        .read(vpnSettingProvider.notifier)
-        .update(
+    ref.read(vpnSettingProvider.notifier).update(
           (state) => state.copyWith(
             accessControlProps: _getRealAccessControlProps(accessControl),
           ),
@@ -209,8 +206,8 @@ class _AccessViewState extends ConsumerState<AccessView> {
           _handleBack();
           return false;
         },
-        child: CommonMinFilledButtonTheme(
-          child: FilledButton.tonal(
+        child: CommonMinElevatedButtonTheme(
+          child: ElevatedButton(
             onPressed: _handleSave,
             child: Text(context.appLocalizations.save),
           ),
@@ -256,9 +253,8 @@ class _AccessViewState extends ConsumerState<AccessView> {
           items: [
             PopupMenuItemData(
               icon: Icons.swap_horiz,
-              label: enable
-                  ? appLocalizations.turnOff
-                  : appLocalizations.turnOn,
+              label:
+                  enable ? appLocalizations.turnOff : appLocalizations.turnOn,
               onPressed: _handleToggle,
             ),
             PopupMenuItemData(
@@ -343,7 +339,7 @@ class _AccessViewState extends ConsumerState<AccessView> {
     return MaterialBanner(
       content: Text(describe),
       actions: [
-        Card.filled(
+        Card(
           color: context.colorScheme.primary,
           elevation: 0,
           shape: RoundedSuperellipseBorder(
@@ -489,33 +485,43 @@ class AccessControlPanel extends ConsumerStatefulWidget {
 
 class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
   IconData _getIconWithAccessControlMode(AccessControlMode mode) {
-    return switch (mode) {
-      AccessControlMode.acceptSelected => Icons.adjust_outlined,
-      AccessControlMode.rejectSelected => Icons.block_outlined,
-    };
+    switch (mode) {
+      case AccessControlMode.acceptSelected:
+        return Icons.adjust_outlined;
+      case AccessControlMode.rejectSelected:
+        return Icons.block_outlined;
+    }
   }
 
   String _getTextWithAccessControlMode(AccessControlMode mode) {
-    return switch (mode) {
-      AccessControlMode.acceptSelected => appLocalizations.whitelistMode,
-      AccessControlMode.rejectSelected => appLocalizations.blacklistMode,
-    };
+    switch (mode) {
+      case AccessControlMode.acceptSelected:
+        return appLocalizations.whitelistMode;
+      case AccessControlMode.rejectSelected:
+        return appLocalizations.blacklistMode;
+    }
   }
 
   String _getTextWithAccessSortType(AccessSortType type) {
-    return switch (type) {
-      AccessSortType.none => appLocalizations.defaultText,
-      AccessSortType.name => appLocalizations.name,
-      AccessSortType.time => appLocalizations.time,
-    };
+    switch (type) {
+      case AccessSortType.none:
+        return appLocalizations.defaultText;
+      case AccessSortType.name:
+        return appLocalizations.name;
+      case AccessSortType.time:
+        return appLocalizations.time;
+    }
   }
 
   IconData _getIconWithProxiesSortType(AccessSortType type) {
-    return switch (type) {
-      AccessSortType.none => Icons.sort,
-      AccessSortType.name => Icons.sort_by_alpha,
-      AccessSortType.time => Icons.timeline,
-    };
+    switch (type) {
+      case AccessSortType.none:
+        return Icons.sort;
+      case AccessSortType.name:
+        return Icons.sort_by_alpha;
+      case AccessSortType.time:
+        return Icons.timeline;
+    }
   }
 
   List<Widget> _buildModeSetting() {
@@ -527,7 +533,7 @@ class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final accessControlMode = ref.watch(
                 accessControlStateProvider.select((state) => state.mode),
               );
@@ -564,7 +570,7 @@ class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final accessSortType = ref.watch(
                 accessControlStateProvider.select((state) => state.sort),
               );
@@ -601,7 +607,7 @@ class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final vm2 = ref.watch(
                 accessControlStateProvider.select(
                   (state) => VM2(
@@ -617,9 +623,7 @@ class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
                     appLocalizations.systemApp,
                     isSelected: vm2.a == false,
                     onPressed: () {
-                      ref
-                          .read(accessControlStateProvider.notifier)
-                          .update(
+                      ref.read(accessControlStateProvider.notifier).update(
                             (state) =>
                                 state.copyWith(isFilterSystemApp: !vm2.a),
                           );
@@ -629,9 +633,7 @@ class _AccessControlPanelState extends ConsumerState<AccessControlPanel> {
                     appLocalizations.noNetworkApp,
                     isSelected: vm2.b == false,
                     onPressed: () {
-                      ref
-                          .read(accessControlStateProvider.notifier)
-                          .update(
+                      ref.read(accessControlStateProvider.notifier).update(
                             (state) =>
                                 state.copyWith(isFilterNonInternetApp: !vm2.b),
                           );

@@ -5,6 +5,8 @@ import 'package:fl_clash/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 
 extension BuildContextExtension on BuildContext {
+  bool get mounted => true;
+
   CommonScaffoldState? get commonScaffoldState {
     return findAncestorStateOfType<CommonScaffoldState>();
   }
@@ -53,9 +55,6 @@ extension BuildContextExtension on BuildContext {
     T? state;
 
     visitor(Element element) {
-      if (!element.mounted) {
-        return;
-      }
       if (element is StatefulElement) {
         if (element.state is T) {
           state = element.state as T;

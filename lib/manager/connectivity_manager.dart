@@ -23,9 +23,9 @@ class _ConnectivityManagerState extends State<ConnectivityManager> {
   @override
   void initState() {
     super.initState();
-    subscription = Connectivity().onConnectivityChanged.listen((results) async {
+    subscription = Connectivity().onConnectivityChanged.listen((result) async {
       if (widget.onConnectivityChanged != null) {
-        widget.onConnectivityChanged!(results);
+        widget.onConnectivityChanged!([result]);
       }
     });
   }

@@ -16,23 +16,24 @@ List<Group> computeSort({
     required Map<String, String> selectedMap,
     required String testUrl,
   }) {
-    return List.from(proxies)..sort((a, b) {
-      final aDelayState = computeProxyDelayState(
-        proxyName: a.name,
-        testUrl: testUrl,
-        groups: groups,
-        selectedMap: selectedMap,
-        delayMap: delayMap,
-      );
-      final bDelayState = computeProxyDelayState(
-        proxyName: b.name,
-        testUrl: testUrl,
-        groups: groups,
-        selectedMap: selectedMap,
-        delayMap: delayMap,
-      );
-      return aDelayState.compareTo(bDelayState);
-    });
+    return List.from(proxies)
+      ..sort((a, b) {
+        final aDelayState = computeProxyDelayState(
+          proxyName: a.name,
+          testUrl: testUrl,
+          groups: groups,
+          selectedMap: selectedMap,
+          delayMap: delayMap,
+        );
+        final bDelayState = computeProxyDelayState(
+          proxyName: b.name,
+          testUrl: testUrl,
+          groups: groups,
+          selectedMap: selectedMap,
+          delayMap: delayMap,
+        );
+        return aDelayState.compareTo(bDelayState);
+      });
   }
 
   List<Proxy> sortOfName(List<Proxy> proxies) {
@@ -41,17 +42,24 @@ List<Group> computeSort({
 
   return groups.map((group) {
     final proxies = group.all;
-    final newProxies = switch (sortType) {
-      ProxiesSortType.none => proxies,
-      ProxiesSortType.delay => sortOfDelay(
-        groups: groups,
-        proxies: proxies,
-        delayMap: delayMap,
-        selectedMap: selectedMap,
-        testUrl: group.testUrl.takeFirstValid([defaultTestUrl]),
-      ),
-      ProxiesSortType.name => sortOfName(proxies),
-    };
+    final List<Proxy> newProxies;
+    switch (sortType) {
+      case ProxiesSortType.none:
+        newProxies = proxies;
+        break;
+      case ProxiesSortType.delay:
+        newProxies = sortOfDelay(
+          groups: groups,
+          proxies: proxies,
+          delayMap: delayMap,
+          selectedMap: selectedMap,
+          testUrl: group.testUrl.takeFirstValid([defaultTestUrl]),
+        );
+        break;
+      case ProxiesSortType.name:
+        newProxies = sortOfName(proxies);
+        break;
+    }
     return group.copyWith(all: newProxies);
   }).toList();
 }

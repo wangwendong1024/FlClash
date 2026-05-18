@@ -29,8 +29,7 @@ class EditorPage extends ConsumerStatefulWidget {
     BuildContext context,
     String title,
     String content,
-  )?
-  onPop;
+  )? onPop;
 
   const EditorPage({
     super.key,
@@ -103,7 +102,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   Widget _wrapController(EditingValueChangeBuilder builder) {
     return ValueListenableBuilder(
       valueListenable: _controller,
-      builder: (_, value, _) {
+      builder: (_, value, __) {
         return builder(value);
       },
     );
@@ -112,7 +111,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
   Widget _wrapTitleController(TextEditingValueChangeBuilder builder) {
     return ValueListenableBuilder(
       valueListenable: _titleController,
-      builder: (_, value, _) {
+      builder: (_, value, __) {
         return builder(value);
       },
     );
@@ -192,8 +191,7 @@ class _EditorPageState extends ConsumerState<EditorPage> {
               _wrapController(
                 (value) => _wrapTitleController(
                   (value) => IconButton(
-                    onPressed:
-                        _controller.text != widget.content ||
+                    onPressed: _controller.text != widget.content ||
                             _titleController.text != widget.title
                         ? () {
                             widget.onSave!(
@@ -266,7 +264,6 @@ class _EditorPageState extends ConsumerState<EditorPage> {
             isMobileView: isMobileView,
           ),
           padding: EdgeInsets.only(right: 16),
-          autocompleteSymbols: true,
           focusNode: _focusNode,
           scrollbarBuilder: (context, child, details) {
             return CommonScrollBar(
@@ -277,20 +274,20 @@ class _EditorPageState extends ConsumerState<EditorPage> {
           toolbarController: _toolbarController,
           indicatorBuilder:
               (context, editingController, chunkController, notifier) {
-                return Row(
-                  children: [
-                    DefaultCodeLineNumber(
-                      controller: editingController,
-                      notifier: notifier,
-                    ),
-                    DefaultCodeChunkIndicator(
-                      width: 20,
-                      controller: chunkController,
-                      notifier: notifier,
-                    ),
-                  ],
-                );
-              },
+            return Row(
+              children: [
+                DefaultCodeLineNumber(
+                  controller: editingController,
+                  notifier: notifier,
+                ),
+                DefaultCodeChunkIndicator(
+                  width: 20,
+                  controller: chunkController,
+                  notifier: notifier,
+                ),
+              ],
+            );
+          },
           shortcutsActivatorsBuilder: DefaultCodeShortcutsActivatorsBuilder(),
           controller: _controller,
           style: CodeEditorStyle(
@@ -327,11 +324,10 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
     required this.controller,
     required this.readOnly,
     required this.isMobileView,
-  }) : height =
-           (isMobileView
-               ? _kDefaultFindPanelHeight * 2
-               : _kDefaultFindPanelHeight) +
-           8;
+  }) : height = (isMobileView
+                ? _kDefaultFindPanelHeight * 2
+                : _kDefaultFindPanelHeight) +
+            8;
 
   @override
   Size get preferredSize =>
@@ -375,7 +371,6 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              spacing: 2,
               children: [
                 _buildIconButton(
                   onPressed: value.result == null
@@ -394,11 +389,11 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
                   icon: Icons.arrow_downward,
                 ),
                 SizedBox(width: 2),
-                IconButton.filledTonal(
+                IconButton(
                   onPressed: controller.close,
                   icon: Icon(Icons.close, size: 16),
                 ),
-              ],
+              ].separated(SizedBox(width: 2)).toList(),
             ),
           ),
         ],
@@ -417,7 +412,6 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildFindInput(BuildContext context, CodeFindValue value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      spacing: 8,
       children: [
         Flexible(
           child: _buildTextField(
@@ -450,7 +444,7 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
           },
         ),
         SizedBox(width: 4),
-      ],
+      ].separated(SizedBox(width: 8)).toList(),
     );
   }
 
@@ -490,7 +484,7 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: isSelected
-            ? IconButton.filledTonal(
+            ? IconButton(
                 onPressed: onPressed,
                 padding: EdgeInsets.all(2),
                 icon: Text(text, style: context.textTheme.bodySmall),
@@ -538,72 +532,69 @@ class ContextMenuControllerImpl implements SelectionToolbarController {
   }) {
     _removeOverLayEntry();
     _overlayEntry ??= OverlayEntry(
-      builder: (context) => CodeEditorTapRegion(
-        child: ValueListenableBuilder(
-          valueListenable: controller,
-          builder: (_, _, child) {
-            final isNotEmpty = controller.selectedText.isNotEmpty;
-            final isAllSelected = controller.isAllSelected;
-            final hasSelected = controller.selectedText.isNotEmpty;
-            List<PopupMenuItemData> menus = [
-              if (isNotEmpty)
-                PopupMenuItemData(
-                  label: appLocalizations.copy,
-                  onPressed: controller.copy,
+      builder: (context) => ValueListenableBuilder(
+        valueListenable: controller,
+        builder: (_, __, child) {
+          final isNotEmpty = controller.selectedText.isNotEmpty;
+          final isAllSelected = controller.isAllSelected;
+          final hasSelected = controller.selectedText.isNotEmpty;
+          List<PopupMenuItemData> menus = [
+            if (isNotEmpty)
+              PopupMenuItemData(
+                label: appLocalizations.copy,
+                onPressed: controller.copy,
+              ),
+            if (!readOnly)
+              PopupMenuItemData(
+                label: appLocalizations.paste,
+                onPressed: controller.paste,
+              ),
+            if (isNotEmpty && !readOnly)
+              PopupMenuItemData(
+                label: appLocalizations.cut,
+                onPressed: controller.cut,
+              ),
+            if (hasSelected && !isAllSelected)
+              PopupMenuItemData(
+                label: appLocalizations.selectAll,
+                onPressed: controller.selectAll,
+              ),
+          ];
+          if (_isFirstRender) {
+            _isFirstRender = false;
+          } else if (controller.selectedText.isEmpty) {
+            _removeOverLayEntry();
+          }
+          if (menus.isEmpty) {
+            _removeOverLayEntry();
+            return SizedBox();
+          }
+          return TextSelectionToolbar(
+            anchorAbove: anchors.primaryAnchor,
+            anchorBelow: anchors.secondaryAnchor ?? Offset.zero,
+            children: menus.asMap().entries.map((
+              MapEntry<int, PopupMenuItemData> entry,
+            ) {
+              return TextSelectionToolbarTextButton(
+                padding: TextSelectionToolbarTextButton.getPadding(
+                  entry.key,
+                  menus.length,
                 ),
-              if (!readOnly)
-                PopupMenuItemData(
-                  label: appLocalizations.paste,
-                  onPressed: controller.paste,
-                ),
-              if (isNotEmpty && !readOnly)
-                PopupMenuItemData(
-                  label: appLocalizations.cut,
-                  onPressed: controller.cut,
-                ),
-              if (hasSelected && !isAllSelected)
-                PopupMenuItemData(
-                  label: appLocalizations.selectAll,
-                  onPressed: controller.selectAll,
-                ),
-            ];
-            if (_isFirstRender) {
-              _isFirstRender = false;
-            } else if (controller.selectedText.isEmpty) {
-              _removeOverLayEntry();
-            }
-            if (menus.isEmpty) {
-              _removeOverLayEntry();
-              return SizedBox();
-            }
-            return TextSelectionToolbar(
-              anchorAbove: anchors.primaryAnchor,
-              anchorBelow: anchors.secondaryAnchor ?? Offset.zero,
-              children: menus.asMap().entries.map((
-                MapEntry<int, PopupMenuItemData> entry,
-              ) {
-                return TextSelectionToolbarTextButton(
-                  padding: TextSelectionToolbarTextButton.getPadding(
-                    entry.key,
-                    menus.length,
-                  ),
-                  alignment: AlignmentDirectional.centerStart,
-                  onPressed: () {
-                    if (entry.value.onPressed == null) {
-                      return;
-                    }
-                    entry.value.onPressed!();
-                    _removeOverLayEntry();
-                  },
-                  child: Text(entry.value.label),
-                );
-              }).toList(),
-            );
-          },
-        ),
+                onPressed: () {
+                  if (entry.value.onPressed == null) {
+                    return;
+                  }
+                  entry.value.onPressed!();
+                  _removeOverLayEntry();
+                },
+                child: Text(entry.value.label),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
-    Overlay.of(context).insert(_overlayEntry!);
+    Overlay.of(context)!.insert(_overlayEntry!);
   }
 }
 

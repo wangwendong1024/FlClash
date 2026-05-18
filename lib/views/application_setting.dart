@@ -1,4 +1,4 @@
-import 'package:fl_clash/common/common.dart';
+﻿import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/providers/config.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -287,7 +287,7 @@ class ApplicationSettingView extends StatelessWidget {
           final item = items[index];
           return item;
         },
-        separatorBuilder: (_, _) {
+        separatorBuilder: (_, __) {
           return const Divider(height: 0);
         },
         itemCount: items.length,

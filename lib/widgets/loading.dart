@@ -1,3 +1,4 @@
+import 'package:fl_clash/common/color.dart';
 import 'package:flutter/material.dart';
 
 class CommonCircleLoading extends StatefulWidget {
@@ -71,13 +72,13 @@ class _StarPainter extends CustomPainter {
   final Paint _paint;
 
   _StarPainter({required this.points, required this.color})
-    : _paint = Paint()..color = color;
+      : _paint = Paint()..color = color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final starBorder = StarBorder(
-      points: points,
+      points: points.round(),
       innerRadiusRatio: 0.8,
       pointRounding: 0.5,
       valleyRounding: 0.1,

@@ -45,7 +45,7 @@ class HotKeyView extends StatelessWidget {
         itemBuilder: (_, index) {
           final hotAction = HotAction.values[index];
           return Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final hotKeyAction = ref.watch(
                 getHotKeyActionProvider(hotAction),
               );
@@ -176,7 +176,7 @@ class _HotKeyRecorderState extends ConsumerState<HotKeyRecorder> {
   @override
   Widget build(BuildContext context) {
     return Focus(
-      onKeyEvent: (_, _) {
+      onKeyEvent: (_, __) {
         return KeyEventResult.handled;
       },
       autofocus: true,
@@ -199,7 +199,7 @@ class _HotKeyRecorderState extends ConsumerState<HotKeyRecorder> {
         ],
         child: ValueListenableBuilder(
           valueListenable: hotKeyActionNotifier,
-          builder: (_, hotKeyAction, _) {
+          builder: (_, hotKeyAction, __) {
             final key = hotKeyAction.key;
             final modifiers = hotKeyAction.modifiers;
             return SizedBox(

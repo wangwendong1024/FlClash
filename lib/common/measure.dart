@@ -3,19 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Measure {
-  final TextScaler _textScaler;
+  final double _textScaleFactor;
   final BuildContext context;
   final Map<String, dynamic> _measureMap;
 
   Measure.of(this.context, double textScaleFactor)
-    : _measureMap = {},
-      _textScaler = TextScaler.linear(textScaleFactor);
+      : _measureMap = {},
+        _textScaleFactor = textScaleFactor;
 
   Size computeTextSize(Text text, {double maxWidth = double.infinity}) {
     final textPainter = TextPainter(
       text: TextSpan(text: text.data, style: text.style),
       maxLines: text.maxLines,
-      textScaler: _textScaler,
+      textScaleFactor: _textScaleFactor,
       textDirection: text.textDirection ?? TextDirection.ltr,
     )..layout(maxWidth: maxWidth);
     return textPainter.size;

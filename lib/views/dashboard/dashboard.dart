@@ -36,7 +36,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   Widget _buildIsEdit(_IsEditWidgetBuilder builder) {
     return ValueListenableBuilder(
       valueListenable: _isEditNotifier,
-      builder: (_, isEdit, _) {
+      builder: (_, isEdit, __) {
         return builder(isEdit);
       },
     );
@@ -57,88 +57,117 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     appController.restartCore();
   }
 
+  Color? _connectedForegroundColor(BuildContext context) {
+    switch (Theme.of(context).brightness) {
+      case Brightness.light:
+        return context.colorScheme.onSurfaceVariant;
+      case Brightness.dark:
+        return context.colorScheme.onPrimaryFixedVariant;
+    }
+  }
+
+  Color? _coreStatusBackgroundColor(
+    BuildContext context,
+    CoreStatus coreStatus,
+  ) {
+    switch (coreStatus) {
+      case CoreStatus.connecting:
+        return null;
+      case CoreStatus.connected:
+        return Colors.greenAccent;
+      case CoreStatus.disconnected:
+        return context.colorScheme.error;
+    }
+  }
+
+  Color? _coreStatusForegroundColor(
+    BuildContext context,
+    CoreStatus coreStatus,
+  ) {
+    switch (coreStatus) {
+      case CoreStatus.connecting:
+        return null;
+      case CoreStatus.connected:
+        return Theme.of(context).brightness == Brightness.light
+            ? context.colorScheme.onSurfaceVariant
+            : null;
+      case CoreStatus.disconnected:
+        return context.colorScheme.onError;
+    }
+  }
+
+  Widget _coreStatusIcon(BuildContext context, CoreStatus coreStatus) {
+    switch (coreStatus) {
+      case CoreStatus.connecting:
+        return Padding(
+          padding: EdgeInsets.all(2),
+          child: CircularProgressIndicator(
+            strokeWidth: 3,
+            color: context.colorScheme.onPrimary,
+            backgroundColor: Colors.transparent,
+          ),
+        );
+      case CoreStatus.connected:
+        return Icon(Icons.check_sharp);
+      case CoreStatus.disconnected:
+        return Icon(Icons.restart_alt_sharp);
+    }
+  }
+
+  String _coreStatusText(CoreStatus coreStatus) {
+    switch (coreStatus) {
+      case CoreStatus.connecting:
+        return appLocalizations.connecting;
+      case CoreStatus.connected:
+        return appLocalizations.connected;
+      case CoreStatus.disconnected:
+        return appLocalizations.disconnected;
+    }
+  }
+
   List<Widget> _buildActions(bool isEdit) {
     return [
       if (!isEdit)
         Consumer(
-          builder: (_, ref, _) {
+          builder: (_, ref, __) {
             final coreStatus = ref.watch(coreStatusProvider);
             return Tooltip(
               message: appLocalizations.coreStatus,
               child: FadeScaleBox(
                 alignment: Alignment.centerRight,
                 child: coreStatus == CoreStatus.connected
-                    ? IconButton.filled(
+                    ? IconButton(
                         visualDensity: VisualDensity.compact,
                         iconSize: 20,
                         padding: EdgeInsets.zero,
                         style: IconButton.styleFrom(
                           backgroundColor: Colors.greenAccent,
-                          foregroundColor: switch (Theme.brightnessOf(
-                            context,
-                          )) {
-                            Brightness.light =>
-                              context.colorScheme.onSurfaceVariant,
-                            Brightness.dark =>
-                              context.colorScheme.onPrimaryFixedVariant,
-                          },
+                          foregroundColor: _connectedForegroundColor(context),
                         ),
                         onPressed: _handleConnection,
-                        icon: Icon(Icons.check, fontWeight: FontWeight.w900),
+                        icon: Icon(Icons.check),
                       )
-                    : FilledButton.icon(
+                    : ElevatedButton.icon(
                         key: ValueKey(coreStatus),
                         onPressed: _handleConnection,
-                        style: FilledButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
                           visualDensity: VisualDensity.compact,
                           padding: EdgeInsets.symmetric(horizontal: 12),
-                          backgroundColor: switch (coreStatus) {
-                            CoreStatus.connecting => null,
-                            CoreStatus.connected => Colors.greenAccent,
-                            CoreStatus.disconnected =>
-                              context.colorScheme.error,
-                          },
-                          foregroundColor: switch (coreStatus) {
-                            CoreStatus.connecting => null,
-                            CoreStatus.connected => switch (Theme.brightnessOf(
-                              context,
-                            )) {
-                              Brightness.light =>
-                                context.colorScheme.onSurfaceVariant,
-                              Brightness.dark => null,
-                            },
-                            CoreStatus.disconnected =>
-                              context.colorScheme.onError,
-                          },
+                          backgroundColor: _coreStatusBackgroundColor(
+                            context,
+                            coreStatus,
+                          ),
+                          foregroundColor: _coreStatusForegroundColor(
+                            context,
+                            coreStatus,
+                          ),
                         ),
                         icon: SizedBox(
                           height: globalState.measure.bodyMediumHeight,
                           width: globalState.measure.bodyMediumHeight,
-                          child: switch (coreStatus) {
-                            CoreStatus.connecting => Padding(
-                              padding: EdgeInsets.all(2),
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                                color: context.colorScheme.onPrimary,
-                                backgroundColor: Colors.transparent,
-                              ),
-                            ),
-                            CoreStatus.connected => Icon(
-                              Icons.check_sharp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            CoreStatus.disconnected => Icon(
-                              Icons.restart_alt_sharp,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          },
+                          child: _coreStatusIcon(context, coreStatus),
                         ),
-                        label: Text(switch (coreStatus) {
-                          CoreStatus.connecting => appLocalizations.connecting,
-                          CoreStatus.connected => appLocalizations.connected,
-                          CoreStatus.disconnected =>
-                            appLocalizations.disconnected,
-                        }),
+                        label: Text(_coreStatusText(coreStatus)),
                       ),
               ),
             );
@@ -181,7 +210,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       builder: (_, type) {
         return ValueListenableBuilder(
           valueListenable: _addedWidgetsNotifier,
-          builder: (_, value, _) {
+          builder: (_, value, __) {
             return AdaptiveSheetScaffold(
               type: type,
               body: _AddDashboardWidgetModal(
@@ -216,9 +245,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       final dashboardWidgets = currentState.children
           .map((item) => DashboardWidget.getDashboardWidget(item))
           .toList();
-      ref
-          .read(appSettingProvider.notifier)
-          .update(
+      ref.read(appSettingProvider.notifier).update(
             (state) => state.copyWith(dashboardWidgets: dashboardWidgets),
           );
     }
@@ -374,7 +401,7 @@ class _AddedContainerState extends State<_AddedContainer> {
             child: SizedBox(
               width: 24,
               height: 24,
-              child: IconButton.filled(
+              child: IconButton(
                 iconSize: 20,
                 padding: EdgeInsets.all(2),
                 onPressed: _handleAdd,

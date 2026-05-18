@@ -10,42 +10,56 @@ class ProxiesSetting extends StatelessWidget {
   const ProxiesSetting({super.key});
 
   IconData _getIconWithProxiesType(ProxiesType type) {
-    return switch (type) {
-      ProxiesType.tab => Icons.view_carousel,
-      ProxiesType.list => Icons.view_list,
-    };
+    switch (type) {
+      case ProxiesType.tab:
+        return Icons.view_carousel;
+      case ProxiesType.list:
+        return Icons.view_list;
+    }
   }
 
   IconData _getIconWithProxiesSortType(ProxiesSortType type) {
-    return switch (type) {
-      ProxiesSortType.none => Icons.sort,
-      ProxiesSortType.delay => Icons.network_ping,
-      ProxiesSortType.name => Icons.sort_by_alpha,
-    };
+    switch (type) {
+      case ProxiesSortType.none:
+        return Icons.sort;
+      case ProxiesSortType.delay:
+        return Icons.network_ping;
+      case ProxiesSortType.name:
+        return Icons.sort_by_alpha;
+    }
   }
 
   String _getStringProxiesSortType(ProxiesSortType type) {
-    return switch (type) {
-      ProxiesSortType.none => appLocalizations.defaultText,
-      ProxiesSortType.delay => appLocalizations.delay,
-      ProxiesSortType.name => appLocalizations.name,
-    };
+    switch (type) {
+      case ProxiesSortType.none:
+        return appLocalizations.defaultText;
+      case ProxiesSortType.delay:
+        return appLocalizations.delay;
+      case ProxiesSortType.name:
+        return appLocalizations.name;
+    }
   }
 
   String getTextForProxiesLayout(ProxiesLayout proxiesLayout) {
-    return switch (proxiesLayout) {
-      ProxiesLayout.tight => appLocalizations.tight,
-      ProxiesLayout.standard => appLocalizations.standard,
-      ProxiesLayout.loose => appLocalizations.loose,
-    };
+    switch (proxiesLayout) {
+      case ProxiesLayout.tight:
+        return appLocalizations.tight;
+      case ProxiesLayout.standard:
+        return appLocalizations.standard;
+      case ProxiesLayout.loose:
+        return appLocalizations.loose;
+    }
   }
 
   String _getTextWithProxiesIconStyle(ProxiesIconStyle style) {
-    return switch (style) {
-      ProxiesIconStyle.standard => appLocalizations.standard,
-      ProxiesIconStyle.none => appLocalizations.none,
-      ProxiesIconStyle.icon => appLocalizations.onlyIcon,
-    };
+    switch (style) {
+      case ProxiesIconStyle.standard:
+        return appLocalizations.standard;
+      case ProxiesIconStyle.none:
+        return appLocalizations.none;
+      case ProxiesIconStyle.icon:
+        return appLocalizations.onlyIcon;
+    }
   }
 
   List<Widget> _buildStyleSetting() {
@@ -57,7 +71,7 @@ class ProxiesSetting extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final proxiesType = ref.watch(
                 proxiesStyleSettingProvider.select((state) => state.type),
               );
@@ -96,7 +110,7 @@ class ProxiesSetting extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final sortType = ref.watch(
                 proxiesStyleSettingProvider.select((state) => state.sortType),
               );
@@ -135,7 +149,7 @@ class ProxiesSetting extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final cardType = ref.watch(
                 proxiesStyleSettingProvider.select((state) => state.cardType),
               );
@@ -171,7 +185,7 @@ class ProxiesSetting extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final layout = ref.watch(
                 proxiesStyleSettingProvider.select((state) => state.layout),
               );
@@ -207,7 +221,7 @@ class ProxiesSetting extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,
           child: Consumer(
-            builder: (_, ref, _) {
+            builder: (_, ref, __) {
               final iconStyle = ref.watch(
                 proxiesStyleSettingProvider.select((state) => state.iconStyle),
               );

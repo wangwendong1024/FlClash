@@ -14,11 +14,14 @@ double getItemHeight(ProxyCardType proxyCardType) {
   final measure = globalState.measure;
   final baseHeight =
       16 + measure.bodyMediumHeight * 2 + measure.bodySmallHeight + 8 + 4;
-  return switch (proxyCardType) {
-    ProxyCardType.expand => baseHeight + measure.labelSmallHeight + 6,
-    ProxyCardType.shrink => baseHeight,
-    ProxyCardType.min => baseHeight - measure.bodyMediumHeight,
-  };
+  switch (proxyCardType) {
+    case ProxyCardType.expand:
+      return baseHeight + measure.labelSmallHeight + 6;
+    case ProxyCardType.shrink:
+      return baseHeight;
+    case ProxyCardType.min:
+      return baseHeight - measure.bodyMediumHeight;
+  }
 }
 
 Future<void> proxyDelayTest(Proxy proxy, [String? testUrl]) async {

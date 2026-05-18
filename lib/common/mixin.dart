@@ -1,24 +1,20 @@
 import 'package:riverpod/riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-mixin AutoDisposeNotifierMixin<T> on AnyNotifier<T, T> {
-  T get value => state;
+mixin AutoDisposeNotifierMixin<T> {
+  T get value => (this as dynamic).state as T;
 
   set value(T value) {
-    state = value;
+    (this as dynamic).state = value;
   }
 
   bool equals(T previous, T next) {
     return false;
   }
 
-  @override
   bool updateShouldNotify(previous, next) {
-    final res = !equals(previous, next)
-        ? super.updateShouldNotify(previous, next)
-        : true;
+    final res = !equals(previous as T, next as T);
     if (res) {
-      onUpdate(next);
+      onUpdate(next as T);
     }
     return res;
   }
@@ -34,10 +30,10 @@ mixin AutoDisposeNotifierMixin<T> on AnyNotifier<T, T> {
   }
 }
 
-mixin AsyncNotifierMixin<T> on AnyNotifier<AsyncValue<T>, T> {
-  T get value;
+mixin AsyncNotifierMixin<T> {
+  T get value => ((this as dynamic).state as AsyncData<T>).value;
 
   set value(T value) {
-    state = AsyncData(value);
+    (this as dynamic).state = AsyncData(value);
   }
 }

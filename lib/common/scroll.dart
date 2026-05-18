@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 class BaseScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-    PointerDeviceKind.touch,
-    PointerDeviceKind.stylus,
-    PointerDeviceKind.invertedStylus,
-    PointerDeviceKind.trackpad,
-    if (system.isDesktop) PointerDeviceKind.mouse,
-    PointerDeviceKind.unknown,
-  };
+        PointerDeviceKind.touch,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.invertedStylus,
+        PointerDeviceKind.trackpad,
+        if (system.isDesktop) PointerDeviceKind.mouse,
+        PointerDeviceKind.unknown,
+      };
 
   @override
   Widget buildScrollbar(
@@ -79,7 +79,7 @@ class NextClampingScrollPhysics extends ClampingScrollPhysics {
     ScrollMetrics position,
     double velocity,
   ) {
-    final Tolerance tolerance = toleranceFor(position);
+    final Tolerance tolerance = this.tolerance;
     if (position.outOfRange) {
       double? end;
       if (position.pixels > position.maxScrollExtent) {
